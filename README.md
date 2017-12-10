@@ -9,7 +9,7 @@ git remote -v
 git fetch && git checkout master
 ```
 
-[![](https://jitpack.io/v/rzrasel/And-Library-Spiral-View-Sharp-WebView.svg)](https://jitpack.io/#rzrasel/And-Library-Spiral-View-Sharp-WebView)
+[![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
 
 ### Installation
 Maven Repositories Installation
