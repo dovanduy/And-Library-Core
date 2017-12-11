@@ -1,4 +1,4 @@
-package com.rz.librarycore.zcertificate;
+package com.rz.librarycore.certificate;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -35,9 +36,45 @@ public class CertificateSHA1Fingerprint {
         //LogWriter.Log("123456789");
         return getCertificateSHA1Fingerprint(argContext);
     }
+
+    //|----|------------------------------------------------------------|
+    private String getCertificateSHA1Fingerprint(Context argContext) {
+        //StringBuilder stringBuilder = new StringBuilder();
+        String hexString = null;
+        String packageName = argContext.getPackageName();
+        PackageManager packageManager = argContext.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            //LogWriter.Log("PACKAGE_NAME: " + packageName);
+            Signature[] signatures = packageInfo.signatures;
+
+            for (Signature sig : signatures) {
+                InputStream input = new ByteArrayInputStream(sig.toByteArray());
+                CertificateFactory cf = CertificateFactory.getInstance("X509");
+                X509Certificate cert = (X509Certificate) cf.generateCertificate(input);
+
+                PublicKey publicKey = cert.getPublicKey();
+                /*if (!whitelist.contains(publicKey.getEncoded())) {
+                    throw new Exception("public key is not valid");
+                }*/
+                MessageDigest md = MessageDigest.getInstance("SHA1");
+                byte[] keyByte = md.digest(publicKey.getEncoded());
+                hexString = byte2HexFormatted(keyByte);
+                //stringBuilder.append("Certificate subject: " + hexString + "<br>");
+                //LogWriter.Log("CERTIFICATE: " + stringBuilder.toString());
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            // e.printStackTrace();
+        } catch (NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        }
+        return hexString;
+    }
     //|----|------------------------------------------------------------|
 
-    private String getCertificateSHA1Fingerprint(Context argContext) {
+    private String getCertificateSHA1Fingerprint_OLD_01(Context argContext) {
         //LogWriter.Log("123456789123456789");
         PackageManager pm = argContext.getPackageManager();
         String packageName = argContext.getPackageName();
