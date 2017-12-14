@@ -1,13 +1,14 @@
+@echo off
+:: @echo off
+REM set /p input="Enter ID: "
+REM echo %input%
+REM pause
 
 @echo off
-set /p input="Enter ID: "
-echo %input%
-pause
-
+set /p input = "Enter Commit Text: "
 git add .
-git commit -am "made changes"
+git commit -m echo %input%
 git pull
 git push --all
-echo Press Enter...
-read
+echo Process Complete Press Enter...
 pause
