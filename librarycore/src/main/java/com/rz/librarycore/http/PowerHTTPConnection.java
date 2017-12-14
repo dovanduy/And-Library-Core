@@ -99,6 +99,7 @@ public class PowerHTTPConnection {
             int responseCode = httpURLConnection.getResponseCode();
             LogWriter.Log("HTTP_RESPONSE_CODE: " + responseCode);
             String httpURLData = PowerURLReadWrite.onURLReader(httpURLConnection);
+            LogWriter.Log("HTTP_DATA: " + httpURLData);
             httpURLConnection.disconnect();
             if (httpURLData != null) {
                 //LogWriter.Log("URL_DATA: " + httpURLData);

@@ -3,6 +3,8 @@ package com.rz.librarycore.http;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.rz.librarycore.log.LogWriter;
+
 import java.util.HashMap;
 
 /**
@@ -78,6 +80,7 @@ public class PowerFeedHTTPAsyncTask {
         @Override
         protected Object doInBackground(String... argParams) {
             Object retVal = null;
+            String value = "";
             String strRequestURL = argParams[0].toString();
             powerHTTPConnection = new PowerHTTPConnection();
             powerHTTPConnection
@@ -87,10 +90,11 @@ public class PowerFeedHTTPAsyncTask {
                     .setUseCaches(isUseCaches)
                     .setUrlHeader(urlHeaders)
                     .setURLParameters(urlRequestParameters);
-            retVal = powerHTTPConnection.onRunConnection();
-            //LogWriter.Log(retVal);
+            value = powerHTTPConnection.onRunConnection();
+            retVal = value;
+            LogWriter.Log("HTTP_DATA" + retVal);
             if (onEventListenerHandler != null) {
-                retVal = onEventListenerHandler.doInBackground(retVal);
+                retVal = onEventListenerHandler.doInBackground(value);
             }
             return retVal;
         }

@@ -15,7 +15,13 @@ PowerFeedHTTPAsyncTask powerFeedHTTPAsyncTask = new PowerFeedHTTPAsyncTask(new O
 
     @Override
     public Object doInBackground(Object... argURLParams) {
-        return "Hi I am returned";
+        LogWriter.Log("RETUREND_VALUE: " + String.valueOf(argURLParams));
+        if (argURLParams instanceof String[]) {
+            String[] strArray = (String[]) argURLParams;
+            System.out.println("RETUREND_VALUE: " + Arrays.toString(strArray));
+            // System.out.println(obj);
+        }
+        return argURLParams;
     }
 
     @Override

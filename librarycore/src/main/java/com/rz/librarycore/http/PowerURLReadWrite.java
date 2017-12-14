@@ -48,6 +48,7 @@ class PowerURLReadWrite {
                 inputStream.close();
                 //argHttpURLConnection.disconnect();
                 retVal = stringBuilder.toString();
+                LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
             } else {
                 inputStream = argHttpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
@@ -60,7 +61,7 @@ class PowerURLReadWrite {
                 }
                 inputStream.close();
                 //argHttpURLConnection.disconnect();
-                LogWriter.Log("PRINT_ERROR_STRING: " + stringBuilder.toString());
+                LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
             }
         } catch (IOException e) {
             //e.printStackTrace();
