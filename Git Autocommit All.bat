@@ -6,7 +6,7 @@ REM pause
 
 @echo off
 set /p input="Enter Commit Text: "
-cls
+:: cls
 :: echo value %input%
 :: set newinput=%input%
 set date=%DATE%
