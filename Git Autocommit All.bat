@@ -5,12 +5,17 @@ REM echo %input%
 REM pause
 
 :: @echo off
-set /p input = "Enter Commit Text: "
-set gcommand=git commit -m "%input%"
+set /p input="Enter Commit Text: "
+cls
+:: echo value %input%
+:: set newinput=%input%
+set date=%DATE%
+set commit=git commit -m
+set gitcommit=%commit% "%date% - %input%"
 git add .
 :: git commit -m "COMMIT COMPLETE A"
-echo %gCommand%
-%gCommand%
+:: echo %gitcommit%
+%gitcommit%
 git pull
 git push --all
 echo Process Complete Press Enter...
