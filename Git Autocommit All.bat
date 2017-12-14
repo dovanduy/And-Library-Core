@@ -4,14 +4,14 @@ REM set /p input="Enter ID: "
 REM echo %input%
 REM pause
 
-:: @echo off
+@echo off
 set /p input="Enter Commit Text: "
 cls
 :: echo value %input%
 :: set newinput=%input%
 set date=%DATE%
 set commit=git commit -m
-set gitcommit=%commit% "%date% - %input%"
+set gitcommit=%commit% "%input% - %date% %TIME%"
 git add .
 :: git commit -m "COMMIT COMPLETE A"
 :: echo %gitcommit%
