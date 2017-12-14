@@ -7,7 +7,7 @@ REM pause
 @echo off
 set /p input = "Enter Commit Text: "
 git add .
-git commit -m echo %input%
+git commit -m "COMMIT COMPLETE"
 git pull
 git push --all
 echo Process Complete Press Enter...
