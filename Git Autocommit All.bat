@@ -5,3 +5,4 @@ git pull
 git push --all
 echo Press Enter...
 read
+pause
