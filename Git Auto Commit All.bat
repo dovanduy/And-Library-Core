@@ -1,4 +1,4 @@
-:: @echo off
+@echo off
 :: @echo off
 REM set /p input="Enter ID: "
 REM echo %input%
