@@ -2,7 +2,7 @@
 :: @echo off
 REM set /p input="Enter ID: "
 REM echo %input%
-REM pause
+REM pause -
 
 @echo off
 set /p input="Enter Commit Text: "
