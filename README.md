@@ -1,8 +1,8 @@
 # And-Library-Core-V-201712.0.1
 And Library Core V-201712.0.1
 
-<a href="https://jitpack.io/#rzrasel/And-Library-Core">
-<img border="0" alt="W3Schools" src="https://jitpack.io/v/rzrasel/And-Library-Core.svg">
+<a href="https://jitpack.io/#rzrasel/And-Library-Core" target="_blank">
+<img src="https://jitpack.io/v/rzrasel/And-Library-Core.svg" />
 </a>
 <!--
 <a href="https://www.w3schools.com">
