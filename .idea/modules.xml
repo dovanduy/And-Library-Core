@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/And-Library-Core.iml" filepath="$PROJECT_DIR$/And-Library-Core.iml" />
+      <module fileurl="file://C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\And-Library-Core.iml" filepath="C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\And-Library-Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/AndLibraryCore-201712.0.1.iml" filepath="$PROJECT_DIR$/AndLibraryCore-201712.0.1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\app\app.iml" filepath="C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appusagesexample/appusagesexample.iml" filepath="$PROJECT_DIR$/appusagesexample/appusagesexample.iml" />
       <module fileurl="file://$PROJECT_DIR$/librarycore/librarycore.iml" filepath="$PROJECT_DIR$/librarycore/librarycore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/usagesexample/usagesexample.iml" filepath="$PROJECT_DIR$/usagesexample/usagesexample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/usagesexample/usagesexample.iml" filepath="$PROJECT_DIR$/usagesexample/usagesexample.iml" />
+      <module fileurl="file://C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\usagesexample\usagesexample.iml" filepath="C:\xampp\htdocs\Android-2017-09\GITLibs\AndLibraryCore-201712.0.1\usagesexample\usagesexample.iml" />
     </modules>
   </component>
 </project>

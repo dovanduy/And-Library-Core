@@ -1,1 +1,1 @@
-include ':usagesexample', ':librarycore'
+include ':appusagesexample', ':librarycore'

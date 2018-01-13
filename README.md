@@ -1,6 +1,8 @@
 # And-Library-Core-V-201712.0.1
 And Library Core V-201712.0.1
 
+[![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
+
 ### GIT Command
 ```git_command
 git init
@@ -9,11 +11,10 @@ git remote -v
 git fetch && git checkout master
 ```
 
-[![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
-
 ### Installation
 Maven Repositories Installation
 
+### Maven Repositories
 ```maven_repositories
 allprojects {
     repositories {
@@ -21,8 +22,27 @@ allprojects {
     }
 }
 ```
-```maven_dependencies
+
+### Android Dependencies
+```android_dependencies
 dependencies {
     compile 'com.github.rzrasel:And-Library-Core:V-201712.0.1'
+}
+```
+
+### Android .AAR File
+```android_repositories
+allprojects {
+   repositories {
+      jcenter()
+      flatDir {
+        dirs 'libs'
+      }
+   }
+}
+```
+```android_dependencies
+dependencies {
+    compile(name:'webkul', ext:'aar')
 }
 ```
