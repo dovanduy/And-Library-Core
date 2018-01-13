@@ -241,4 +241,5 @@ if (sqLiteDBCopyHelper != null) {
 cursor.getString(0);
 cursor.getCount()
 if(cursor != null && cursor.getCount() > 0)
+
 */

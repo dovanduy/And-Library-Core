@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import java.util.Map;
 
 /**
+ *
  * Created by Rz Rasel on 20-Sep-16.
  */
 public class SharePrefHandler {
