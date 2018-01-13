@@ -14,7 +14,7 @@ git fetch && git checkout master
 ### Installation
 Maven Repositories Installation
 
-### Maven Repositories
+### Add Maven Repositories
 ```maven_repositories
 allprojects {
     repositories {
@@ -23,14 +23,14 @@ allprojects {
 }
 ```
 
-### Android Dependencies
+### Add Android Dependencies
 ```android_dependencies
 dependencies {
     compile 'com.github.rzrasel:And-Library-Core:V-201712.0.1'
 }
 ```
 
-### Android .AAR File
+### Add Android .AAR File
 ```android_repositories
 allprojects {
    repositories {
