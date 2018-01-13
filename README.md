@@ -1,7 +1,7 @@
 # And-Library-Core-V-201712.0.1
 And Library Core V-201712.0.1
 
-[![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core  target="_blank")
+[![](https://jitpack.io/v/rzrasel/And-Library-Core.svg target="_blank")](https://jitpack.io/#rzrasel/And-Library-Core)
 
 <!--
 <a href="https://www.w3schools.com">
