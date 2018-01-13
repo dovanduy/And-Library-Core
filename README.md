@@ -43,6 +43,6 @@ allprojects {
 ```
 ```android_dependencies
 dependencies {
-    compile(name:'webkul', ext:'aar')
+    compile(name:'librarycore', ext:'aar')
 }
 ```
