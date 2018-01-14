@@ -20,17 +20,17 @@ https://ipapi.co/8.8.8.8/json/
 https://ip.seeip.org/json
 https://seeip.org/
 // test functions
-Utils.getMACAddress("wlan0");
-Utils.getMACAddress("eth0");
-Utils.getIPAddress(true); // IPv4
-Utils.getIPAddress(false); // IPv6
+IPAPIUtils.getMACAddress("wlan0");
+IPAPIUtils.getMACAddress("eth0");
+IPAPIUtils.getIPAddress(true); // IPv4
+IPAPIUtils.getIPAddress(false); // IPv6
 
 import java.io.*;
 import java.net.*;
 import java.util.*;   
 //import org.apache.http.conn.util.InetAddressUtils;
 
-public class Utils {
+public class IPAPIUtils {
 
     /**
      * Convert byte array to hex string
