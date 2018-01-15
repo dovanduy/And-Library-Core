@@ -13,6 +13,10 @@ import com.rz.librarycore.log.LogWriter;
 /**
  * Created by Rz Rasel on 2016-08-01.
  */
+/**
+ * @deprecated As of 2018-01-15
+ */
+@Deprecated
 public class NetConnDetect {
     private static NetConnDetect instance = null;
 

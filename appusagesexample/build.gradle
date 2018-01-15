@@ -5,11 +5,18 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.rz.usagesexample"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 20171203
-        versionName "201712.0.3"
+        minSdkVersion extMinSdkVersion
+        targetSdkVersion extTargetSdkVersion
+        versionCode extVersionCode
+        versionName extVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        def date = new Date();
+        //def formattedDate = date.format('yyyyMMddHHmmss')
+        def formattedDate = date.format('yyyyMMdd')
+        //ext.extAppName = android.defaultConfig.getApplicationId()
+        def apkName = extAppName + ' - (' + applicationId + ') ' + 'V-' + defaultConfig.versionName + ' - ' + formattedDate + ' '
+        setProperty("archivesBaseName", "$apkName")
     }
     buildTypes {
         release {

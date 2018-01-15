@@ -21,3 +21,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+ext {
+    extAppName = "Library Core"
+    extCompileSdkVersion = 26
+    extBuildToolsVersion = '26.0.2'
+
+    extMinSdkVersion = 15
+    extTargetSdkVersion = 26
+    extVersionCode = 20171211
+    extVersionName = "201712.1.1"
+}
