@@ -69,6 +69,7 @@ public class ActSharePref extends AppCompatActivity {
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             onSharePreference = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
             Object objHardIp = onSharePreference.getValue(KeyDeviceHardWareIp);
+            onSetDeviceData();
             if (objHardIp == null) {
                 //LogWriter.Log("IP is: " + objHardIp.toString());
                 onSetPrivateData();
@@ -90,7 +91,9 @@ public class ActSharePref extends AppCompatActivity {
                     Date nowDate = new Date();
                     long diffInMillies = Math.abs(nowDate.getTime() - lastSyncDate.getTime());
                     long hourDiff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    LogWriter.Log(hourDiff + " hourDiff " + simpleDateFormat.format(nowDate));
+                    LogWriter.Log("Sync:-" + objSecurityEntryDate.toString()
+                            + "-" + hourDiff + "-HOUR-"
+                            + simpleDateFormat.format(nowDate));
                     if (hourDiff > 12) {
                         onSetPrivateData();
                     }
@@ -104,7 +107,6 @@ public class ActSharePref extends AppCompatActivity {
 
         private void onSetPrivateData() {
             deviceIPApi = new DeviceIPApi(context);
-            deviceInfo = new DeviceInfo(activity, context);
             deviceIPApi.getApparentIPAddress(new DeviceIPApi.OnHTTPIPEventListenerHandler() {
                 @Override
                 public void onPostExecute(HashMap<String, String> argResult) {
@@ -118,13 +120,20 @@ public class ActSharePref extends AppCompatActivity {
         private void onPrivateDataEntry(HashMap<String, String> argResult) {
             onSharePreference.setValue(KeyDeviceHardWareIp, deviceIPApi.getInterfaceIPAddress())
                     .setValue(KeyDeviceGlobalNetIp, argResult.get("ip"))
-                    .setValue(KeyDeviceBuildId, deviceInfo.getDeviceBuildID())
-                    .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID())
                     .setValue(KeyDeviceNetLatitude, argResult.get("latitude"))
                     .setValue(KeyDeviceNetLongitude, argResult.get("longitude"))
                     .setValue(KeyDeviceNetCountry, argResult.get("country"))
                     .setValue(KeyPDataForceUpdate, false)
                     .setValue(KeyPrivateDataDate, simpleDateFormat.format(new Date()));
+        }
+
+        private void onSetDeviceData() {
+            deviceInfo = new DeviceInfo(activity, context);
+            onSharePreference.setValue(KeyDeviceBuildId, deviceInfo.getDeviceBuildID())
+                    .setValue("app_package_name", APPStaticPackageInfo.getPackageName(context))
+                    .setValue("app_package_code", APPStaticPackageInfo.getVersionCode(context))
+                    .setValue("app_version_name", APPStaticPackageInfo.getVersionName(context))
+                    .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
         }
 
     }
