@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 
 import com.rz.librarycore.apppackage.APPStaticPackageInfo;
 import com.rz.librarycore.hardware.DeviceInfo;
@@ -13,6 +14,7 @@ import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -74,10 +76,25 @@ public class ActSharePref extends AppCompatActivity {
                 try {
                     Object objSecurityEntryDate = onSharePreference.getValue(KeySecurityEntryDate);
                     Date lastSyncDate = simpleDateFormat.parse(objSecurityEntryDate.toString());
+                    /*Date date = new Date();
+                    long HOUR = 60 * 60 * 25;
+                    Date nowDate = new Date(date.getTime() + HOUR);
+                    DateTime dt = new DateTime();
+                    DateTime added = dt.plusHours(6);*/
+                    /*Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(new Date());
+                    calendar.add(Calendar.HOUR_OF_DAY, 24);
+                    Date nowDate = new Date(calendar.getTimeInMillis());
+                    long diffInMillis = Math.abs(nowDate.getTime() - lastSyncDate.getTime());*/
+                    //long dayDiff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                     Date nowDate = new Date();
                     long diffInMillies = Math.abs(nowDate.getTime() - lastSyncDate.getTime());
-                    long dayDiff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    LogWriter.Log(dayDiff + " dayDIFFF");
+                    long hourDiff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    LogWriter.Log(hourDiff + " hourDiff " + simpleDateFormat.format(nowDate));
+                    if (hourDiff > 12) {
+                        onSetPrivateData();
+                    }
+                    //http://www.baeldung.com/java-date-difference
                 } catch (ParseException e) {
                     //e.printStackTrace();
                     LogWriter.Log("Error: " + e);
