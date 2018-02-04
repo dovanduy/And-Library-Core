@@ -3,6 +3,8 @@ package com.rz.librarycore.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.rz.librarycore.log.LogWriter;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -61,10 +63,11 @@ public class SharePrefPrivateHandler {
         } else if (argValue instanceof Set<?>) {
             editor.putStringSet(argKey, (Set<String>) argValue);
         }
+        onSave();
         return this;
     }
 
-    public void saveValue() {
+    private void onSave() {
         if (editor != null) {
             editor.commit();
         }
@@ -111,7 +114,8 @@ public class SharePrefPrivateHandler {
 
         for (Map.Entry<String, ?> entry : mapKeyValueItems.entrySet()) {
             //Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
-            System.out.println("|----|------------|MAP_KEY|----|" + entry.getKey() + " |----|MAP_VALUE|----|" + entry.getValue().toString());
+            //System.out.println("|----|------------|MAP_KEY|----|" + entry.getKey() + " |----|MAP_VALUE|----|" + entry.getValue().toString());
+            LogWriter.Log("MAP-KEY-VALUE: " + entry.getKey() + " - " + entry.getValue().toString());
         }
         return mapKeyValueItems;
     }

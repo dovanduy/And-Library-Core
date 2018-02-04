@@ -34,11 +34,11 @@ public class ActSplash extends AppCompatActivity {
         urlRequestParameters.put("auth_key", "paramValue1");
         urlRequestParameters.put("package_name", "me.apphive.doordekhaetui");
         urlRequestParameters.put("app_version", "201712.0.4");
-        powerFeedHTTPAsyncTask
+        /*powerFeedHTTPAsyncTask
                 .setHTTPMethod(HTTPMethod.POST)
                 .setUrlHeader(urlHeaders)
                 .setURLParameters(urlRequestParameters)
-                .onExecute(context, "http://jagoron24.com/app-tv-bangla-url.php");
+                .onExecute(context, "http://jagoron24.com/app-tv-bangla-url.php");*/
     }
     PowerFeedHTTPAsyncTask powerFeedHTTPAsyncTask = new PowerFeedHTTPAsyncTask(new OnFeedHTTPEventListenerHandler() {
         @Override

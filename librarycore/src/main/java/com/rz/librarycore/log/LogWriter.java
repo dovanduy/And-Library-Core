@@ -4,27 +4,33 @@ package com.rz.librarycore.log;
  * Created by Rz Rasel on 01-Aug-16.
  */
 public class LogWriter {
+    public static boolean isDebug = true;
+
     public static void Log(String argMessage) {
         //|------------------------------------------------------------|
-        String buildMessage = "";
-        buildMessage = "Message:- " + argMessage + " - "
-                + "Class Name:- " + getCallerClassName() + " - "
-                + "Method Name:- " + getCallerMethodName() + " - "
-                + "Line Number:- " + getCallerLineNumber();
-        System.out.println("DEBUG_LOG_PRINT_WRITER:- " + buildMessage);
+        if (isDebug) {
+            String buildMessage = "";
+            buildMessage = "Message:- " + argMessage + " - "
+                    + "Class Name:- " + getCallerClassName() + " - "
+                    + "Method Name:- " + getCallerMethodName() + " - "
+                    + "Line Number:- " + getCallerLineNumber();
+            System.out.println("DEBUG_LOG_PRINT_WRITER:- " + buildMessage);
+        }
         //|------------------------------------------------------------|
     }
 
     public static void Log(String argTag, String argMessage) {
         //|------------------------------------------------------------|
-        argTag = argTag.toUpperCase();
-        argTag = "LOG_PRINT_WRITER_" + argTag.replaceAll("\\s+", "_");
-        String buildMessage = "";
-        buildMessage = "Message:- " + argMessage + " - "
-                + "Class Name:- " + getCallerClassName() + " - "
-                + "Method Name:- " + getCallerMethodName() + " - "
-                + "Line Number:- " + getCallerLineNumber();
-        System.out.println(argTag + ":- " + buildMessage);
+        if (isDebug) {
+            argTag = argTag.toUpperCase();
+            argTag = "LOG_PRINT_WRITER_" + argTag.replaceAll("\\s+", "_");
+            String buildMessage = "";
+            buildMessage = "Message:- " + argMessage + " - "
+                    + "Class Name:- " + getCallerClassName() + " - "
+                    + "Method Name:- " + getCallerMethodName() + " - "
+                    + "Line Number:- " + getCallerLineNumber();
+            System.out.println(argTag + ":- " + buildMessage);
+        }
         //|------------------------------------------------------------|
         /*int pid = android.os.Process.myPid();
         File outputFile = new File(Environment.getExternalStorageDirectory() + "/logs/logcat.txt");

@@ -1,4 +1,4 @@
-package com.rz.librarycore.normal;
+package com.rz.librarycore.hardware;
 
 /**
  * Created by Rz Rasel on 2017-08-23.
@@ -127,6 +127,30 @@ public class DeviceInfo {
         String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         deviceId = md5(androidID).toUpperCase();
         return deviceId;
+    }
+
+    public String getDeviceUUID(int argRequestPermission) {
+        UUID deviceUuid = null;
+        int REQUEST_READ_PHONE_STATE_PERMISSION = argRequestPermission;
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE_PERMISSION);
+        } else {
+            /*teleManagerDeviceID = telephonyManager.getDeviceId();
+            teleManagerDeviceSerial = "" + telephonyManager.getSimSerialNumber();
+            System.out.println("::::::::::::::::::::::::::::::Android_Tele_Device_ID:-" + teleManagerDeviceID);
+            System.out.println("::::::::::::::::::::::::::::::Android_Tele_Device_Serial-" + teleManagerDeviceSerial);*/
+            String teleManagerDeviceID = "";
+            String teleManagerDeviceSerial = "";
+            String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            deviceUuid = new UUID(androidId.hashCode(), ((long) teleManagerDeviceID.hashCode() << 32) | teleManagerDeviceSerial.hashCode());
+        }
+        /*String teleManagerDeviceID = "";
+        String teleManagerDeviceSerial = "";
+        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) teleManagerDeviceID.hashCode() << 32) | teleManagerDeviceSerial.hashCode());*/
+        return deviceUuid.toString();
     }
 
     public String getDeviceBuildBrand() {

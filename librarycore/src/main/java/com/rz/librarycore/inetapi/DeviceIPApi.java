@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class DeviceIPApi {
     private Context context;
-    private EventListenerHandler eventListenerHandler;
+    private OnHTTPIPEventListenerHandler onHTTPIPEventListenerHandler;
 
     public DeviceIPApi(Context argContext) {
         context = argContext;
@@ -88,17 +88,19 @@ public class DeviceIPApi {
         }
     }
 
-    public String getApparentIPAddress(EventListenerHandler argEventListenerHandler) {
+    public void getApparentIPAddress(OnHTTPIPEventListenerHandler argOnHTTPIPEventListenerHandler) {
         String actualIPAddress = null;
-        eventListenerHandler = argEventListenerHandler;
+        onHTTPIPEventListenerHandler = argOnHTTPIPEventListenerHandler;
         new AsyncLoadSeamingIP().execute("http://www.ip-api.com/json");
-        return actualIPAddress;
+        //return actualIPAddress;
     }
-
+    public interface OnHTTPIPEventListenerHandler {
+        public void onPostExecute(HashMap<String, String> argResult);
+    }
     private class AsyncLoadSeamingIP extends AsyncTask<String, Void, HashMap<String, String>> {
         HashMap<String, String> hashMapIPDetails = new HashMap<String, String>();
-        public AsyncLoadSeamingIP()
-        {
+
+        public AsyncLoadSeamingIP() {
             hashMapIPDetails.put("country", "");
             hashMapIPDetails.put("city", "");
             hashMapIPDetails.put("countryCode", "");
@@ -110,6 +112,7 @@ public class DeviceIPApi {
             hashMapIPDetails.put("zip", "");
             hashMapIPDetails.put("status", "");
         }
+
         @Override
         protected void onPreExecute() {
         }
@@ -159,11 +162,12 @@ public class DeviceIPApi {
         @Override
         protected void onPostExecute(HashMap<String, String> argResult) {
             //System.out.println("onPostExecute: " + argResult);
-            if (eventListenerHandler != null) {
-                eventListenerHandler.onPostExecute(argResult);
+            if (onHTTPIPEventListenerHandler != null) {
+                onHTTPIPEventListenerHandler.onPostExecute(argResult);
             }
         }
     }
+
     public String getMacAddress() {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
@@ -190,9 +194,9 @@ public class DeviceIPApi {
         return "02:00:00:00:00:00";
     }
 
-    public interface EventListenerHandler {
+    /*public interface EventListenerHandler {
         public void onPostExecute(HashMap<String, String> argResult);
-    }
+    }*/
     //http://www.ip-api.com/json
     //http://www.itcuties.com/java/read-url-to-string/
 }
