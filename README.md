@@ -1,5 +1,5 @@
-# And-Library-Core-V-201712.0.1
-And Library Core V-201712.0.1
+# And-Library-Core-V-201802.01.2
+And Library Core V-201802.01.2
 
 [![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
 
