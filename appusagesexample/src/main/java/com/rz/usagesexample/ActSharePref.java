@@ -2,6 +2,8 @@ package com.rz.usagesexample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -40,7 +42,44 @@ public class ActSharePref extends AppCompatActivity {
         LogWriter.Log(deviceInfo.getDeviceBuildID());
         LogWriter.Log(deviceInfo.getDeviceID());
         LogWriter.Log(deviceInfo.getDeviceUUID(1010));*/
+        asyncHandler.sendEmptyMessage(0);
     }
+
+    private long asyncDelayTime = 1000 * 60 * 2; // 1000 * 60 * 2;
+    private Message message = new Message();
+    Thread asyncThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            //message = new Message();
+            Bundle bundle = new Bundle();
+            Integer value = 1;
+            bundle.putInt("KEY", value);
+            message.setData(bundle);
+            //message.what = 1;
+            asyncHandler.sendMessage(message);
+        }
+    });
+    Handler asyncHandler = new Handler() {
+        @Override
+        public void handleMessage(Message argMessage) {
+            Bundle bundle = argMessage.getData();
+            if (argMessage.what == 0) {
+                //updateUI();
+                LogWriter.Log("GET 0");
+                this.postDelayed(asyncThread, asyncDelayTime);
+                message = new Message();
+                message.what = 1;
+                new InitializeSecurity(activity, context);
+                sharePrefHandler.printAllKeyValue();
+            } else {
+                //showErrorDialog();
+                LogWriter.Log("GET OTHER " + argMessage.what);
+                this.postDelayed(asyncThread, asyncDelayTime);
+                message = new Message();
+                message.what = 0;
+            }
+        }
+    };
 
     //Initialization
     public class InitializeSecurity {
@@ -69,10 +108,10 @@ public class ActSharePref extends AppCompatActivity {
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             onSharePreference = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
             Object objHardIp = onSharePreference.getValue(KeyDeviceHardWareIp);
-            onSetDeviceData();
             if (objHardIp == null) {
                 //LogWriter.Log("IP is: " + objHardIp.toString());
                 onSetPrivateData();
+                onSetDeviceData();
             } else {
                 try {
                     Object objSecurityEntryDate = onSharePreference.getValue(KeySecurityEntryDate);
@@ -96,6 +135,7 @@ public class ActSharePref extends AppCompatActivity {
                             + simpleDateFormat.format(nowDate));
                     if (hourDiff > 12) {
                         onSetPrivateData();
+                        onSetDeviceData();
                     }
                     //http://www.baeldung.com/java-date-difference
                 } catch (ParseException e) {
@@ -133,6 +173,7 @@ public class ActSharePref extends AppCompatActivity {
                     .setValue("app_package_name", APPStaticPackageInfo.getPackageName(context))
                     .setValue("app_package_code", APPStaticPackageInfo.getVersionCode(context))
                     .setValue("app_version_name", APPStaticPackageInfo.getVersionName(context))
+                    .setValue("app_auth_key", APPStaticPackageInfo.getVersionName(context))
                     .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
         }
 
