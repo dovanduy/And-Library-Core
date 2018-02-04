@@ -2,6 +2,7 @@ package com.rz.usagesexample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -22,6 +23,10 @@ public class ActSplash extends AppCompatActivity {
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
+        /////
+        startActivity(new Intent(context, ActSharePref.class));
+        finish();
+        /////
         HashMap<String, String> urlHeaders = new HashMap<String, String>();
         HashMap<String, String> urlRequestParameters = new HashMap<String, String>();
         /*urlHeaders.put("head1", "headeValue1");

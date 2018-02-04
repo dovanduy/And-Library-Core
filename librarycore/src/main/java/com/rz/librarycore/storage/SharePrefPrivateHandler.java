@@ -1,4 +1,4 @@
-package com.rz.librarycore.normal;
+package com.rz.librarycore.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,8 @@ import java.util.Set;
 
 public class SharePrefPrivateHandler {
     private Context context;
-    private static String PREFS_NAME = "me.apphive";
+    //private static String PREFS_NAME = SharePrefPrivateHandler.class.getSimpleName();
+    private static String PREFS_NAME = SharePrefPrivateHandler.class.getPackage().getName();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private MODE mode = MODE.PRIVATE;
