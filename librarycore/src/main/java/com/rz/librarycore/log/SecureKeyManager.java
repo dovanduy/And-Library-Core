@@ -8,6 +8,7 @@ import android.os.Message;
 
 import com.rz.librarycore.apppackage.APPStaticPackageInfo;
 import com.rz.librarycore.certificate.CertificateSHA1Fingerprint;
+import com.rz.librarycore.cryption.MD5Builder;
 import com.rz.librarycore.hardware.DeviceInfo;
 import com.rz.librarycore.inetapi.CheckNetConn;
 import com.rz.librarycore.inetapi.DeviceIPApi;
@@ -37,8 +38,8 @@ public class SecureKeyManager {
     private Message message = new Message();
     public final static String KeyDeviceHardWareIp = "device_hardware_ip";
     public final static String KeyDeviceGlobalNetIp = "device_global_net_ip";
-    public final static String KeyDeviceBuildId = "device_build_id";
-    public final static String KeyDeviceAndroidId = "device_android_id";
+    public final static String KeyDevicePrimaryId = "device_primary_id";
+    public final static String KeyDeviceSecondaryId = "device_secondary_id";
     public final static String KeyDeviceNetLatitude = "device_net_latitude";
     public final static String KeyDeviceNetLongitude = "device_net_longitude";
     public final static String KeyDeviceNetCountry = "device_net_country";
@@ -90,7 +91,7 @@ public class SecureKeyManager {
             asyncDelayTime = delayTimeTemp;
             if (CheckNetConn.isConnected(context)) {
                 asyncDelayTime = delayTimeMain;
-                LogWriter.Log("Net connection found.");
+                //LogWriter.Log("Net connection found.");
             } else {
                 LogWriter.Log("Net connection not found.");
             }
@@ -116,15 +117,15 @@ public class SecureKeyManager {
                         onSecurityKeyInitialization();
                     }
                 }
-                onSharePreference.printAllKeyValue();
-                LogWriter.Log("GET 0");
+                //onSharePreference.printAllKeyValue();
+                //LogWriter.Log("GET 0");
                 message.what = 1;
             } else {
                 //showErrorDialog();
-                LogWriter.Log("GET OTHER " + argMessage.what);
+                //LogWriter.Log("GET OTHER " + argMessage.what);
                 message.what = 0;
             }
-            LogWriter.Log("Delay Time: " + asyncDelayTime);
+            //LogWriter.Log("Delay Time: " + asyncDelayTime);
             this.postDelayed(asyncThread, asyncDelayTime);
         }
     };
@@ -133,7 +134,7 @@ public class SecureKeyManager {
         Object objHardwareIp = onSharePreference.getValue(KeyDeviceHardWareIp);
         if (objHardwareIp == null) {
             //LogWriter.Log("IP is: " + objHardIp.toString());
-            LogWriter.Log("Hardware IP is null.");
+            //LogWriter.Log("Hardware IP is null.");
             onSetPrivateData();
             onSetDeviceData();
         } else {
@@ -156,9 +157,9 @@ public class SecureKeyManager {
                 long diffInMillis = Math.abs(nowDate.getTime() - lastSyncDate.getTime());
                 long hourDiff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
                 boolean isForceUpdate = (Boolean) objForceUpdate;
-                LogWriter.Log("Sync:-" + objSecurityEntryDate.toString()
+                /*LogWriter.Log("Sync:-" + objSecurityEntryDate.toString()
                         + "-" + hourDiff + "-HOUR-"
-                        + simpleDateFormat.format(nowDate) + "-Is Force-" + isForceUpdate);
+                        + simpleDateFormat.format(nowDate) + "-Is Force-" + isForceUpdate);*/
                 if (hourDiff > 12 || isForceUpdate) {
                     onSetPrivateData();
                     onSetDeviceData();
@@ -212,13 +213,17 @@ public class SecureKeyManager {
                 .setValue(KeyDeviceNetCountry, argResult.get("country"))
                 .setValue(KeyPDataForceUpdate, false)
                 .setValue(KeyPrivateDataDate, simpleDateFormat.format(new Date()));
-        LogWriter.Log("UPDATE DATE TIME: " + simpleDateFormat.format(new Date()));
+        //LogWriter.Log("UPDATE DATE TIME: " + simpleDateFormat.format(new Date()));
     }
 
     private void onSetDeviceData() {
         CertificateSHA1Fingerprint certAuthKey = CertificateSHA1Fingerprint.getInstance();
         deviceInfo = new DeviceInfo(activity, context);
-        onSharePreference.setValue(KeyDeviceBuildId, deviceInfo.getDeviceBuildID())
+        String devicePrimaryId = deviceInfo.getDeviceBuildID();
+        String deviceSecondaryId = deviceInfo.getDeviceID();
+        devicePrimaryId = MD5Builder.md5(devicePrimaryId);
+        deviceSecondaryId = MD5Builder.md5(deviceSecondaryId);
+        onSharePreference.setValue(KeyDevicePrimaryId, devicePrimaryId)
                 .setValue(KeyAppPackageName, APPStaticPackageInfo.getPackageName(context))
                 .setValue(KeyAppVersionCode, APPStaticPackageInfo.getVersionCode(context))
                 .setValue(KeyAppVersionName, APPStaticPackageInfo.getVersionName(context))
@@ -226,7 +231,7 @@ public class SecureKeyManager {
                 //.setValue(KeyAppFCMKeyToken, "")
                 //.setValue(KeyAppIsFirstTime, true)
                 //.setValue(KeyAppFirstDate, staticFormat.format(new Date()))
-                .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
+                .setValue(KeyDeviceSecondaryId, deviceSecondaryId);
     }
 }
 /*

@@ -1,5 +1,7 @@
 package com.rz.librarycore.cryption;
 
+import com.rz.librarycore.log.LogWriter;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -8,11 +10,11 @@ import java.security.NoSuchAlgorithmException;
  */
 
 public class MD5Builder {
-    public static final String md5(final String s) {
+    public static final String md5(final String argStrValue) {
         try {
             // Create MD5 Hash
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(s.getBytes());
+            messageDigest.update(argStrValue.getBytes());
             byte messageByte[] = messageDigest.digest();
 
             // Create Hex String
@@ -27,6 +29,7 @@ public class MD5Builder {
 
         } catch (NoSuchAlgorithmException e) {
             //Logger.logStackTrace(TAG, e);
+            LogWriter.Log("Error NoSuchAlgorithmException: " + e);
         }
         return "";
     }

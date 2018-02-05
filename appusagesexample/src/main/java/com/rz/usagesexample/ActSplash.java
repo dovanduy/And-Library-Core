@@ -16,6 +16,7 @@ import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ActSplash extends AppCompatActivity {
     private Activity activity;
@@ -29,10 +30,12 @@ public class ActSplash extends AppCompatActivity {
         context = this;
         /////
         /////
+        SecureKeyManager secureKeyManager = new SecureKeyManager(activity, context);
         SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("is_private_data_force_update", true);
         SecureKeyManager.onSetAppIsRunFirstTime(context);
+        sharePrefHandler.printAllKeyValue();
         /////
         startActivity(new Intent(context, ActSharePref.class));
         finish();

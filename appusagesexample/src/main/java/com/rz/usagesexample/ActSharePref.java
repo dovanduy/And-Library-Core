@@ -35,6 +35,29 @@ public class ActSharePref extends AppCompatActivity {
         activity = this;
         context = this;
         LogWriter.Log(APPStaticPackageInfo.getPackageName(context));
-        SecureKeyManager.onSecurityChanged(context);
+        //
+        /*SecureKeyManager secureKeyManager = new SecureKeyManager(activity, context);
+        SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
+        //sharePrefHandler.clearAll();
+        //sharePrefHandler.setValue("is_private_data_force_update", true);
+        SecureKeyManager.onSetAppIsRunFirstTime(context);
+        sharePrefHandler.printAllKeyValue();
+        //////
+        //////
+        SecureKeyManager.onSecurityChanged(context);*/
+        /*//////
+        //////
+        HashMap<String, String> map1 = new HashMap<String, String>();
+        HashMap<String, String> map2 = new HashMap<String, String>();
+        HashMap<String, String> map3 = new HashMap<String, String>();
+        map1.put("map-111", "111");
+        map1.put("map-122", "222");
+        map1.put("map-133", "333");
+        map2.put("map-244", "444");
+        map2.put("map-255", "555");
+        map2.put("map-266", "666");
+        map3.putAll(map1);
+        map3.putAll(map2);
+        LogWriter.Log("Map Data: " + map3.toString());*/
     }
 }
