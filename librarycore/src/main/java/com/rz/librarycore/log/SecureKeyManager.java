@@ -184,20 +184,9 @@ public class SecureKeyManager {
         staticPreference.setValue(KeyAppFirstDate, staticFormat.format(new Date()));
     }
 
-    /*public static void onSecurityChanged(Context argContext) {
-        new SecureKeyManager((Activity) argContext, argContext).onSecurityChangedFound();
-    }*/
-
-    public void onSecurityChanged() {
-        onSharePreference.setValue(KeyPDataForceUpdate, true);
-        /*asyncHandler.removeCallbacks(asyncThread);
-        message = new Message();
-        message.what = 0;
-        asyncHandler.sendEmptyMessage(0);*/
-        /*asyncHandler.removeCallbacks(asyncThread);
-        isForceUpdate = true;
-        //asyncHandler.sendMessage(message);
-        asyncHandler.post(asyncThread);*/
+    public static void onSecurityChanged(Context argContext) {
+        SharePrefPrivateHandler staticPreference = new SharePrefPrivateHandler(argContext, APPStaticPackageInfo.getPackageName(argContext));
+        staticPreference.setValue(KeyPDataForceUpdate, true);
     }
 
     private void onSetPrivateData() {
