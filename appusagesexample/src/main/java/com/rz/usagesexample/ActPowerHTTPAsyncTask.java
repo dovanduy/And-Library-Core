@@ -55,8 +55,14 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
             public Object doInBackground(String... argURLParams) {
                 LogWriter.Log("RETURNED_VALUE: " + String.valueOf(argURLParams));
                 if (argURLParams instanceof String[]) {
-                    String[] strArray = (String[]) argURLParams;
-                    System.out.println("RETURNED_VALUE********: " + Arrays.toString(strArray));
+                    /*String[] strArray = (String[]) argURLParams;
+                    System.out.println("RETURNED_VALUE********: " + Arrays.toString(strArray));*/
+					String[] strArray = (String[]) argURLParams;
+                    //String urlData = Arrays.toString(strArray);
+                    String urlData = strArray[0];
+                    System.out.println("RETUREND_VALUE_DO_IN_BACK: " + urlData);
+                    // System.out.println(obj);
+                    onJSONParse(urlData);
                     // System.out.println(obj);
                 }
                 return argURLParams;
@@ -65,6 +71,12 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
             @Override
             public void onPostExecute(Object argResult) {
                 //LogWriter.Log("onPostExecute: " + Arrays.toString(argResult) + "");
+				if (argResult instanceof String[]) {
+                    String[] strArray = (String[]) argResult;
+                    System.out.println("RETUREND_VALUE********: " + Arrays.toString(strArray));
+                    //System.out.println(obj);
+                }
+                LogWriter.Log("onPostExecute: " + argResult + "");
             }
 
             @Override
