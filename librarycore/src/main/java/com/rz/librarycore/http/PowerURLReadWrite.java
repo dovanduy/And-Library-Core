@@ -65,7 +65,7 @@ class PowerURLReadWrite {
             }
         } catch (IOException e) {
             //e.printStackTrace();
-            LogWriter.Log("PRINT_ERROR_IOException:- " + e.getMessage().toString());
+            LogWriter.Log("PRINT_ERROR_IOException:- " + e);
         }
         return retVal;
     }

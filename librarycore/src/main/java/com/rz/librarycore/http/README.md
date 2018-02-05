@@ -48,5 +48,5 @@ HashMap<String, String> urlHeaders = new HashMap<String, String>();
                 .setHTTPMethod(HTTPMethod.POST)
                 .setUrlHeader(urlHeaders)
                 .setURLParameters(urlRequestParameters)
-                .onExecute(context, "http://jagoron24.com/");
+                .onExecute(context, "https://raw.githubusercontent.com/rzrasel/And-Library-Core/master/appusagesexample/src/main/assets/PowerFeedHTTP.html");
 ```
