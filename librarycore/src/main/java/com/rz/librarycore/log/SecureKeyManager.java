@@ -50,15 +50,20 @@ public class SecureKeyManager {
     public final static String KeyAppVersionName = "app_version_name";
     public final static String KeyAppAuthKey = "app_auth_key";
     public final static String KeyAppFCMKeyToken = "app_fcm_key_token";
-    public final static String KeyAppIsFirstTime = "app_is_first_time";
-    public final static String KeyAppFirstDate = "app_first_date";
+    public final static String KeyAppIsFirstTime = "app_is_first_run";
+    public final static String KeyAppFirstDate = "app_first_run_date";
     //public String ValSecureHardIp = "";
+    private boolean isForceUpdate = false;
 
     public SecureKeyManager(Activity argActivity, Context argContext) {
         activity = argActivity;
         context = argContext;
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         onSharePreference = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
+        Object objInitDate = onSharePreference.getValue("app_initialization_date");
+        if (objInitDate == null) {
+            onSharePreference.setValue("app_initialization_date", simpleDateFormat.format(new Date()));
+        }
         asyncDelayTime = delayTimeMain;
         asyncHandler.sendEmptyMessage(0);
     }
@@ -71,7 +76,9 @@ public class SecureKeyManager {
             Integer value = 1;
             bundle.putInt("KEY", value);
             message.setData(bundle);
-            //message.what = 1;
+            if (isForceUpdate) {
+                message.what = 0;
+            }
             asyncHandler.sendMessage(message);
         }
     });
@@ -79,6 +86,7 @@ public class SecureKeyManager {
         @Override
         public void handleMessage(Message argMessage) {
             Bundle bundle = argMessage.getData();
+            message = new Message();
             asyncDelayTime = delayTimeTemp;
             if (CheckNetConn.isConnected(context)) {
                 asyncDelayTime = delayTimeMain;
@@ -86,19 +94,34 @@ public class SecureKeyManager {
             } else {
                 LogWriter.Log("Net connection not found.");
             }
+            Object objIsForceUpdate = onSharePreference.getValue(KeyPDataForceUpdate);
+            if (objIsForceUpdate != null) {
+                boolean isForceUpdate = (Boolean) objIsForceUpdate;
+                asyncDelayTime = delayTimeMain;
+                if (isForceUpdate) {
+                    asyncDelayTime = delayTimeTemp;
+                    message.what = 0;
+                }
+            } else {
+                asyncDelayTime = delayTimeTemp;
+                message.what = 0;
+            }
             if (argMessage.what == 0) {
                 //updateUI();
                 if (CheckNetConn.isConnected(context)) {
                     onSecurityKeyInitialization();
+                } else {
+                    Object objHardwareIp = onSharePreference.getValue(KeyDeviceHardWareIp);
+                    if (objHardwareIp == null) {
+                        onSecurityKeyInitialization();
+                    }
                 }
                 onSharePreference.printAllKeyValue();
                 LogWriter.Log("GET 0");
-                message = new Message();
                 message.what = 1;
             } else {
                 //showErrorDialog();
                 LogWriter.Log("GET OTHER " + argMessage.what);
-                message = new Message();
                 message.what = 0;
             }
             LogWriter.Log("Delay Time: " + asyncDelayTime);
@@ -107,8 +130,8 @@ public class SecureKeyManager {
     };
 
     private void onSecurityKeyInitialization() {
-        Object objHardIp = onSharePreference.getValue(KeyDeviceHardWareIp);
-        if (objHardIp == null) {
+        Object objHardwareIp = onSharePreference.getValue(KeyDeviceHardWareIp);
+        if (objHardwareIp == null) {
             //LogWriter.Log("IP is: " + objHardIp.toString());
             LogWriter.Log("Hardware IP is null.");
             onSetPrivateData();
@@ -161,7 +184,26 @@ public class SecureKeyManager {
         staticPreference.setValue(KeyAppFirstDate, staticFormat.format(new Date()));
     }
 
+    /*public static void onSecurityChanged(Context argContext) {
+        new SecureKeyManager((Activity) argContext, argContext).onSecurityChangedFound();
+    }*/
+
+    public void onSecurityChanged() {
+        onSharePreference.setValue(KeyPDataForceUpdate, true);
+        /*asyncHandler.removeCallbacks(asyncThread);
+        message = new Message();
+        message.what = 0;
+        asyncHandler.sendEmptyMessage(0);*/
+        /*asyncHandler.removeCallbacks(asyncThread);
+        isForceUpdate = true;
+        //asyncHandler.sendMessage(message);
+        asyncHandler.post(asyncThread);*/
+    }
+
     private void onSetPrivateData() {
+        if (!CheckNetConn.isConnected(context)) {
+            return;
+        }
         deviceIPApi = new DeviceIPApi(context);
         deviceIPApi.getApparentIPAddress(new DeviceIPApi.OnHTTPIPEventListenerHandler() {
             @Override
@@ -198,3 +240,9 @@ public class SecureKeyManager {
                 .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
     }
 }
+/*
+Force Update True:
+1. base on distance
+2. change global ip
+3. change hardware ip
+*/

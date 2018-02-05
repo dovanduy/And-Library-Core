@@ -28,11 +28,11 @@ public class ActSplash extends AppCompatActivity {
         activity = this;
         context = this;
         /////
-        SecureKeyManager.onSetAppIsRunFirstTime(context);
         /////
         SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("is_private_data_force_update", true);
+        SecureKeyManager.onSetAppIsRunFirstTime(context);
         /////
         startActivity(new Intent(context, ActSharePref.class));
         finish();

@@ -35,7 +35,8 @@ public class ActSharePref extends AppCompatActivity {
         activity = this;
         context = this;
         LogWriter.Log(APPStaticPackageInfo.getPackageName(context));
-        new SecureKeyManager(activity, context);
+        SecureKeyManager secureKeyManager = new SecureKeyManager(activity, context);
+        secureKeyManager.onSecurityChanged();
         //sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("test", "Test");
