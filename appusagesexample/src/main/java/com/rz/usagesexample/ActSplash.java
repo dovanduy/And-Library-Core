@@ -37,7 +37,7 @@ public class ActSplash extends AppCompatActivity {
         SecureKeyManager.onSetAppIsRunFirstTime(context);
         sharePrefHandler.printAllKeyValue();
         /////
-        startActivity(new Intent(context, ActSharePref.class));
+        startActivity(new Intent(context, ActPowerHTTPAsyncTask.class));
         finish();
         /////
         HashMap<String, String> urlHeaders = new HashMap<String, String>();
