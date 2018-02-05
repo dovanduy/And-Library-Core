@@ -9,9 +9,11 @@ import android.os.Message;
 import com.rz.librarycore.apppackage.APPStaticPackageInfo;
 import com.rz.librarycore.certificate.CertificateSHA1Fingerprint;
 import com.rz.librarycore.hardware.DeviceInfo;
+import com.rz.librarycore.inetapi.CheckNetConn;
 import com.rz.librarycore.inetapi.DeviceIPApi;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,14 +24,16 @@ import java.util.concurrent.TimeUnit;
  * Created by Rz Rasel on 2018-02-05.
  */
 
-public class SecureKeyManage {
+public class SecureKeyManager {
     private Activity activity;
     private Context context;
     private SharePrefPrivateHandler onSharePreference;
     private SimpleDateFormat simpleDateFormat;
     private DeviceIPApi deviceIPApi;
     private DeviceInfo deviceInfo;
-    private long asyncDelayTime = 1000 * 60 * 2; // 1000 * 60 * 2;
+    private long asyncDelayTime = 0;
+    private long delayTimeMain = 1000 * 60 * 1; // 1000 * 60 * 2;
+    private long delayTimeTemp = 1000 * 10;
     private Message message = new Message();
     public final static String KeyDeviceHardWareIp = "device_hardware_ip";
     public final static String KeyDeviceGlobalNetIp = "device_global_net_ip";
@@ -41,15 +45,21 @@ public class SecureKeyManage {
     public final static String KeyPrivateDataDate = "private_data_date";
     public final static String KeyPDataForceUpdate = "is_private_data_force_update";
     public final static String KeySecurityEntryDate = "security_entry_date";
-    public final static String KeyFCMId = "fcm_id";
-    public String ValSecureHardIp = "";
+    public final static String KeyAppPackageName = "app_package_name";
+    public final static String KeyAppVersionCode = "app_version_code";
+    public final static String KeyAppVersionName = "app_version_name";
+    public final static String KeyAppAuthKey = "app_auth_key";
+    public final static String KeyAppFCMKeyToken = "app_fcm_key_token";
+    public final static String KeyAppIsFirstTime = "app_is_first_time";
+    public final static String KeyAppFirstDate = "app_first_date";
+    //public String ValSecureHardIp = "";
 
-    public SecureKeyManage(Activity argActivity, Context argContext) {
+    public SecureKeyManager(Activity argActivity, Context argContext) {
         activity = argActivity;
         context = argContext;
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         onSharePreference = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
-        asyncDelayTime = 1000 * 30;
+        asyncDelayTime = delayTimeMain;
         asyncHandler.sendEmptyMessage(0);
     }
 
@@ -69,9 +79,18 @@ public class SecureKeyManage {
         @Override
         public void handleMessage(Message argMessage) {
             Bundle bundle = argMessage.getData();
+            asyncDelayTime = delayTimeTemp;
+            if (CheckNetConn.isConnected(context)) {
+                asyncDelayTime = delayTimeMain;
+                LogWriter.Log("Net connection found.");
+            } else {
+                LogWriter.Log("Net connection not found.");
+            }
             if (argMessage.what == 0) {
                 //updateUI();
-                onSecurityKeyInitialization();
+                if (CheckNetConn.isConnected(context)) {
+                    onSecurityKeyInitialization();
+                }
                 onSharePreference.printAllKeyValue();
                 LogWriter.Log("GET 0");
                 message = new Message();
@@ -82,6 +101,7 @@ public class SecureKeyManage {
                 message = new Message();
                 message.what = 0;
             }
+            LogWriter.Log("Delay Time: " + asyncDelayTime);
             this.postDelayed(asyncThread, asyncDelayTime);
         }
     };
@@ -129,6 +149,18 @@ public class SecureKeyManage {
         }
     }
 
+    public static void onSetFCMKey(Context argContext, String argAppFCMKeyToken) {
+        SharePrefPrivateHandler staticPreference = new SharePrefPrivateHandler(argContext, APPStaticPackageInfo.getPackageName(argContext));
+        staticPreference.setValue(KeyAppFCMKeyToken, argAppFCMKeyToken);
+    }
+
+    public static void onSetAppIsRunFirstTime(Context argContext) {
+        Format staticFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SharePrefPrivateHandler staticPreference = new SharePrefPrivateHandler(argContext, APPStaticPackageInfo.getPackageName(argContext));
+        staticPreference.setValue(KeyAppIsFirstTime, true);
+        staticPreference.setValue(KeyAppFirstDate, staticFormat.format(new Date()));
+    }
+
     private void onSetPrivateData() {
         deviceIPApi = new DeviceIPApi(context);
         deviceIPApi.getApparentIPAddress(new DeviceIPApi.OnHTTPIPEventListenerHandler() {
@@ -156,10 +188,13 @@ public class SecureKeyManage {
         CertificateSHA1Fingerprint certAuthKey = CertificateSHA1Fingerprint.getInstance();
         deviceInfo = new DeviceInfo(activity, context);
         onSharePreference.setValue(KeyDeviceBuildId, deviceInfo.getDeviceBuildID())
-                .setValue("app_package_name", APPStaticPackageInfo.getPackageName(context))
-                .setValue("app_version_code", APPStaticPackageInfo.getVersionCode(context))
-                .setValue("app_version_name", APPStaticPackageInfo.getVersionName(context))
-                .setValue("app_auth_key", certAuthKey.getAuthKey(context))
+                .setValue(KeyAppPackageName, APPStaticPackageInfo.getPackageName(context))
+                .setValue(KeyAppVersionCode, APPStaticPackageInfo.getVersionCode(context))
+                .setValue(KeyAppVersionName, APPStaticPackageInfo.getVersionName(context))
+                .setValue(KeyAppAuthKey, certAuthKey.getAuthKey(context))
+                //.setValue(KeyAppFCMKeyToken, "")
+                //.setValue(KeyAppIsFirstTime, true)
+                //.setValue(KeyAppFirstDate, staticFormat.format(new Date()))
                 .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
     }
 }

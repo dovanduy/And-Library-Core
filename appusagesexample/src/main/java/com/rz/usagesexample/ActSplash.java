@@ -11,6 +11,7 @@ import com.rz.librarycore.http.HTTPMethod;
 import com.rz.librarycore.http.OnFeedHTTPEventListenerHandler;
 import com.rz.librarycore.http.PowerFeedHTTPAsyncTask;
 import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.SecureKeyManager;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.util.Arrays;
@@ -19,12 +20,15 @@ import java.util.HashMap;
 public class ActSplash extends AppCompatActivity {
     private Activity activity;
     private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
+        /////
+        SecureKeyManager.onSetAppIsRunFirstTime(context);
         /////
         SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
@@ -46,6 +50,7 @@ public class ActSplash extends AppCompatActivity {
                 .setURLParameters(urlRequestParameters)
                 .onExecute(context, "http://jagoron24.com/app-tv-bangla-url.php");*/
     }
+
     PowerFeedHTTPAsyncTask powerFeedHTTPAsyncTask = new PowerFeedHTTPAsyncTask(new OnFeedHTTPEventListenerHandler() {
         @Override
         public void onPreExecute() {

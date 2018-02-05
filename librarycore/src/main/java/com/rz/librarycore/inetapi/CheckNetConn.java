@@ -24,7 +24,7 @@ public class CheckNetConn {
         return instance;
     }
 
-    public boolean isConnected(Context argContext) {
+    public static boolean isConnected(Context argContext) {
         int hasPermission = 0;
         hasPermission = ContextCompat.checkSelfPermission((Activity) argContext, Manifest.permission.INTERNET);
         if (hasPermission != PackageManager.PERMISSION_GRANTED) {

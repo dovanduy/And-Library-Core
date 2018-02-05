@@ -13,7 +13,7 @@ import com.rz.librarycore.certificate.CertificateSHA1Fingerprint;
 import com.rz.librarycore.hardware.DeviceInfo;
 import com.rz.librarycore.inetapi.DeviceIPApi;
 import com.rz.librarycore.log.LogWriter;
-import com.rz.librarycore.log.SecureKeyManage;
+import com.rz.librarycore.log.SecureKeyManager;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.text.ParseException;
@@ -35,7 +35,7 @@ public class ActSharePref extends AppCompatActivity {
         activity = this;
         context = this;
         LogWriter.Log(APPStaticPackageInfo.getPackageName(context));
-        new SecureKeyManage(activity, context);
+        new SecureKeyManager(activity, context);
         //sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("test", "Test");
