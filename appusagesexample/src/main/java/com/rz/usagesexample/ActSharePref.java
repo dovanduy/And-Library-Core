@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 
 import com.rz.librarycore.apppackage.APPStaticPackageInfo;
+import com.rz.librarycore.certificate.CertificateSHA1Fingerprint;
 import com.rz.librarycore.hardware.DeviceInfo;
 import com.rz.librarycore.inetapi.DeviceIPApi;
 import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.SecureKeyManage;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.text.ParseException;
@@ -24,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class ActSharePref extends AppCompatActivity {
     private Activity activity;
     private Context context;
-    private SharePrefPrivateHandler sharePrefHandler;
+    //private SharePrefPrivateHandler sharePrefHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,53 +35,17 @@ public class ActSharePref extends AppCompatActivity {
         activity = this;
         context = this;
         LogWriter.Log(APPStaticPackageInfo.getPackageName(context));
-        sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
+        new SecureKeyManage(activity, context);
+        //sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("test", "Test");
-        new InitializeSecurity(activity, context);
-        sharePrefHandler.printAllKeyValue();
+        //new InitializeSecurity(activity, context);
+        //sharePrefHandler.printAllKeyValue();
         /*DeviceInfo deviceInfo = new DeviceInfo(activity, context);
         LogWriter.Log(deviceInfo.getDeviceBuildID());
         LogWriter.Log(deviceInfo.getDeviceID());
         LogWriter.Log(deviceInfo.getDeviceUUID(1010));*/
-        asyncHandler.sendEmptyMessage(0);
     }
-
-    private long asyncDelayTime = 1000 * 60 * 2; // 1000 * 60 * 2;
-    private Message message = new Message();
-    Thread asyncThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            //message = new Message();
-            Bundle bundle = new Bundle();
-            Integer value = 1;
-            bundle.putInt("KEY", value);
-            message.setData(bundle);
-            //message.what = 1;
-            asyncHandler.sendMessage(message);
-        }
-    });
-    Handler asyncHandler = new Handler() {
-        @Override
-        public void handleMessage(Message argMessage) {
-            Bundle bundle = argMessage.getData();
-            if (argMessage.what == 0) {
-                //updateUI();
-                LogWriter.Log("GET 0");
-                this.postDelayed(asyncThread, asyncDelayTime);
-                message = new Message();
-                message.what = 1;
-                new InitializeSecurity(activity, context);
-                sharePrefHandler.printAllKeyValue();
-            } else {
-                //showErrorDialog();
-                LogWriter.Log("GET OTHER " + argMessage.what);
-                this.postDelayed(asyncThread, asyncDelayTime);
-                message = new Message();
-                message.what = 0;
-            }
-        }
-    };
 
     //Initialization
     public class InitializeSecurity {
@@ -110,12 +76,13 @@ public class ActSharePref extends AppCompatActivity {
             Object objHardIp = onSharePreference.getValue(KeyDeviceHardWareIp);
             if (objHardIp == null) {
                 //LogWriter.Log("IP is: " + objHardIp.toString());
+                LogWriter.Log("Hardware IP is null.");
                 onSetPrivateData();
                 onSetDeviceData();
             } else {
                 try {
                     Object objSecurityEntryDate = onSharePreference.getValue(KeySecurityEntryDate);
-                    Date lastSyncDate = simpleDateFormat.parse(objSecurityEntryDate.toString());
+                    Object objForceUpdate = onSharePreference.getValue(KeyPDataForceUpdate);
                     /*Date date = new Date();
                     long HOUR = 60 * 60 * 25;
                     Date nowDate = new Date(date.getTime() + HOUR);
@@ -127,13 +94,15 @@ public class ActSharePref extends AppCompatActivity {
                     Date nowDate = new Date(calendar.getTimeInMillis());
                     long diffInMillis = Math.abs(nowDate.getTime() - lastSyncDate.getTime());*/
                     //long dayDiff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    Date lastSyncDate = simpleDateFormat.parse(objSecurityEntryDate.toString());
                     Date nowDate = new Date();
-                    long diffInMillies = Math.abs(nowDate.getTime() - lastSyncDate.getTime());
-                    long hourDiff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    long diffInMillis = Math.abs(nowDate.getTime() - lastSyncDate.getTime());
+                    long hourDiff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+                    boolean isForceUpdate = (Boolean) objForceUpdate;
                     LogWriter.Log("Sync:-" + objSecurityEntryDate.toString()
                             + "-" + hourDiff + "-HOUR-"
-                            + simpleDateFormat.format(nowDate));
-                    if (hourDiff > 12) {
+                            + simpleDateFormat.format(nowDate) + "-Is Force-" + isForceUpdate);
+                    if (hourDiff > 12 || isForceUpdate) {
                         onSetPrivateData();
                         onSetDeviceData();
                     }
@@ -142,6 +111,7 @@ public class ActSharePref extends AppCompatActivity {
                     //e.printStackTrace();
                     LogWriter.Log("Error: " + e);
                 }
+                onSharePreference.printAllKeyValue();
             }
         }
 
@@ -165,15 +135,17 @@ public class ActSharePref extends AppCompatActivity {
                     .setValue(KeyDeviceNetCountry, argResult.get("country"))
                     .setValue(KeyPDataForceUpdate, false)
                     .setValue(KeyPrivateDataDate, simpleDateFormat.format(new Date()));
+            LogWriter.Log("UPDATE DATE TIME: " + simpleDateFormat.format(new Date()));
         }
 
         private void onSetDeviceData() {
+            CertificateSHA1Fingerprint certAuthKey = CertificateSHA1Fingerprint.getInstance();
             deviceInfo = new DeviceInfo(activity, context);
             onSharePreference.setValue(KeyDeviceBuildId, deviceInfo.getDeviceBuildID())
                     .setValue("app_package_name", APPStaticPackageInfo.getPackageName(context))
-                    .setValue("app_package_code", APPStaticPackageInfo.getVersionCode(context))
+                    .setValue("app_version_code", APPStaticPackageInfo.getVersionCode(context))
                     .setValue("app_version_name", APPStaticPackageInfo.getVersionName(context))
-                    .setValue("app_auth_key", APPStaticPackageInfo.getVersionName(context))
+                    .setValue("app_auth_key", certAuthKey.getAuthKey(context))
                     .setValue(KeyDeviceAndroidId, deviceInfo.getDeviceID());
         }
 

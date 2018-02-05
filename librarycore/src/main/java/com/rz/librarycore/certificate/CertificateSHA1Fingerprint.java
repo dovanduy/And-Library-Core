@@ -38,7 +38,7 @@ public class CertificateSHA1Fingerprint {
     }
 
     //|----|------------------------------------------------------------|
-    private String getCertificateSHA1Fingerprint(Context argContext) {
+    private String getCertificateSHA1Fingerprint_NEW_01(Context argContext) {
         //StringBuilder stringBuilder = new StringBuilder();
         String hexString = null;
         String packageName = argContext.getPackageName();
@@ -74,7 +74,7 @@ public class CertificateSHA1Fingerprint {
     }
     //|----|------------------------------------------------------------|
 
-    private String getCertificateSHA1Fingerprint_OLD_01(Context argContext) {
+    private String getCertificateSHA1Fingerprint(Context argContext) {
         //LogWriter.Log("123456789123456789");
         PackageManager pm = argContext.getPackageManager();
         String packageName = argContext.getPackageName();

@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.rz.librarycore.apppackage.APPStaticPackageInfo;
 import com.rz.librarycore.http.HTTPMethod;
 import com.rz.librarycore.http.OnFeedHTTPEventListenerHandler;
 import com.rz.librarycore.http.PowerFeedHTTPAsyncTask;
 import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +25,10 @@ public class ActSplash extends AppCompatActivity {
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
+        /////
+        SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
+        //sharePrefHandler.clearAll();
+        //sharePrefHandler.setValue("is_private_data_force_update", true);
         /////
         startActivity(new Intent(context, ActSharePref.class));
         finish();
