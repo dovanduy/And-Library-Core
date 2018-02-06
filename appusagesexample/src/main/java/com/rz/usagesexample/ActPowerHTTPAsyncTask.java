@@ -103,7 +103,7 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
                     //onJSONParse(urlData);
                     // System.out.println(obj);
                 }
-                return "i call again";
+                return argURLParams;
             }
 
             @Override
