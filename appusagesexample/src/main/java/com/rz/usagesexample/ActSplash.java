@@ -35,7 +35,7 @@ public class ActSplash extends AppCompatActivity {
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("is_private_data_force_update", true);
         SecureKeyManager.onSetAppIsRunFirstTime(context);
-        sharePrefHandler.printAllKeyValue();
+        //sharePrefHandler.printAllKeyValue();
         /////
         startActivity(new Intent(context, ActPowerHTTPAsyncTask.class));
         finish();

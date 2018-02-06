@@ -57,6 +57,7 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
             SharePrefPrivateHandler statPreferences = null;
             statPreferences = new SharePrefPrivateHandler(argContext, APPStaticPackageInfo.getPackageName(argContext));
             urlRequestParameters.put("auth_key", statPreferences.getValue(SecureKeyManager.KeyAppAuthKey) + "");
+            urlRequestParameters.put("fcm_key_token", statPreferences.getValue(SecureKeyManager.KeyAppFCMKeyToken) + "");
             urlRequestParameters.put("package_name", APPStaticPackageInfo.getPackageName(argContext));
             urlRequestParameters.put("app_version_code", APPStaticPackageInfo.getVersionCode(argContext) + "");
             urlRequestParameters.put("app_version_name", APPStaticPackageInfo.getVersionName(argContext));
@@ -110,9 +111,11 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
                 //LogWriter.Log("onPostExecute: " + Arrays.toString(argResult) + "");
                 if (argResult instanceof String[]) {
                     String[] strArray = (String[]) argResult;
-                    System.out.println("RETUREND_VALUE********: " + Arrays.toString(strArray));
+                    System.out.println("RETURNED_VALUE********: " + Arrays.toString(strArray));
                     //System.out.println(obj);
                 }
+                Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                LogWriter.Log("onPostExecute: " + format.format(new Date()));
                 LogWriter.Log("onPostExecute: " + argResult + "");
             }
 
