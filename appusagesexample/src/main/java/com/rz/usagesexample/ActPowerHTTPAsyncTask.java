@@ -13,7 +13,10 @@ import com.rz.librarycore.log.LogWriter;
 import com.rz.librarycore.log.SecureKeyManager;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ActPowerHTTPAsyncTask extends AppCompatActivity {
@@ -36,16 +39,50 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
         //////////////
     }
 
+    public static class PrepareHTTPRequest {
+        private Context context;
+        //private HashMap<String, String> mapConstantParameters = new HashMap<>();
+
+        public PrepareHTTPRequest(Context argContext) {
+            context = argContext;
+        }
+
+        public void onExecute() {
+            //
+        }
+
+        public static HashMap<String, String> getURLPostParameters(Context argContext) {
+            Format staticFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            HashMap<String, String> urlRequestParameters = new HashMap<>();
+            SharePrefPrivateHandler statPreferences = null;
+            statPreferences = new SharePrefPrivateHandler(argContext, APPStaticPackageInfo.getPackageName(argContext));
+            urlRequestParameters.put("auth_key", statPreferences.getValue(SecureKeyManager.KeyAppAuthKey) + "");
+            urlRequestParameters.put("package_name", APPStaticPackageInfo.getPackageName(argContext));
+            urlRequestParameters.put("app_version_code", APPStaticPackageInfo.getVersionCode(argContext) + "");
+            urlRequestParameters.put("app_version_name", APPStaticPackageInfo.getVersionName(argContext));
+            urlRequestParameters.put("app_global_ip", statPreferences.getValue(SecureKeyManager.KeyDeviceGlobalNetIp) + "");
+            urlRequestParameters.put("app_hardware_ip", statPreferences.getValue(SecureKeyManager.KeyDeviceHardWareIp) + "");
+            urlRequestParameters.put("app_net_lat", statPreferences.getValue(SecureKeyManager.KeyDeviceNetLatitude) + "");
+            urlRequestParameters.put("app_net_lng", statPreferences.getValue(SecureKeyManager.KeyDeviceNetLongitude) + "");
+            urlRequestParameters.put("app_net_country", statPreferences.getValue(SecureKeyManager.KeyDeviceNetCountry) + "");
+            urlRequestParameters.put("app_primary_id", statPreferences.getValue(SecureKeyManager.KeyDevicePrimaryId) + "");
+            urlRequestParameters.put("app_secondary_id", statPreferences.getValue(SecureKeyManager.KeyDeviceSecondaryId) + "");
+            urlRequestParameters.put("app_request_time", staticFormat.format(new Date()));
+            return urlRequestParameters;
+        }
+    }
+
     private void onPostMethodOne() {
         SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         HashMap<String, String> urlHeaders = new HashMap<String, String>();
         HashMap<String, String> urlRequestParameters = new HashMap<String, String>();
         /*urlHeaders.put("head1", "headeValue1");
         urlHeaders.put("head2", "headeValue2");*/
-        urlRequestParameters.put("auth_key", sharePrefHandler.getValue(SecureKeyManager.KeyAppAuthKey) + "");
-        urlRequestParameters.put("package_name", APPStaticPackageInfo.getPackageName(context));
-        urlRequestParameters.put("app_version_code", APPStaticPackageInfo.getVersionCode(context) + "");
-        urlRequestParameters.put("app_version_name", APPStaticPackageInfo.getVersionName(context));
+        /*urlRequestParameters.put("auth_key_test", sharePrefHandler.getValue(SecureKeyManager.KeyAppAuthKey) + "");
+        urlRequestParameters.put("package_name_test", APPStaticPackageInfo.getPackageName(context));
+        urlRequestParameters.put("app_version_code_test", APPStaticPackageInfo.getVersionCode(context) + "");
+        urlRequestParameters.put("app_version_name_test", APPStaticPackageInfo.getVersionName(context));*/
+        urlRequestParameters.putAll(PrepareHTTPRequest.getURLPostParameters(context));
         PowerFeedHTTPAsyncTask powerFeedHTTPAsyncTask = new PowerFeedHTTPAsyncTask(new OnFeedHTTPEventListenerHandler() {
             @Override
             public void onPreExecute() {
@@ -57,21 +94,21 @@ public class ActPowerHTTPAsyncTask extends AppCompatActivity {
                 if (argURLParams instanceof String[]) {
                     /*String[] strArray = (String[]) argURLParams;
                     System.out.println("RETURNED_VALUE********: " + Arrays.toString(strArray));*/
-					String[] strArray = (String[]) argURLParams;
+                    String[] strArray = (String[]) argURLParams;
                     //String urlData = Arrays.toString(strArray);
                     String urlData = strArray[0];
-                    System.out.println("RETUREND_VALUE_DO_IN_BACK: " + urlData);
+                    System.out.println("RETURNED_VALUE_DO_IN_BACK: " + urlData);
                     // System.out.println(obj);
-                    onJSONParse(urlData);
+                    //onJSONParse(urlData);
                     // System.out.println(obj);
                 }
-                return argURLParams;
+                return "i call again";
             }
 
             @Override
             public void onPostExecute(Object argResult) {
                 //LogWriter.Log("onPostExecute: " + Arrays.toString(argResult) + "");
-				if (argResult instanceof String[]) {
+                if (argResult instanceof String[]) {
                     String[] strArray = (String[]) argResult;
                     System.out.println("RETUREND_VALUE********: " + Arrays.toString(strArray));
                     //System.out.println(obj);
