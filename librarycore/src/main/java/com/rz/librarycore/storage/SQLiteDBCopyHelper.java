@@ -1,4 +1,4 @@
-package com.library;
+package com.rz.librarycore.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
