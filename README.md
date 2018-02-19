@@ -1,5 +1,5 @@
-# And-Library-Core-V-201802.01.2
-And Library Core V-201802.01.2
+# And-Library-Core-V-201802.01.4
+And Library Core V-201802.01.4
 
 [![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
 
@@ -20,6 +20,10 @@ git init
 git remote add origin https://github.com/rzrasel/And-Library-Core.git
 git remote -v
 git fetch && git checkout master
+git add .
+git commit -m "Add Readme & Git Commit File"
+git pull
+git push --all
 ```
 
 ### Installation
