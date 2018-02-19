@@ -41,7 +41,7 @@ allprojects {
 ### Add Android Dependencies
 ```android_dependencies
 dependencies {
-    compile 'com.github.rzrasel:And-Library-Core:V-201712.0.1'
+    compile 'com.github.rzrasel:And-Library-Core:V-201802.01.4'
 }
 ```
 
