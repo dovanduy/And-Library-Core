@@ -221,8 +221,8 @@ public class SecureKeyManager {
         deviceInfo = new DeviceInfo(activity, context);
         String devicePrimaryId = deviceInfo.getDeviceBuildID();
         String deviceSecondaryId = deviceInfo.getDeviceID();
-        devicePrimaryId = MD5Builder.md5(devicePrimaryId);
-        deviceSecondaryId = MD5Builder.md5(deviceSecondaryId);
+        /*devicePrimaryId = MD5Builder.md5(devicePrimaryId);
+        deviceSecondaryId = MD5Builder.md5(deviceSecondaryId);*/
         onSharePreference.setValue(KeyDevicePrimaryId, devicePrimaryId)
                 .setValue(KeyAppPackageName, APPStaticPackageInfo.getPackageName(context))
                 .setValue(KeyAppVersionCode, APPStaticPackageInfo.getVersionCode(context))

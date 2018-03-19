@@ -25,7 +25,8 @@ android {
 	libraryVariants.all { variant ->
         variant.outputs.all { output ->
             if (outputFile != null && outputFileName.endsWith('.aar')) {
-                outputFileName = "${archivesBaseName}-v-${version}.aar"
+                //outputFileName = "${archivesBaseName}-V-${version}.aar"
+                outputFileName = "${archivesBaseName}-${extAppName}-V-${version}.aar"
             }
         }
     }
