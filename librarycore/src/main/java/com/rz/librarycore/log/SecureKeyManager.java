@@ -55,6 +55,7 @@ public class SecureKeyManager {
     public final static String KeyAppFirstDate = "app_first_run_date";
     //public String ValSecureHardIp = "";
     private boolean isForceUpdate = false;
+    private boolean isGrabOnlineData = false;
 
     public SecureKeyManager(Activity argActivity, Context argContext) {
         activity = argActivity;
@@ -65,6 +66,13 @@ public class SecureKeyManager {
         if (objInitDate == null) {
             onSharePreference.setValue("app_initialization_date", simpleDateFormat.format(new Date()));
         }
+        /*asyncDelayTime = delayTimeMain;
+        asyncHandler.sendEmptyMessage(0);*/
+    }
+
+    public void onExecute(boolean argIsGrabOnlineData) {
+        //False is not execute or grab online data, if true grab online data
+        isGrabOnlineData = argIsGrabOnlineData;
         asyncDelayTime = delayTimeMain;
         asyncHandler.sendEmptyMessage(0);
     }
@@ -191,7 +199,7 @@ public class SecureKeyManager {
     }
 
     private void onSetPrivateData() {
-        if (!CheckNetConn.isConnected(context)) {
+        if (!CheckNetConn.isConnected(context) && !isGrabOnlineData) {
             return;
         }
         deviceIPApi = new DeviceIPApi(context);

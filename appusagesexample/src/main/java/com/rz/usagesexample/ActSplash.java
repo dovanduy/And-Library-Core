@@ -31,13 +31,14 @@ public class ActSplash extends AppCompatActivity {
         /////
         /////
         SecureKeyManager secureKeyManager = new SecureKeyManager(activity, context);
+        secureKeyManager.onExecute(false);
         SharePrefPrivateHandler sharePrefHandler = new SharePrefPrivateHandler(context, APPStaticPackageInfo.getPackageName(context));
         //sharePrefHandler.clearAll();
         //sharePrefHandler.setValue("is_private_data_force_update", true);
         SecureKeyManager.onSetAppIsRunFirstTime(context);
         //sharePrefHandler.printAllKeyValue();
         /////
-        startActivity(new Intent(context, ActDatabaseHelper.class));
+        startActivity(new Intent(context, ActUpdateAPK.class));
         finish();
         /////
         HashMap<String, String> urlHeaders = new HashMap<String, String>();

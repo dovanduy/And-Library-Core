@@ -30,6 +30,6 @@ ext {
 
     extMinSdkVersion = 15
     extTargetSdkVersion = 26
-    extVersionCode = 201802026
-    extVersionName = "201802.02.6"
+    extVersionCode = 201802027
+    extVersionName = "201802.02.7"
 }

@@ -25,20 +25,15 @@ import java.net.URL;
 public class DigitizeDownload {
     private Activity activity;
     private Context context;
+    private ProgressDialog progressDialog;
+    private String fileUrl;
+    private String fileName;
 
-    public void DigitizeDownload(Context argContext) {
+    public DigitizeDownload(Activity argActivity, Context argContext) {
+        activity = argActivity;
         context = argContext;
         /*activity = this;
         context = this;*/
-        if (Build.VERSION.SDK_INT >= 23) {
-            int REQUEST = 112;
-            //String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
-            if (!hasPermissions(context, PERMISSIONS)) {
-                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, REQUEST);
-                return;
-            }
-        }
         /*TextView heading = (TextView) findViewById(R.id.heading);
         Button updateBtn = (Button) findViewById(R.id.btn);
         heading.setText("App Version: " + AppVersion);
@@ -48,6 +43,22 @@ public class DigitizeDownload {
                 new DownloadNewVersion().execute();
             }
         });*/
+    }
+
+    public void onExecute(String argFileUrl, String argFileName) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int REQUEST = 112;
+            //String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            if (!hasPermissions(context, PERMISSIONS)) {
+                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, REQUEST);
+                Toast.makeText(context, "For permission can't execute. Try again", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        fileUrl = argFileUrl;
+        fileName = argFileName;
+        new DownloadFile().execute(fileUrl);
     }
 
     private boolean hasPermissions(Context context, String... permissions) {
@@ -60,39 +71,40 @@ public class DigitizeDownload {
         }
         return true;
     }
-    public class DownloadNewVersion extends AsyncTask<String, Integer, Boolean> {
+
+    public class DownloadFile extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*bar = new ProgressDialog(context);
-            bar.setCancelable(false);
-            bar.setMessage("Downloading...");
-            bar.setIndeterminate(true);
-            bar.setCanceledOnTouchOutside(false);
-            bar.show();*/
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Downloading...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
 
         }
 
         protected void onProgressUpdate(Integer... progress) {
             super.onProgressUpdate(progress);
-            /*bar.setIndeterminate(false);
-            bar.setMax(100);
-            bar.setProgress(progress[0]);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setMax(100);
+            progressDialog.setProgress(progress[0]);
             String msg = "";
             if (progress[0] > 99) {
                 msg = "Finishing... ";
             } else {
                 msg = "Downloading... " + progress[0] + "%";
             }
-            bar.setMessage(msg);*/
+            progressDialog.setMessage(msg);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
-            /*bar.dismiss();
-            if (result) {
+            progressDialog.dismiss();
+            /*if (result) {
                 Toast.makeText(getApplicationContext(), "Update Done", Toast.LENGTH_SHORT).show();
             } else {
 
@@ -102,18 +114,20 @@ public class DigitizeDownload {
         }
 
         @Override
-        protected Boolean doInBackground(String... arg0) {
+        protected Boolean doInBackground(String... argParamUrl) {
             Boolean flag = false;
             try {
-                URL url = new URL("http://androidpala.com/tutorial/app-debug.apk");
+                //"http://androidpala.com/tutorial/app-debug.apk"
+                String strUrl = argParamUrl[0];
+                URL url = new URL(strUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setDoOutput(true);
                 conn.connect();
-                String PATH = Environment.getExternalStorageDirectory() + "/Download/";
-                File file = new File(PATH);
+                String localSdCardFilePath = Environment.getExternalStorageDirectory() + "/Download/";
+                File file = new File(localSdCardFilePath);
                 file.mkdirs();
-                File outputFile = new File(file, "app-debug.apk");
+                File outputFile = new File(file, fileName);
 
                 if (outputFile.exists()) {
                     outputFile.delete();
@@ -137,7 +151,7 @@ public class DigitizeDownload {
                 }
                 fos.close();
                 is.close();
-                OpenNewVersion(PATH);
+                OpenNewVersion(localSdCardFilePath);
                 flag = true;
             } catch (Exception e) {
                 //Log.e(TAG, "Update Error: " + e.getMessage());
@@ -147,9 +161,9 @@ public class DigitizeDownload {
         }
     }
 
-    void OpenNewVersion(String location) {
+    public void OpenNewVersion(String argLocation) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(new File(location + "app-debug.apk")), "application/vnd.android.package-archive");
+        intent.setDataAndType(Uri.fromFile(new File(argLocation + fileName)), "application/vnd.android.package-archive");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

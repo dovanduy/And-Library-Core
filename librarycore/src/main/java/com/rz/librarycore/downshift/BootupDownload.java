@@ -11,17 +11,35 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import java.io.File;
 
 public class BootUpDownload {
     private Activity activity;
     private Context context;
+    private String fileUrl;
+    private String fileName;
 
-    public void BootUpDownload(Context argContext) {
+    public BootUpDownload(Activity argActivity, Context argContext) {
+        activity = argActivity;
         context = argContext;
     }
-
+    public void onExecute(String argFileUrl, String argFileName, String argTitle, String argDescription) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int REQUEST = 112;
+            //String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            if (!hasPermissions(context, PERMISSIONS)) {
+                ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, REQUEST);
+                Toast.makeText(context, "For permission can't execute. Try again", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        fileUrl = argFileUrl;
+        fileName = argFileName;
+        OnDownloadManager(argTitle, argDescription);
+    }
     private static boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -33,8 +51,8 @@ public class BootUpDownload {
         return true;
     }
 
-    public void OnDownloadManager(String argURL, String argTitle, String argDescription) {
-        if (Build.VERSION.SDK_INT >= 23) {
+    private void OnDownloadManager(String argTitle, String argDescription) {
+        /*if (Build.VERSION.SDK_INT >= 23) {
             int REQUEST = 112;
             //String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -42,13 +60,13 @@ public class BootUpDownload {
                 ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, REQUEST);
                 return;
             }
-        }
+        }*/
         //get destination to update file and set Uri
         //TODO: First I wanted to store my update .apk file on internal storage for my app but apparently android does not allow you to open and install
         //aplication with existing package from there. So for me, alternative solution is Download directory in external storage. If there is better
         //solution, please inform us in comment
         String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-        String fileName = "AppName.apk";
+        //String fileName = "AppName.apk";
         destination += fileName;
         final Uri uri = Uri.parse("file://" + destination);
 
@@ -63,7 +81,7 @@ public class BootUpDownload {
         //url = "http://androidpala.com/tutorial/app-debug.apk";
 
         //set downloadmanager
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(argURL));
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fileUrl));
         request.setTitle(argTitle);
         request.setDescription(argDescription);
 
