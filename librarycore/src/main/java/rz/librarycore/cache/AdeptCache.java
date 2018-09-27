@@ -215,4 +215,27 @@ https://www.tutorialspoint.com/java/java_serialization.htm
 https://stackoverflow.com/questions/8116147/java-how-to-make-this-serializable
 how to serialize an object in java without using serializable interface
 java.io.FileNotFoundException: /data/data/com.sm.cattleshurjohms/files/SFRUUFJlcXVlc3RTcGlubmVyQ293SWRMaXN0aHR0cDovc2h1cmpvaG1zLmNvbS9obXNhcGkvY293Lz9mYXJtPTE=
+
+public class Box<T> {
+   private T t;
+
+   public void add(T t) {
+      this.t = t;
+   }
+
+   public T get() {
+      return t;
+   }
+
+   public static void main(String[] args) {
+      Box<Integer> integerBox = new Box<Integer>();
+      Box<String> stringBox = new Box<String>();
+    
+      integerBox.add(new Integer(10));
+      stringBox.add(new String("Hello World"));
+
+      System.out.printf("Integer Value :%d\n\n", integerBox.get());
+      System.out.printf("String Value :%s\n", stringBox.get());
+   }
+}
 */
