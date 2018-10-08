@@ -1,6 +1,8 @@
 # And-Library-Core
 And Library Core
 
+<a href='https://bintray.com/rzrasel/android-power-pack/android-core-library?source=watch' alt='Get automatic notifications about new "android-core-library" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
+[ ![Download](https://api.bintray.com/packages/rzrasel/android-power-pack/android-core-library/images/download.svg) ](https://bintray.com/rzrasel/android-power-pack/android-core-library/_latestVersion)
 [![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
 
 <!--
@@ -86,4 +88,68 @@ function pingDomain($domain){
     return $status;
 }
 ?>
+```
+
+
+
+
+
+
+
+
+
+
+
+Download
+--------
+
+Maven Repositories
+```maven
+allprojects {
+    repositories {
+        maven { url 'https://dl.bintray.com/rzrasel/android-power-pack/' }
+    }
+}
+```
+
+Download the latest JAR or grab via Maven:
+```xml
+<dependency>
+    <groupId>com.adept.power-pack</groupId>
+    <artifactId>core-library</artifactId>
+    <version>100.00.01</version>
+    <type>pom</type>
+</dependency>
+```
+or Gradle:
+```groovy
+compile 'com.adept.power-pack:core-library:100.00.01'
+```
+
+Usage
+-----
+
+In your Activity
+
+```java
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import rz.logwriter.LogWriter;
+
+public class ActSplash extends AppCompatActivity {
+    private Activity activity;
+    private Context context;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.act_splash);
+        activity = this;
+        context = this;
+        LogWriter.Log("Test Log");
+    }
+}
 ```

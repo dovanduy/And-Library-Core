@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 /**
  * Returns an Image object that can then be painted on the screen.
- * The url argument must specify an absolute {@link URL}. The name
+ * The url argument must specify an absolute { @ link URL }. The name
  * argument is a specifier that is relative to the url argument.
  * <p>
  * This method always returns immediately, whether or not the
@@ -14,10 +14,10 @@ import android.os.Bundle;
  * that draw the image will incrementally paint on the screen.
  * </p>
  *
- * @param  url  an absolute URL giving the base location of the image
- * @param  name the location of the image, relative to the url argument
- * @return      the image at the specified URL
- * @see         Image
+ * //@param  url  an absolute URL giving the base location of the image
+ * //@param  name the location of the image, relative to the url argument
+ * //@return      the image at the specified URL
+ * //@see         Image
  */
 public class RedirectWindow {
     private Context context;
@@ -32,7 +32,7 @@ public class RedirectWindow {
     /**
      * The Description of the method to explain what the method does
      *
-     * @param Bundle type parameters used by the method
+     * @param argBundle type parameters used by the method
      * @return self class object
      */
     public RedirectWindow setBundle(Bundle argBundle) {
