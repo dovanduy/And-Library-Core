@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#|------------------------------------------------------------|
+#Disable obfuscation
+#How to obfuscation module
+#Obfuscating a module/library
+#Obfuscating multiple modules with android studio
+#|------------------------------------------------------------|
+#-keep public class com.rz.librarycore.* { public protected *; }
+#-keep class com.rz.librarycore.** { *; }
+#-keepclassmembers class com.rz.librarycore.redirect.RedirectWindow { public *; }
+-keep public class com.rz.librarycore.** { public *; }
+#|------------------------------------------------------------|
