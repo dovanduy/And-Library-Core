@@ -24,11 +24,20 @@ import android.os.Bundle;
 public class RedirectWindow {
     private Activity activity;
     private Context context;
+    private static RedirectWindow instance = null;
     private Intent intent;
     private Bundle bundle;
     private boolean haveFlag = false;
     private boolean isFinishWindow = false;
-    CoreRedirectWindow coreRedirectWindow;
+    private CoreRedirectWindow coreRedirectWindow;
+    //private RedirectWindow redirectWindow = new RedirectWindow(activity, context);
+
+    public RedirectWindow getInstance(Activity argActivity, Context argContext) {
+        if (instance == null) {
+            instance = new RedirectWindow(argActivity, argContext);
+        }
+        return instance;
+    }
 
     public RedirectWindow(Activity argActivity, Context argContext) {
         activity = argActivity;
