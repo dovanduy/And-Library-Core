@@ -5,11 +5,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.StrictMode;
-import android.support.v4.BuildConfig;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.rz.librarycore.BuildConfig;
 import com.rz.librarycore.log.LogWriter;
 
 import java.io.IOException;

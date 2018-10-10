@@ -1,6 +1,5 @@
 package com.rz.librarycore.permission;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -56,7 +55,6 @@ public class ManifestPermission {
         return hasPermission;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public void onRequest(String argPermissions[], int argPermissionRequestCode) {
         //((Activity) context).requestPermissions(argPermissions, argPermissionRequestCode);
         ActivityCompat.requestPermissions((Activity) context, argPermissions, argPermissionRequestCode);

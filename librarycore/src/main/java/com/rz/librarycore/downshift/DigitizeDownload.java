@@ -1,7 +1,6 @@
 package com.rz.librarycore.downshift;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,7 +23,7 @@ import java.net.URL;
 public class DigitizeDownload {
     private Activity activity;
     private Context context;
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
     private String fileUrl;
     private String fileName;
 
@@ -76,34 +74,34 @@ public class DigitizeDownload {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(context);
+            /*progressDialog = new ProgressDialog(context);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Downloading...");
             progressDialog.setIndeterminate(true);
             progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            progressDialog.show();*/
 
         }
 
         protected void onProgressUpdate(Integer... progress) {
             super.onProgressUpdate(progress);
-            progressDialog.setIndeterminate(false);
+            /*progressDialog.setIndeterminate(false);
             progressDialog.setMax(100);
-            progressDialog.setProgress(progress[0]);
+            progressDialog.setProgress(progress[0]);*/
             String msg = "";
             if (progress[0] > 99) {
                 msg = "Finishing... ";
             } else {
                 msg = "Downloading... " + progress[0] + "%";
             }
-            progressDialog.setMessage(msg);
+            //progressDialog.setMessage(msg);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
             /*if (result) {
                 Toast.makeText(getApplicationContext(), "Update Done", Toast.LENGTH_SHORT).show();
             } else {
