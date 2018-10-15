@@ -45,7 +45,7 @@ allprojects {
 ### Add Android Dependencies
 ```android_dependencies
 dependencies {
-    compile 'com.github.rzrasel:And-Library-Core:V-201802.01.4'
+    implementation 'com.github.rzrasel:And-Library-Core:V-201802.01.4'
 }
 ```
 
@@ -62,7 +62,7 @@ allprojects {
 ```
 ```android_dependencies
 dependencies {
-    compile(name:'librarycore', ext:'aar')
+    implementation(name:'librarycore', ext:'aar')
 }
 ```
 https://mobikul.com/manually-include-external-aar-file/
@@ -125,7 +125,7 @@ Download the latest JAR or grab via Maven:
 ```
 or Gradle:
 ```groovy
-compile 'com.adept.power-pack:core-library:100.00.01'
+implementation 'com.adept.power-pack:and-core-library:100.00.01'
 ```
 
 Usage
