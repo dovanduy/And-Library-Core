@@ -5,34 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-/**
- * Returns an Image object that can then be painted on the screen.
- * The url argument must specify an absolute { @ link URL }. The name
- * argument is a specifier that is relative to the url argument.
- * <p>
- * This method always returns immediately, whether or not the
- * image exists. When this applet attempts to draw the image on
- * the screen, the data will be loaded. The graphics primitives
- * that draw the image will incrementally paint on the screen.
- * </p>
- * <p>
- * //@param  url  an absolute URL giving the base location of the image
- * //@param  name the location of the image, relative to the url argument
- * //@return      the image at the specified URL
- * //@see         Image
- */
 public class RedirectWindow {
-    private Activity activity;
-    private Context context;
+    private Activity f1462a;
+    private Context f1463b;
     private static RedirectWindow instance = null;
-    private Intent intent;
-    private Bundle bundle;
-    private boolean haveFlag = false;
-    private boolean isFinishWindow = false;
-    private CoreRedirectWindow coreRedirectWindow;
-    //private RedirectWindow redirectWindow = new RedirectWindow(activity, context);
+    private C0408a f1464d;
 
-    public RedirectWindow getInstance(Activity argActivity, Context argContext) {
+    public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
         if (instance == null) {
             instance = new RedirectWindow(argActivity, argContext);
         }
@@ -40,105 +19,32 @@ public class RedirectWindow {
     }
 
     public RedirectWindow(Activity argActivity, Context argContext) {
-        activity = argActivity;
-        context = argContext;
-        coreRedirectWindow = new CoreRedirectWindow();
-        coreRedirectWindow.setCoreRedirectWindow(activity, context);
+        f1462a = argActivity;
+        f1463b = argContext;
+        f1464d = new C0408a(f1462a, f1463b);
     }
 
-    /**
-     * The Description of the method to explain what the method does
-     *
-     * @param argBundle type parameters used by the method
-     * @return self class object
-     */
-    public RedirectWindow setBundle(Bundle argBundle) {
-        this.bundle = argBundle;
-        coreRedirectWindow.setBundle(bundle);
+    public Intent withRedirect(Class<?> argRedirectClass) {
+        return this.f1464d.m1628a(argRedirectClass);
+    }
+
+    public RedirectWindow withBundle(Bundle bundle) {
+        this.f1464d.m1630a(bundle);
         return this;
     }
 
-    public RedirectWindow setHaveFlag(boolean argHaveFlag) {
-        this.haveFlag = argHaveFlag;
-        coreRedirectWindow.setHaveFlag(haveFlag);
+    public RedirectWindow withFlag() {
+        this.f1464d.m1629a();
         return this;
     }
 
-    public RedirectWindow setIsFinishWindow(boolean argIsFinishWindow) {
-        this.isFinishWindow = argIsFinishWindow;
-        coreRedirectWindow.setIsFinishWindow(isFinishWindow);
+    public RedirectWindow runRedirect() {
+        this.f1464d.m1631b();
         return this;
     }
 
-    public void onRedirect(Class<?> argRedirectClass) {
-        /*intent = new Intent(context, argRedirectClass);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        if (haveFlag) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        context.startActivity(intent);*/
-        coreRedirectWindow.onRedirect(argRedirectClass);
+    public RedirectWindow disposeWindow() {
+        this.f1464d.m1632c();
+        return this;
     }
 }
-
-class CoreRedirectWindow {
-    private Activity activity;
-    private Context context;
-    private Intent intent;
-    private Bundle bundle;
-    private boolean haveFlag = false;
-    private boolean isFinishWindow = false;
-
-    /*public CoreRedirectWindow(Context argContext) {
-        context = argContext;
-    }*/
-    public CoreRedirectWindow setCoreRedirectWindow(Activity argActivity, Context argContext) {
-        activity = argActivity;
-        context = argContext;
-        return this;
-    }
-
-    /**
-     * The Description of the method to explain what the method does
-     *
-     * @param argBundle type parameters used by the method
-     * @return self class object
-     */
-    public CoreRedirectWindow setBundle(Bundle argBundle) {
-        this.bundle = argBundle;
-        return this;
-    }
-
-    public CoreRedirectWindow setHaveFlag(boolean argHaveFlag) {
-        this.haveFlag = argHaveFlag;
-        return this;
-    }
-
-    public CoreRedirectWindow setIsFinishWindow(boolean argIsFinishWindow) {
-        this.isFinishWindow = argIsFinishWindow;
-        return this;
-    }
-
-    public void onRedirect(Class<?> argRedirectClass) {
-        intent = new Intent(context, argRedirectClass);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        if (haveFlag) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        activity.startActivity(intent);
-        if (isFinishWindow) {
-            activity.finish();
-        }
-    }
-}
-/**
- * The Desciption of the method to explain what the method does
- *
- * @param the parameters used by the method
- * @return self class object
- * @throws what kind of exception does this method throw
- */

@@ -9,10 +9,15 @@ android {
         versionCode 1000001
         versionName "100.00.01"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        def date = new Date()
+        //def formattedDate = date.format('yyyyMMddHHmmss')
+        def formattedDate = date.format('yyyyMMdd')
+        def apkName = applicationId + '-v-' + defaultConfig.versionName + ' - ' + formattedDate + ' '
+        setProperty("archivesBaseName", "$apkName")
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
