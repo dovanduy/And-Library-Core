@@ -3,6 +3,8 @@ And Library Core
 
 https://android.jlelse.eu/publish-multi-module-android-libraries-on-jitpack-339213f6224c
 
+<a href='https://bintray.com/rzrasel/android-core-library-center/android-core-library/_latestVersion'><img src='https://api.bintray.com/packages/rzrasel/android-core-library-center/android-core-library/images/download.svg'></a>
+
 <a href='https://bintray.com/rzrasel/android-power-pack/android-core-library?source=watch' alt='Get automatic notifications about new "android-core-library" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 [ ![Download](https://api.bintray.com/packages/rzrasel/android-power-pack/android-core-library/images/download.svg) ](https://bintray.com/rzrasel/android-power-pack/android-core-library/_latestVersion)
 [![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
@@ -109,7 +111,7 @@ Maven Repositories
 ```maven
 allprojects {
     repositories {
-        maven { url 'https://dl.bintray.com/rzrasel/android-power-pack/' }
+        maven { url 'https://dl.bintray.com/rzrasel/android-core-library-center' }
     }
 }
 ```
@@ -117,15 +119,15 @@ allprojects {
 Download the latest JAR or grab via Maven:
 ```xml
 <dependency>
-    <groupId>com.adept.power-pack</groupId>
-    <artifactId>core-library</artifactId>
+    <groupId>com.adept.archery</groupId>
+    <artifactId>and-core-library</artifactId>
     <version>100.00.01</version>
     <type>pom</type>
 </dependency>
 ```
 or Gradle:
 ```groovy
-implementation 'com.adept.power-pack:and-core-library:100.00.01'
+implementation 'com.adept.archery:and-core-library:100.00.01'
 ```
 
 Usage
