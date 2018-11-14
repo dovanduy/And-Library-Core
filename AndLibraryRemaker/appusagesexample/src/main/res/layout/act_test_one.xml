@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="This is activity splash"
+        android:text="This is activity test one"
         android:textSize="16sp" />
-
 </RelativeLayout>

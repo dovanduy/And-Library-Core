@@ -27,6 +27,7 @@ public class RedirectWindow {
     private static RedirectWindow instance = null;
     private Intent intent;
     private CoreRedirectWindow coreRedirectWindow;
+    private OnEventListener onEventListener;
     //private RedirectWindow redirectWindow = new RedirectWindow(activity, context);
 
     public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
@@ -43,9 +44,11 @@ public class RedirectWindow {
         //coreRedirectWindow.setCoreRedirectWindow(activity, context);
     }
 
-    public Intent withRedirect(Class<?> argRedirectClass) {
-        return coreRedirectWindow.withRedirect(argRedirectClass);
-    }
+    /*@Deprecated
+    public RedirectWindow withRedirect(Class<?> argRedirectClass) {
+        coreRedirectWindow.withRedirect(argRedirectClass);
+        return this;
+    }*/
 
     /**
      * The Description of the method to explain what the method does
@@ -63,14 +66,34 @@ public class RedirectWindow {
         return this;
     }
 
-    public RedirectWindow runRedirect() {
-        coreRedirectWindow.runRedirect();
-        return this;
-    }
-
     public RedirectWindow disposeWindow() {
         coreRedirectWindow.disposeWindow();
         return this;
+    }
+
+    /*@Deprecated
+    public void runRedirect() {
+        coreRedirectWindow.runRedirect();
+        return;
+    }*/
+
+    public void runRedirect(Class<?> argRedirectClass) {
+        coreRedirectWindow.runRedirect(argRedirectClass);
+        return;
+    }
+
+    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds) {
+        coreRedirectWindow.runRedirect(argRedirectClass, argTimeMilliseconds);
+        return;
+    }
+
+    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
+        coreRedirectWindow.runRedirect(argRedirectClass, argTimeMilliseconds, argOnEventListener);
+        return;
+    }
+
+    public interface OnEventListener {
+        public boolean onDependencyWait();
     }
 }
 

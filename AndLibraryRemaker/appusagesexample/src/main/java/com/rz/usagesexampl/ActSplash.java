@@ -2,6 +2,7 @@ package com.rz.usagesexampl;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import com.rz.roundimage.RoundImage;
 public class ActSplash extends AppCompatActivity {
     private Activity activity;
     private Context context;
+    private boolean isDependencyWait = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +23,30 @@ public class ActSplash extends AppCompatActivity {
         RoundImage.onSayHi();
         MashUp.onSayHi();
         //RedirectWindow redirectWindow = new RedirectWindow(activity, context);
-        //Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
         RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-        redirectWindow.withRedirect(ActSplash.class);
-        redirectWindow.withBundle(savedInstanceState)
+        redirectWindow.withBundle(bundle)
                 .withFlag()
-                .runRedirect()
-                .disposeWindow();
+                .disposeWindow()
+                .runRedirect(ActTestTwo.class);
+        redirectWindow.withBundle(bundle)
+                .withFlag()
+                .disposeWindow()
+                .runRedirect(ActTestTwo.class, 5000);
+        redirectWindow.withBundle(bundle)
+                .withFlag()
+                .disposeWindow()
+                .runRedirect(ActTestTwo.class, 5000, new RedirectWindow.OnEventListener() {
+                    @Override
+                    public boolean onDependencyWait() {
+                        return isDependencyWait;
+                    }
+                });
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                isDependencyWait = true;
+            }
+        }, 10000);
     }
 }
 //https://github.com/bintray/gradle-bintray-plugin/issues/88

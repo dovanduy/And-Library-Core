@@ -11,7 +11,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         def date = new Date()
         //def formattedDate = date.format('yyyyMMddHHmmss')
-        def formattedDate = date.format('yyyyMMdd')
+        //def formattedDate = date.format('yyyyMMdd')
+        def formattedDate = date.format('yyyyMMdd-HHmmss')
         def apkName = applicationId + '-v-' + defaultConfig.versionName + ' - ' + formattedDate + ' '
         setProperty("archivesBaseName", "$apkName")
     }
