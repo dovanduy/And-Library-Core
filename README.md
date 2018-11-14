@@ -3,10 +3,9 @@ And Library Core
 
 https://android.jlelse.eu/publish-multi-module-android-libraries-on-jitpack-339213f6224c
 
-<a href='https://bintray.com/rzrasel/android-core-library-center/android-core-library/_latestVersion'><img src='https://api.bintray.com/packages/rzrasel/android-core-library-center/android-core-library/images/download.svg'></a>
 
-<a href='https://bintray.com/rzrasel/android-power-pack/android-core-library?source=watch' alt='Get automatic notifications about new "android-core-library" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
-[ ![Download](https://api.bintray.com/packages/rzrasel/android-power-pack/android-core-library/images/download.svg) ](https://bintray.com/rzrasel/android-power-pack/android-core-library/_latestVersion)
+<a href='https://bintray.com/rzrasel/android-core-library-center/android-core-library?source=watch' alt='Get automatic notifications about new "android-core-library" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
+[ ![Download](https://api.bintray.com/packages/rzrasel/android-core-library-center/android-core-library/images/download.svg) ](https://bintray.com/rzrasel/android-core-library-center/android-core-library/_latestVersion)
 [![](https://jitpack.io/v/rzrasel/And-Library-Core.svg)](https://jitpack.io/#rzrasel/And-Library-Core)
 
 <!--
