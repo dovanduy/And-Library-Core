@@ -17,8 +17,5 @@ public class ActSplash extends AppCompatActivity {
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
-        RedirectWindow redirectWindow = new RedirectWindow(context);
-        Bundle bundleExtras = new Bundle();
-        redirectWindow.setBundle(bundleExtras);
     }
 }
