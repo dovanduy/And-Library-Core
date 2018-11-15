@@ -38,15 +38,15 @@ public class RedirectWindow {
         return this;
     }
 
-    public void runRedirect(Class<?> argRedirectClass) {
+    public void run(Class<?> argRedirectClass) {
         this.f1122d.m1398a((Class) argRedirectClass);
     }
 
-    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds) {
+    public void run(Class<?> argRedirectClass, int argTimeMilliseconds) {
         this.f1122d.m1399a((Class) argRedirectClass, argTimeMilliseconds);
     }
 
-    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
+    public void run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
         this.f1122d.m1400a(argRedirectClass, argTimeMilliseconds, argOnEventListener);
     }
 
