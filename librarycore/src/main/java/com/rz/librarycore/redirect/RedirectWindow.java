@@ -13,6 +13,7 @@ public class RedirectWindow {
     public RedirectWindow(Activity argActivity, Context argContext) {
         this.f1120a = argActivity;
         this.f1121b = argContext;
+        f1122d = new C0372a(f1120a, f1121b);
     }
 
     public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
