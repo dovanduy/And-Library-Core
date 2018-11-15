@@ -20,33 +20,23 @@ public class ActSplash extends AppCompatActivity {
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
-        RoundImage.onSayHi();
-        MashUp.onSayHi();
+        /*RoundImage.onSayHi();
+        MashUp.onSayHi();*/
         //RedirectWindow redirectWindow = new RedirectWindow(activity, context);
-        Bundle bundle = new Bundle();
-        RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .runRedirect(ActTestTwo.class);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .runRedirect(ActTestTwo.class, 5000);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .runRedirect(ActTestTwo.class, 5000, new RedirectWindow.OnEventListener() {
-                    @Override
-                    public boolean onDependencyWait() {
-                        return isDependencyWait;
-                    }
-                });
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                isDependencyWait = true;
-            }
-        }, 10000);
+        String tag = "TEST_TAG";
+        LogWriter.isDebug = true;
+        LogWriter.Log("Test log log");
+        LogWriter.Log(tag, "Test log log");
+        LogWriter.dLog("Test log d");
+        LogWriter.dLog(tag, "Test log d");
+        LogWriter.eLog("Test log e");
+        LogWriter.eLog(tag, "Test log e");
+        LogWriter.iLog("Test log i");
+        LogWriter.iLog(tag, "Test log i");
+        LogWriter.vLog("Test log v");
+        LogWriter.vLog(tag, "Test log v");
+        LogWriter.wtfLog("Test log wtf");
+        LogWriter.wtfLog(tag, "Test log wtf");
     }
 }
 //https://github.com/bintray/gradle-bintray-plugin/issues/88

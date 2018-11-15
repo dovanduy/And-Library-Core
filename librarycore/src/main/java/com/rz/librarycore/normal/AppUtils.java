@@ -10,7 +10,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.rz.librarycore.BuildConfig;
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

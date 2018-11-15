@@ -3,7 +3,7 @@ package com.rz.librarycore.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.util.Map;
 import java.util.Set;

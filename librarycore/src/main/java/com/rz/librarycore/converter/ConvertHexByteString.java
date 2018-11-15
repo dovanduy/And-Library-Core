@@ -1,6 +1,6 @@
 package com.rz.librarycore.converter;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

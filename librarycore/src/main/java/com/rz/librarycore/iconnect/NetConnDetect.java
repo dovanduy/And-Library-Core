@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 /**
  * Created by Rz Rasel on 2016-08-01.

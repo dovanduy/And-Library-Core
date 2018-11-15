@@ -1,6 +1,6 @@
 package com.rz.librarycore.http;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.util.Iterator;
 import java.util.Map;

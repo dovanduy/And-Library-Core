@@ -1,4 +1,4 @@
-package com.rz.usagesexampl;
+package com.rz.usagesexampl.done;
 
 import android.app.Activity;
 import android.content.Context;

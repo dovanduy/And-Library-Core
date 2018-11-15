@@ -3,7 +3,7 @@ package com.rz.librarycore.http;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.util.HashMap;
 

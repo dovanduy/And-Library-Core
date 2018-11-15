@@ -1,6 +1,6 @@
 package com.rz.librarycore.http;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

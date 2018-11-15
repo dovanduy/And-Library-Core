@@ -6,9 +6,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +23,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Rz Rasel on 2018-01-23.

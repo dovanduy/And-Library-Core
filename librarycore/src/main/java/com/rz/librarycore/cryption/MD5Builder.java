@@ -1,6 +1,6 @@
 package com.rz.librarycore.cryption;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

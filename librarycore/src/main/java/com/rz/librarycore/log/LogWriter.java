@@ -1,160 +1,90 @@
 package com.rz.librarycore.log;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class LogWriter {
     public static boolean isDebug = true;
+    protected static final String f1109b = LogWriter.class.getName();
 
     public static void Log(String argMessage) {
-        //|------------------------------------------------------------|
-        if (!isDebug) {
-            return;
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1387a(argMessage);
         }
-        String buildMessage = "";
-        buildMessage = "Message:- " + argMessage + "; "
-                + "Class Name:- " + getCallerClassName() + "; "
-                + "Method Name:- " + getCallerMethodName() + "; "
-                + "Line Number:- " + getCallerLineNumber() + "; "
-                + "File Name:- " + getCallerFileName();
-        System.out.println("DEBUG_LOG_PRINT_WRITER:- " + buildMessage);
-        //|------------------------------------------------------------|
     }
 
     public static void Log(String argTag, String argMessage) {
-        //|------------------------------------------------------------|
-        if (!isDebug) {
-            return;
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1388a(argTag, argMessage);
         }
-        argTag = argTag.toUpperCase();
-        argTag = "DEBUG_LOG_PRINT_WRITER_" + argTag.replaceAll("\\s+", "_");
-        String buildMessage = "";
-        buildMessage = "Message:- " + argMessage + " - "
-                + "Class Name:- " + getCallerClassName() + "; "
-                + "Method Name:- " + getCallerMethodName() + "; "
-                + "Line Number:- " + getCallerLineNumber() + "; "
-                + "File Name:- " + getCallerFileName();
-        System.out.println(argTag + ":- " + buildMessage);
-        //|------------------------------------------------------------|
-        /*int pid = android.os.Process.myPid();
-        File outputFile = new File(Environment.getExternalStorageDirectory() + "/logs/logcat.txt");
-        try {
-            String command = "logcat | grep " + pid + " > " + outputFile.getAbsolutePath();
-            Process p = Runtime.getRuntime().exec("su");
-            OutputStream os = p.getOutputStream();
-            os.write((command + "\n").getBytes("ASCII"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        //|------------------------------------------------------------|
     }
 
-    public static String getCallerClassName() {
-        /*String callerClassName = new Exception().getStackTrace()[1].getClassName();
-        String calleeClassName = new Exception().getStackTrace()[0].getClassName();*/
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        /*for (int i = 0; i < stackTraceElements.length; i++) {
-            System.out.println("DEBUG_TRACE: " + stackTraceElements[i].getClassName());
-        }*/
-        //for (StackTraceElement element : stackTrace)
-        if (stackTraceElements.length >= 4) {
-            return Thread.currentThread().getStackTrace()[4].getClassName();
-        } else if (stackTraceElements.length == 3) {
-            return Thread.currentThread().getStackTrace()[3].getClassName();
-        } else if (stackTraceElements.length == 2) {
-            return Thread.currentThread().getStackTrace()[2].getClassName();
+    public static void dLog(String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1389b(argMessage);
         }
-        return "";
     }
 
-    public static String getCallerClassNameOnly() {
-        String fullClassName = "";
-        String className = "";
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        if (stackTraceElements.length >= 4) {
-            fullClassName = Thread.currentThread().getStackTrace()[4].getClassName();
-            className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-            return className;
-        } else if (stackTraceElements.length == 3) {
-            fullClassName = Thread.currentThread().getStackTrace()[3].getClassName();
-            className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-            return className;
-        } else if (stackTraceElements.length == 2) {
-            fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
-            className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-            return className;
+    public static void dLog(String argTag, String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1390b(argTag, argMessage);
         }
-        return className;
     }
 
-    public static String getCallerMethodName() {
-        /*String callerClassName = new Exception().getStackTrace()[1].getClassName();
-        String calleeClassName = new Exception().getStackTrace()[0].getClassName();*/
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        if (stackTraceElements.length >= 4) {
-            return Thread.currentThread().getStackTrace()[4].getMethodName();
-        } else if (stackTraceElements.length == 3) {
-            return Thread.currentThread().getStackTrace()[3].getMethodName();
-        } else if (stackTraceElements.length == 2) {
-            return Thread.currentThread().getStackTrace()[2].getMethodName();
+    public static void eLog(String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1391c(argMessage);
         }
-        return "";
     }
 
-    public static String getCallerLineNumber() {
-        /*String callerClassName = new Exception().getStackTrace()[1].getClassName();
-        String calleeClassName = new Exception().getStackTrace()[0].getClassName();*/
-        Throwable throwable = new Throwable();
-        StackTraceElement[] stackTraceElements = throwable.getStackTrace();
-        /*for (StackTraceElement element : stackTraceElements) {
-            System.out.println("LINE_NUMBER: " + element.getLineNumber());
-        }*/
-        //StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        if (stackTraceElements.length >= 4) {
-            return Thread.currentThread().getStackTrace()[4].getLineNumber() + "";
-        } else if (stackTraceElements.length == 3) {
-            return Thread.currentThread().getStackTrace()[3].getLineNumber() + "";
-        } else if (stackTraceElements.length == 2) {
-            return Thread.currentThread().getStackTrace()[2].getLineNumber() + "";
+    public static void eLog(String argTag, String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1392c(argTag, argMessage);
         }
-        return "";
     }
 
-    public static String getCallerFileName() {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        if (stackTraceElements.length >= 4) {
-            return stackTraceElements[4].getFileName() + "";
-        } else if (stackTraceElements.length == 3) {
-            return stackTraceElements[3].getFileName() + "";
-        } else if (stackTraceElements.length == 2) {
-            return stackTraceElements[2].getFileName() + "";
+    public static void iLog(String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1393d(argMessage);
         }
-        /*String retVal = "";
-        for (StackTraceElement element : stackTraceElements) {
-            retVal += element.getFileName() + " ";
-        }
-        return retVal;*/
-        return "";
     }
 
-    public static String getCallerClassNameTemp() {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        for (int i = 1; i < stackTraceElements.length; i++) {
-            StackTraceElement ste = stackTraceElements[i];
-            /*if (!ste.getClassName().equals(KDebug.class.getName()) && ste.getClassName().indexOf("java.lang.Thread") != 0) {
-                return ste.getClassName();
-            }*/
+    public static void iLog(String argTag, String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1394d(argTag, argMessage);
         }
-        return null;
     }
 
+    public static void vLog(String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1395e(argMessage);
+        }
+    }
 
-    public static class ArrayHandle {
-        public static Object[] reverse(Object[] arr) {
-            List<Object> list = Arrays.asList(arr);
-            Collections.reverse(list);
-            return list.toArray();
+    public static void vLog(String argTag, String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1396e(argTag, argMessage);
+        }
+    }
+
+    public static void wtfLog(String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1397f(argMessage);
+        }
+    }
+
+    public static void wtfLog(String argTag, String argMessage) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.m1398f(argTag, argMessage);
         }
     }
 }

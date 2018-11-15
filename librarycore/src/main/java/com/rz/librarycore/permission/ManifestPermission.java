@@ -3,11 +3,10 @@ package com.rz.librarycore.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.librarycore.log.LogWriter;
+import com.rz.librarycore.log.original.LogWriter;
 
 /**
  * Created by Rz Rasel on 2017-12-11.

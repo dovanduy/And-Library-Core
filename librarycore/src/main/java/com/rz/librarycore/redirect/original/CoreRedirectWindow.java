@@ -17,7 +17,7 @@ class CoreRedirectWindow {
     private Context context;
     private Intent intent;
     private Bundle bundle;
-    Class<?> redirectClass;
+    private Class<?> redirectClass;
     private List<Integer> methodCallerList = new ArrayList<>();
     private Handler handlerRedirect;
     private RedirectWindow.OnEventListener onEventListener;
@@ -113,7 +113,7 @@ class CoreRedirectWindow {
         return;
     }
 
-    private Thread threadRedirect = new Thread(new Runnable() {
+    protected Thread threadRedirect = new Thread(new Runnable() {
         @Override
         public void run() {
             if (isDependencyWait) {
@@ -128,7 +128,7 @@ class CoreRedirectWindow {
         }
     });
 
-    private void onRun() {
+    protected void onRun() {
         Collections.sort(methodCallerList, new Comparator<Integer>() {
             @Override
             public int compare(Integer objLeftSide, Integer objRightSide) {
@@ -166,7 +166,7 @@ class CoreRedirectWindow {
 class CollectionSort {
     private List<Integer> methodCallerList = new ArrayList<>();
 
-    private void sortAscending() {
+    protected void sortAscending() {
         methodCallerList.clear();
         methodCallerList.add(1);
         methodCallerList.add(3);
@@ -186,7 +186,7 @@ class CollectionSort {
         }
     }
 
-    private void sortDescending() {
+    protected void sortDescending() {
         methodCallerList.clear();
         methodCallerList.add(1);
         methodCallerList.add(3);
@@ -206,7 +206,7 @@ class CollectionSort {
         }
     }
 
-    private void sortCustom() {
+    protected void sortCustom() {
         ArrayList<ModelData> modelDataArrayList = new ArrayList<>();
         Collections.sort(modelDataArrayList, new Comparator<ModelData>() {
             public int compare(ModelData objOne, ModelData objTwo) {
