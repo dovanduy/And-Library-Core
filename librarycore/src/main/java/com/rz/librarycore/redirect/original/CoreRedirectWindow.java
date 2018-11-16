@@ -272,6 +272,10 @@ class CollectionSort {
         }
     }
 
+    private void someMethod(int argValue) {
+        System.out.println(argValue);
+    }
+
     public void reflectionTest() {
         String strMethodName = new Object() {
         }.getClass().getEnclosingMethod().getName();
