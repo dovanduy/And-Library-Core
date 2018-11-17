@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,13 +24,16 @@ class CoreRedirectWindow {
     private Handler handlerRedirect;
     private RedirectWindow.OnEventListener onEventListener;
     private boolean isDependencyWait = true;
+    private String methodName = "methodName";
 
     /*public CoreRedirectWindow(Context argContext) {
         context = argContext;
     }*/
     protected CoreRedirectWindow(Activity argActivity, Context argContext) {
+        methodName = "CoreRedirectWindow(Activity argActivity, Context argContext)";
         activity = argActivity;
         context = argContext;
+        methodCallerList = new ArrayList<>();
         methodCallerList.clear();
     }
 
@@ -44,7 +49,9 @@ class CoreRedirectWindow {
     }*/
 
     protected CoreRedirectWindow withIntent(Intent argIntent) {
-        methodCallerList.add(1);
+        methodName = "withIntent(Intent argIntent)";
+        //methodCallerList.add(1);
+        setPriority();
         return this;
     }
 
@@ -55,23 +62,29 @@ class CoreRedirectWindow {
      * @return self class object
      */
     protected CoreRedirectWindow withBundle(Bundle argBundle) {
+        methodName = "withBundle(Bundle argBundle)";
+        setPriority();
         this.bundle = argBundle;
         /*if (intent != null) {
             intent.putExtras(bundle);
         }*/
-        methodCallerList.add(2);
+        //methodCallerList.add(2);
         return this;
     }
 
     protected CoreRedirectWindow withFlag() {
+        methodName = "withFlag()";
+        setPriority();
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        methodCallerList.add(3);
+        //methodCallerList.add(3);
         return this;
     }
 
     protected CoreRedirectWindow disposeWindow() {
+        methodName = "disposeWindow()";
+        setPriority();
         //activity.finish();
-        methodCallerList.add(5);
+        //methodCallerList.add(5);
         return this;
     }
 
@@ -83,52 +96,44 @@ class CoreRedirectWindow {
         return;
     }*/
 
-    protected void runRedirect(Class<?> argRedirectClass) {
+    protected void execute(Class<?> argRedirectClass) {
+        methodName = "execute(Class<?> argRedirectClass)";
+        setPriority();
         //activity.startActivity(intent);
         redirectClass = argRedirectClass;
         //intent = new Intent(context, redirectClass);
-        methodCallerList.add(4);
+        //methodCallerList.add(4);
         onRun();
         return;
     }
 
-    protected void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds) {
+    protected void execute(Class<?> argRedirectClass, int argTimeMilliseconds) {
+        methodName = "execute(Class<?> argRedirectClass, int argTimeMilliseconds)";
+        setPriority();
         redirectClass = argRedirectClass;
         //intent = new Intent(context, redirectClass);
         handlerRedirect = new Handler();
-        methodCallerList.add(4);
+        //methodCallerList.add(4);
         isDependencyWait = true;
         handlerRedirect.postDelayed(threadRedirect, argTimeMilliseconds);
         return;
     }
 
-    protected void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds, RedirectWindow.OnEventListener argOnEventListener) {
+    protected void execute(Class<?> argRedirectClass, int argTimeMilliseconds, RedirectWindow.OnEventListener argOnEventListener) {
+        methodName = "execute(Class<?> argRedirectClass, int argTimeMilliseconds, RedirectWindow.OnEventListener argOnEventListener)";
+        setPriority();
         redirectClass = argRedirectClass;
         onEventListener = argOnEventListener;
         //intent = new Intent(context, redirectClass);
         handlerRedirect = new Handler();
-        methodCallerList.add(4);
+        ///methodCallerList.add(4);
         isDependencyWait = false;
         handlerRedirect.postDelayed(threadRedirect, argTimeMilliseconds);
         return;
     }
 
-    protected Thread threadRedirect = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            if (isDependencyWait) {
-                onRun();
-                //System.out.println("RUN_CALLED");
-                handlerRedirect.removeCallbacks(threadRedirect);
-            } else {
-                isDependencyWait = onEventListener.onDependencyWait();
-                //System.out.println("RUN_CALLED_REDIRECT_WAIT: " + isDependencyWait);
-                handlerRedirect.postDelayed(threadRedirect, 50);
-            }
-        }
-    });
-
     protected void onRun() {
+        methodName = "onRun()";
         Collections.sort(methodCallerList, new Comparator<Integer>() {
             @Override
             public int compare(Integer objLeftSide, Integer objRightSide) {
@@ -158,9 +163,60 @@ class CoreRedirectWindow {
         }
     }
 
-    /*protected interface OnEventListener {
-        boolean onDependencyWait();
-    }*/
+    protected Thread threadRedirect = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            if (isDependencyWait) {
+                onRun();
+                //System.out.println("RUN_CALLED");
+                handlerRedirect.removeCallbacks(threadRedirect);
+            } else {
+                isDependencyWait = onEventListener.onDependencyWait();
+                //System.out.println("RUN_CALLED_REDIRECT_WAIT: " + isDependencyWait);
+                handlerRedirect.postDelayed(threadRedirect, 50);
+            }
+        }
+    });
+
+    private enum PRIORITY {
+        WITH_INTENT(1),
+        WITH_BUNDLE(2),
+        WITH_FLAG(3),
+        EXECUTE(4),
+        DISPOSE_WINDOW(5);
+        private int item;
+
+        PRIORITY(int argValue) {
+            this.item = argValue;
+        }
+
+        public int getItem() {
+            return this.item;
+        }
+    }
+
+    private void setPriority() {
+        methodName = "setPriority()";
+        //String strMethodName = argMethodName.replaceAll("(.)([A-Z])", "$1_$2").toUpperCase();
+        String strMethodName = Thread.currentThread().getStackTrace()[3].getMethodName()
+                .replaceAll("(.)([A-Z])", "$1_$2").toUpperCase();
+        //System.out.println("METHOD_NAME: " + strMethodName);
+        if (containsEnum(PRIORITY.class, strMethodName)) {
+            //System.out.println("ENUM_VALUE: " + PRIORITY.valueOf(strMethodName).getItem());
+            int priority = PRIORITY.valueOf(strMethodName).item;
+            methodCallerList.add(priority);
+        }
+    }
+
+    private <E extends Enum<E>> boolean containsEnum(Class<E> argEnum, String argValue) {
+        methodName = "containsEnum(Class<E> argEnum, String argValue)";
+        for (Enum<E> item : argEnum.getEnumConstants()) {
+            if (item.toString().equals(argValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 class CollectionSort {
@@ -216,7 +272,7 @@ class CollectionSort {
         Collections.reverse(modelDataArrayList);
     }
 
-    class ModelData {
+    public class ModelData {
         private String name;
 
         public String getName() {
@@ -225,6 +281,35 @@ class CollectionSort {
 
         public void setName(String name) {
             this.name = name;
+        }
+    }
+
+    private void someMethod(int argValue) {
+        System.out.println(argValue);
+    }
+
+    public void reflectionTest() {
+        String strMethodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        //setPriority();
+        try {
+            String className = this.getClass().getName();
+            Class<?> typeClass = Class.forName(className);
+            Object object = typeClass.newInstance();
+            String methodName = "someMethod";
+            //Method method = object.getClass().getMethod(methodName);
+            Method method = object.getClass().getDeclaredMethod(methodName, int.class);
+            method.invoke(object, 10);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
     }
 }

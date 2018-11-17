@@ -5,15 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 
 public class RedirectWindow {
-    private Activity f1120a;
-    private Context f1121b;
+    private Activity f1128a;
+    private Context f1129b;
     private static RedirectWindow instance = null;
-    private C0372a f1122d;
+    private C0371a f1130d;
 
     public RedirectWindow(Activity argActivity, Context argContext) {
-        this.f1120a = argActivity;
-        this.f1121b = argContext;
-        f1122d = new C0372a(f1120a, f1121b);
+        this.f1128a = argActivity;
+        this.f1129b = argContext;
+        this.f1130d = new C0371a(this.f1128a, this.f1129b);
     }
 
     public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
@@ -24,33 +24,33 @@ public class RedirectWindow {
     }
 
     public RedirectWindow withBundle(Bundle argBundle) {
-        this.f1122d.m1397a(argBundle);
+        this.f1130d.m1395a(argBundle);
         return this;
     }
 
     public RedirectWindow withFlag() {
-        this.f1122d.m1396a();
+        this.f1130d.m1394a();
         return this;
     }
 
     public RedirectWindow disposeWindow() {
-        this.f1122d.m1401b();
+        this.f1130d.m1399b();
         return this;
     }
 
     public void run(Class<?> argRedirectClass) {
-        this.f1122d.m1398a((Class) argRedirectClass);
+        this.f1130d.m1396a((Class) argRedirectClass);
     }
 
     public void run(Class<?> argRedirectClass, int argTimeMilliseconds) {
-        this.f1122d.m1399a((Class) argRedirectClass, argTimeMilliseconds);
+        this.f1130d.m1397a((Class) argRedirectClass, argTimeMilliseconds);
     }
 
-    public void run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
-        this.f1122d.m1400a(argRedirectClass, argTimeMilliseconds, argOnEventListener);
+    public void m1407a(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
+        this.f1130d.m1398a(argRedirectClass, argTimeMilliseconds, argOnEventListener);
     }
 
     public interface OnEventListener {
-        public boolean onDependencyWait();
+        boolean onDependencyWait();
     }
 }

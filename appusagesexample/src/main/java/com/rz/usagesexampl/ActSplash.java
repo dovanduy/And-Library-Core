@@ -2,11 +2,8 @@ package com.rz.usagesexampl;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.rz.librarycore.log.LogWriter;
-import com.rz.librarycore.redirect.RedirectWindow;
+import android.support.v7.app.AppCompatActivity;
 
 public class ActSplash extends AppCompatActivity {
     private Activity activity;

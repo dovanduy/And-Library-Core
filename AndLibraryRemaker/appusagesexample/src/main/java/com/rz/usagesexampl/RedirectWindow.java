@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.done;
+package com.rz.usagesexampl;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,9 +28,11 @@ public class RedirectWindow {
     private Intent intent;
     private CoreRedirectWindow coreRedirectWindow;
     private OnEventListener onEventListener;
+    private String methodName = "methodName";
     //private RedirectWindow redirectWindow = new RedirectWindow(activity, context);
 
     public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
+        String staticMethodName = "RedirectWindow getInstance(Activity argActivity, Context argContext)";
         if (instance == null) {
             instance = new RedirectWindow(argActivity, argContext);
         }
@@ -38,6 +40,7 @@ public class RedirectWindow {
     }
 
     public RedirectWindow(Activity argActivity, Context argContext) {
+        methodName = "RedirectWindow(Activity argActivity, Context argContext)";
         activity = argActivity;
         context = argContext;
         coreRedirectWindow = new CoreRedirectWindow(activity, context);
@@ -57,16 +60,19 @@ public class RedirectWindow {
      * @return self class object
      */
     public RedirectWindow withBundle(Bundle argBundle) {
+        methodName = "withBundle(Bundle argBundle)";
         coreRedirectWindow.withBundle(argBundle);
         return this;
     }
 
     public RedirectWindow withFlag() {
+        methodName = "withFlag()";
         coreRedirectWindow.withFlag();
         return this;
     }
 
     public RedirectWindow disposeWindow() {
+        methodName = "disposeWindow()";
         coreRedirectWindow.disposeWindow();
         return this;
     }
@@ -77,18 +83,21 @@ public class RedirectWindow {
         return;
     }*/
 
-    public void runRedirect(Class<?> argRedirectClass) {
-        coreRedirectWindow.runRedirect(argRedirectClass);
+    public void run(Class<?> argRedirectClass) {
+        methodName = "run(Class<?> argRedirectClass)";
+        coreRedirectWindow.execute(argRedirectClass);
         return;
     }
 
-    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds) {
-        coreRedirectWindow.runRedirect(argRedirectClass, argTimeMilliseconds);
+    public void run(Class<?> argRedirectClass, int argTimeMilliseconds) {
+        methodName = "run(Class<?> argRedirectClass, int argTimeMilliseconds)";
+        coreRedirectWindow.execute(argRedirectClass, argTimeMilliseconds);
         return;
     }
 
-    public void runRedirect(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
-        coreRedirectWindow.runRedirect(argRedirectClass, argTimeMilliseconds, argOnEventListener);
+    public void run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
+        methodName = "run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener)";
+        coreRedirectWindow.execute(argRedirectClass, argTimeMilliseconds, argOnEventListener);
         return;
     }
 
