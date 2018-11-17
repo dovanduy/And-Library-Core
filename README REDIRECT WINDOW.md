@@ -21,28 +21,30 @@ https://android.jlelse.eu/publish-multi-module-android-libraries-on-jitpack-3392
 
 ### Code Usages
 ```code_usages
-Bundle bundle = new Bundle();
-RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-redirectWindow.withBundle(bundle)
-        .withFlag()
-        .disposeWindow()
-        .runRedirect(ActTestTwo.class);
-redirectWindow.withBundle(bundle)
-        .withFlag()
-        .disposeWindow()
-        .runRedirect(ActTestTwo.class, 5000);
-redirectWindow.withBundle(bundle)
-        .withFlag()
-        .disposeWindow()
-        .runRedirect(ActTestTwo.class, 5000, new RedirectWindow.OnEventListener() {
-            @Override
-            public boolean onDependencyWait() {
-                return isDependencyWait;
-            }
-        });
-new Handler().postDelayed(new Runnable() {
-    public void run() {
-        isDependencyWait = true;
-    }
-}, 10000);
+private void onRedirectWindow() {
+    Bundle bundle = new Bundle();
+    RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
+    redirectWindow.withBundle(bundle)
+            .withFlag()
+            .disposeWindow()
+            .run(ActTestTwo.class);
+    redirectWindow.withBundle(bundle)
+            .withFlag()
+            .disposeWindow()
+            .run(ActTestTwo.class, 5000);
+    redirectWindow.withBundle(bundle)
+            .withFlag()
+            .disposeWindow()
+            .run(ActTestTwo.class, 5000, new RedirectWindow.OnEventListener() {
+                @Override
+                public boolean onDependencyWait() {
+                    return isDependencyWait;
+                }
+            });
+    new Handler().postDelayed(new Runnable() {
+        public void run() {
+            isDependencyWait = true;
+        }
+    }, 10000);
+}
 ```

@@ -46,7 +46,7 @@ public class RedirectWindow {
         this.f1130d.m1397a((Class) argRedirectClass, argTimeMilliseconds);
     }
 
-    public void m1407a(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
+    public void run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
         this.f1130d.m1398a(argRedirectClass, argTimeMilliseconds, argOnEventListener);
     }
 
