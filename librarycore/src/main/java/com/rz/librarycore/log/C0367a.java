@@ -177,4 +177,45 @@ class C0367a {
     private static boolean m1401i(String str) {
         return str == null || str.trim().isEmpty() || str.equalsIgnoreCase("null");
     }
+
+    protected static void LogLoopPrint(String argDesiredClassName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        StackTraceElement[] stackTraceElements = new Throwable().fillInStackTrace().getStackTrace();
+        String callingClass = "<unknown>";
+        String callerMethod = "<unknown>";
+        String lineNumber = "<unknown>";
+        String fileName = "<unknown>";
+        stringBuilder.append("Class Name:- " + callingClass);
+        stringBuilder.append("Method Name:- " + callerMethod);
+        stringBuilder.append("Line Number:- " + lineNumber);
+        stringBuilder.append("File Name:- " + fileName);
+        for (int i = 2; i < stackTraceElements.length; i++) {
+            String className = stackTraceElements[i].getClassName();
+            if (className.equalsIgnoreCase(argDesiredClassName)) {
+                callingClass = stackTraceElements[i].getClassName();
+                callerMethod = stackTraceElements[i].getMethodName();
+                lineNumber = stackTraceElements[i].getLineNumber() + "";
+                fileName = stackTraceElements[i].getFileName() + "";
+                stringBuilder.setLength(0);
+                stringBuilder.append(callingClass + " ");
+                stringBuilder.append("Method: " + callerMethod + " ");
+                stringBuilder.append("Line: " + lineNumber + " ");
+                stringBuilder.append(" File: " + fileName);
+            }
+        }
+        System.out.println("LOG_PRINT: " + stringBuilder.toString());
+    }
+
+    private static boolean isNullOrEmpty(String argValue) {
+        if (argValue == null) {
+            return true;
+        }
+        if (argValue.trim().isEmpty()) {
+            return true;
+        }
+        if (argValue.equalsIgnoreCase("null")) {
+            return true;
+        }
+        return false;
+    }
 }

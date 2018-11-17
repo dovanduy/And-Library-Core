@@ -87,4 +87,11 @@ public class LogWriter {
             C0367a.m1398f(argTag, argMessage);
         }
     }
+
+    public static void LogLoopPrint(String argDesiredClassName) {
+        if (isDebug) {
+            C0367a.f1106a = isDebug;
+            C0367a.LogLoopPrint(argDesiredClassName);
+        }
+    }
 }

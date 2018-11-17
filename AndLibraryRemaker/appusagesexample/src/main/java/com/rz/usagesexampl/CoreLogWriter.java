@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.done;
+package com.rz.usagesexampl;
 
 import android.util.Log;
 
@@ -9,9 +9,11 @@ import java.util.List;
 class CoreLogWriter {
     protected static boolean isDebug = true;
     private static final String CLASS_NAME = CoreLogWriter.class.getName();
+    private static String methodName = "methodName";
     //private static String strLogTagPre = "DEBUG_LOG_PRINT_WRITER";
 
     protected static void Log(String argMessage) {
+        methodName = "Log(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -23,6 +25,7 @@ class CoreLogWriter {
     }
 
     protected static void Log(String argTag, String argMessage) {
+        methodName = "Log(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -48,6 +51,7 @@ class CoreLogWriter {
     }
 
     protected static void dLog(String argMessage) {
+        methodName = "dLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -59,6 +63,7 @@ class CoreLogWriter {
     }
 
     protected static void dLog(String argTag, String argMessage) {
+        methodName = "dLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -74,6 +79,7 @@ class CoreLogWriter {
     }
 
     protected static void eLog(String argMessage) {
+        methodName = "eLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -90,6 +96,7 @@ class CoreLogWriter {
     }
 
     protected static void eLog(String argTag, String argMessage) {
+        methodName = "eLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -108,6 +115,7 @@ class CoreLogWriter {
     }
 
     protected static void iLog(String argMessage) {
+        methodName = "iLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -124,6 +132,7 @@ class CoreLogWriter {
     }
 
     protected static void iLog(String argTag, String argMessage) {
+        methodName = "iLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -142,6 +151,7 @@ class CoreLogWriter {
     }
 
     protected static void vLog(String argMessage) {
+        methodName = "vLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -158,6 +168,7 @@ class CoreLogWriter {
     }
 
     protected static void vLog(String argTag, String argMessage) {
+        methodName = "vLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -176,6 +187,7 @@ class CoreLogWriter {
     }
 
     protected static void wtfLog(String argMessage) {
+        methodName = "wtfLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -192,6 +204,7 @@ class CoreLogWriter {
     }
 
     protected static void wtfLog(String argTag, String argMessage) {
+        methodName = "wtfLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -207,6 +220,7 @@ class CoreLogWriter {
     }
 
     private static String getLogMessage(String argMessage) {
+        methodName = "getLogMessage(String argMessage)";
         String buildMessage = "";
         buildMessage = argMessage + " # " + getCallerDetails();
         return buildMessage;
@@ -223,6 +237,7 @@ class CoreLogWriter {
     }
 
     private static String getCallerDetails() {
+        methodName = "getCallerDetails()";
         StringBuilder stringBuilder = new StringBuilder();
         StackTraceElement[] stackTraceElements = new Throwable().fillInStackTrace().getStackTrace();
         String callingClass = "<unknown>";
@@ -395,6 +410,34 @@ class CoreLogWriter {
         System.out.println("LOG_PRINT: " + stringBuilder.toString());
     }
 
+    protected static void LogLoopPrint(String argDesiredClassName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        StackTraceElement[] stackTraceElements = new Throwable().fillInStackTrace().getStackTrace();
+        String callingClass = "<unknown>";
+        String callerMethod = "<unknown>";
+        String lineNumber = "<unknown>";
+        String fileName = "<unknown>";
+        stringBuilder.append("Class Name:- " + callingClass);
+        stringBuilder.append("Method Name:- " + callerMethod);
+        stringBuilder.append("Line Number:- " + lineNumber);
+        stringBuilder.append("File Name:- " + fileName);
+        for (int i = 2; i < stackTraceElements.length; i++) {
+            String className = stackTraceElements[i].getClassName();
+            if (className.equalsIgnoreCase(argDesiredClassName)) {
+                callingClass = stackTraceElements[i].getClassName();
+                callerMethod = stackTraceElements[i].getMethodName();
+                lineNumber = stackTraceElements[i].getLineNumber() + "";
+                fileName = stackTraceElements[i].getFileName() + "";
+                stringBuilder.setLength(0);
+                stringBuilder.append(callingClass + " ");
+                stringBuilder.append("Method: " + callerMethod + " ");
+                stringBuilder.append("Line: " + lineNumber + " ");
+                stringBuilder.append(" File: " + fileName);
+            }
+        }
+        System.out.println("LOG_PRINT: " + stringBuilder.toString());
+    }
+
     protected static class ArrayHandle {
         public static Object[] reverse(Object[] arr) {
             List<Object> list = Arrays.asList(arr);
@@ -404,6 +447,7 @@ class CoreLogWriter {
     }
 
     private static boolean isNullOrEmpty(String argValue) {
+        methodName = "isNullOrEmpty(String argValue)";
         if (argValue == null) {
             return true;
         }
@@ -414,5 +458,170 @@ class CoreLogWriter {
             return true;
         }
         return false;
+    }
+
+    static class Write {
+
+        protected static void Log(String argDesiredClassName, String argMessage) {
+            methodName = "Log(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            System.out.println(getLogTag("") + getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void Log(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "Log(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            System.out.println(getLogTag(argTag) + getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void dLog(String argDesiredClassName, String argMessage) {
+            methodName = "dLog(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.d(getLogTag(""), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void dLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "dLog(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.d(getLogTag(argTag), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void eLog(String argDesiredClassName, String argMessage) {
+            methodName = "eLog(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.e(getLogTag(""), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void eLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "eLog(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.e(getLogTag(argTag), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void iLog(String argDesiredClassName, String argMessage) {
+            methodName = "iLog(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.i(getLogTag(""), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void iLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "iLog(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.i(getLogTag(argTag), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void vLog(String argDesiredClassName, String argMessage) {
+            methodName = "vLog(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.v(getLogTag(""), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void vLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "vLog(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.v(getLogTag(argTag), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void wtfLog(String argDesiredClassName, String argMessage) {
+            methodName = "wtfLog(String argDesiredClassName, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.wtf(getLogTag(""), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        protected static void wtfLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "wtfLog(String argDesiredClassName, String argTag, String argMessage)";
+            //|------------------------------------------------------------|
+            if (!isDebug) {
+                return;
+            }
+            Log.wtf(getLogTag(argTag), getLogMessage(argDesiredClassName, argMessage));
+            //|------------------------------------------------------------|
+        }
+
+        private static String getLogMessage(String argDesiredClassName, String argMessage) {
+            methodName = "getLogMessage(String argDesiredClassName, String argMessage)";
+            String buildMessage = "";
+            buildMessage = argMessage + " # " + getCallerDetails(argDesiredClassName);
+            return buildMessage;
+        }
+
+        private static String getCallerDetails(String argDesiredClassName) {
+            methodName = "getCallerDetails(String argDesiredClassName)";
+            StringBuilder stringBuilder = new StringBuilder();
+            StackTraceElement[] stackTraceElements = new Throwable().fillInStackTrace().getStackTrace();
+            String callingClass = "<unknown>";
+            String callerMethod = "<unknown>";
+            String lineNumber = "<unknown>";
+            String fileName = "<unknown>";
+            stringBuilder.append(callingClass + " ");
+            stringBuilder.append("Method: " + callerMethod + " ");
+            stringBuilder.append("Line: " + lineNumber + " ");
+            stringBuilder.append(" File: " + fileName);
+            for (int i = 2; i < stackTraceElements.length; i++) {
+                String className = stackTraceElements[i].getClassName();
+                if (!isNullOrEmpty(className)) {
+                    if (className.equalsIgnoreCase(argDesiredClassName)) {
+                    /*callingClass = stackTraceElements[i].getClassName();
+                    callingClass = callingClass.substring(callingClass.lastIndexOf('.') + 1);
+                    callingClass = callingClass.substring(callingClass.lastIndexOf('$') + 1);*/
+                        callingClass = stackTraceElements[i].getClassName();
+                        callerMethod = stackTraceElements[i].getMethodName();
+                        lineNumber = stackTraceElements[i].getLineNumber() + "";
+                        fileName = stackTraceElements[i].getFileName() + "";
+                        stringBuilder.setLength(0);
+                        stringBuilder.append(callingClass + " ");
+                        stringBuilder.append("Method: " + callerMethod + " ");
+                        stringBuilder.append("Line: " + lineNumber + " ");
+                        stringBuilder.append(" File: " + fileName);
+                        break;
+                    }
+                }
+            }
+            return stringBuilder.toString();
+        }
     }
 }

@@ -1,10 +1,12 @@
-package com.rz.librarycore.log.original;
+package com.rz.usagesexampl;
 
 public class LogWriter {
     public static boolean isDebug = true;
     protected static final String CLASS_NAME = LogWriter.class.getName();
+    private static String methodName = "methodName";
 
     public static void Log(String argMessage) {
+        methodName = "Log(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -15,6 +17,7 @@ public class LogWriter {
     }
 
     public static void Log(String argTag, String argMessage) {
+        methodName = "Log(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -25,6 +28,7 @@ public class LogWriter {
 
 
     public static void dLog(String argMessage) {
+        methodName = "dLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -35,6 +39,7 @@ public class LogWriter {
     }
 
     public static void dLog(String argTag, String argMessage) {
+        methodName = "dLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -45,6 +50,7 @@ public class LogWriter {
     }
 
     public static void eLog(String argMessage) {
+        methodName = "eLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -55,6 +61,7 @@ public class LogWriter {
     }
 
     public static void eLog(String argTag, String argMessage) {
+        methodName = "eLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -65,6 +72,7 @@ public class LogWriter {
     }
 
     public static void iLog(String argMessage) {
+        methodName = "iLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -75,6 +83,7 @@ public class LogWriter {
     }
 
     public static void iLog(String argTag, String argMessage) {
+        methodName = "iLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -85,6 +94,7 @@ public class LogWriter {
     }
 
     public static void vLog(String argMessage) {
+        methodName = "vLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -95,6 +105,7 @@ public class LogWriter {
     }
 
     public static void vLog(String argTag, String argMessage) {
+        methodName = "vLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -105,6 +116,7 @@ public class LogWriter {
     }
 
     public static void wtfLog(String argMessage) {
+        methodName = "wtfLog(String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -115,6 +127,7 @@ public class LogWriter {
     }
 
     public static void wtfLog(String argTag, String argMessage) {
+        methodName = "wtfLog(String argTag, String argMessage)";
         //|------------------------------------------------------------|
         if (!isDebug) {
             return;
@@ -146,6 +159,7 @@ public class LogWriter {
 
     public static class Write {
         public static void Log(String argDesiredClassName, String argMessage) {
+            methodName = "Log(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -156,6 +170,7 @@ public class LogWriter {
         }
 
         public static void Log(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "Log(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -166,6 +181,7 @@ public class LogWriter {
 
 
         public static void dLog(String argDesiredClassName, String argMessage) {
+            methodName = "dLog(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -176,6 +192,7 @@ public class LogWriter {
         }
 
         public static void dLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "dLog(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -186,6 +203,7 @@ public class LogWriter {
         }
 
         public static void eLog(String argDesiredClassName, String argMessage) {
+            methodName = "eLog(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -196,6 +214,7 @@ public class LogWriter {
         }
 
         public static void eLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "eLog(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -206,6 +225,7 @@ public class LogWriter {
         }
 
         public static void iLog(String argDesiredClassName, String argMessage) {
+            methodName = "iLog(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -216,6 +236,7 @@ public class LogWriter {
         }
 
         public static void iLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "iLog(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -226,6 +247,7 @@ public class LogWriter {
         }
 
         public static void vLog(String argDesiredClassName, String argMessage) {
+            methodName = "vLog(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -236,6 +258,7 @@ public class LogWriter {
         }
 
         public static void vLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "vLog(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -246,6 +269,7 @@ public class LogWriter {
         }
 
         public static void wtfLog(String argDesiredClassName, String argMessage) {
+            methodName = "wtfLog(String argDesiredClassName, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
@@ -256,6 +280,7 @@ public class LogWriter {
         }
 
         public static void wtfLog(String argDesiredClassName, String argTag, String argMessage) {
+            methodName = "wtfLog(String argDesiredClassName, String argTag, String argMessage)";
             //|------------------------------------------------------------|
             if (!isDebug) {
                 return;
