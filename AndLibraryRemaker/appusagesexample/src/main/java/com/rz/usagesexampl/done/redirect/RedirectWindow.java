@@ -104,6 +104,19 @@ public class RedirectWindow {
     public interface OnEventListener {
         public boolean onDependencyWait();
     }
+
+    public void getRandomString(int argStringLength) {
+        //String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder stringBuilder = new StringBuilder();
+        while (argStringLength-- != 0) {
+            int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
+            stringBuilder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        System.out.println("RANDOM_STRING: " + stringBuilder.toString());
+        System.out.println("RANDOM_STRING: " + ALPHA_NUMERIC_STRING.toLowerCase());
+        //return stringBuilder.toString();
+    }
 }
 
 /**

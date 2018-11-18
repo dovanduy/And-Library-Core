@@ -66,14 +66,14 @@ public class ActSplash extends AppCompatActivity {
                 .disposeWindow()
                 .run(ActTestTwo.class, 5000);*/
         RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-        /*redirectWindow.withBundle(bundle)
+        redirectWindow.withBundle(bundle)
                 .withFlag()
                 .disposeWindow()
-                .run(ActTestTwo.class);*/
-        /*redirectWindow.withBundle(bundle)
+                .run(ActTestTwo.class);
+        redirectWindow.withBundle(bundle)
                 .withFlag()
                 .disposeWindow()
-                .run(ActTestTwo.class, 5000);*/
+                .run(ActTestTwo.class, 5000);
         redirectWindow.withBundle(bundle)
                 .withFlag()
                 .disposeWindow()
