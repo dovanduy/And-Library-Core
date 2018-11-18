@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 /**
  * Created by Rz Rasel on 2017-12-11.
  */
@@ -47,7 +45,7 @@ public class ManifestPermission {
             //Manifest.permission.INTERNET
             permission = ContextCompat.checkSelfPermission((Activity) context, permissionItem);
             if (permission != PackageManager.PERMISSION_GRANTED) {
-                LogWriter.Log("NEED_PERMISSION: " + permissionItem + " - PERMISSION_NEED_TO_SET");
+                //LogWriter.Log("NEED_PERMISSION: " + permissionItem + " - PERMISSION_NEED_TO_SET");
                 hasPermission = false;
             }
         }
@@ -57,8 +55,7 @@ public class ManifestPermission {
     public void onRequest(String argPermissions[], int argPermissionRequestCode) {
         //((Activity) context).requestPermissions(argPermissions, argPermissionRequestCode);
         ActivityCompat.requestPermissions((Activity) context, argPermissions, argPermissionRequestCode);
-        LogWriter.Log("PERISSION_REQUEST_CODE: " + argPermissionRequestCode
-                + " REQUEST_STRINGS: " + argPermissions.toString());
+        //LogWriter.Log("PERISSION_REQUEST_CODE: " + argPermissionRequestCode + " REQUEST_STRINGS: " + argPermissions.toString());
     }
 
     public void onSetEventListener(OnEventListenerHandler argOnEventListenerHandler) {
@@ -68,9 +65,7 @@ public class ManifestPermission {
     public void onRequestPermissionsResult(int argRequestCode, String argPermissions[], int[] argGrantResults, int argPermissionRequestCode) {
         //if(Build.VERSION.SDK_INT==Build.VERSION_CODES.M)
         //if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        LogWriter.Log("REQUEST_CODE: " + argRequestCode
-                + " PERISSION_REQUEST_CODE: " + argPermissionRequestCode
-                + " REQUEST_STRINGS: " + argPermissions.toString());
+        //LogWriter.Log("REQUEST_CODE: " + argRequestCode + " PERISSION_REQUEST_CODE: " + argPermissionRequestCode + " REQUEST_STRINGS: " + argPermissions.toString());
         if (argRequestCode == argPermissionRequestCode) {
             if (argGrantResults.length > 0 && argGrantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted, yay! do the

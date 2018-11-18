@@ -1,7 +1,5 @@
 package com.rz.librarycore.cryption;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -29,7 +27,7 @@ public class MD5Builder {
 
         } catch (NoSuchAlgorithmException e) {
             //Logger.logStackTrace(TAG, e);
-            LogWriter.Log("Error NoSuchAlgorithmException: " + e);
+            //LogWriter.Log("Error NoSuchAlgorithmException: " + e);
         }
         return "";
     }

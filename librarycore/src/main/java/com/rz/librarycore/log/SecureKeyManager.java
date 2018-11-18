@@ -11,7 +11,6 @@ import com.rz.librarycore.certificate.CertificateSHA1Fingerprint;
 import com.rz.librarycore.hardware.DeviceInfo;
 import com.rz.librarycore.inetapi.CheckNetConn;
 import com.rz.librarycore.inetapi.DeviceIPApi;
-import com.rz.librarycore.log.original.LogWriter;
 import com.rz.librarycore.storage.SharePrefPrivateHandler;
 
 import java.text.Format;

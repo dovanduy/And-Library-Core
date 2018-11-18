@@ -3,8 +3,6 @@ package com.rz.librarycore.http;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.util.HashMap;
 
 /**
@@ -92,7 +90,7 @@ public class PowerFeedHTTPAsyncTask {
                     .setURLParameters(urlRequestParameters);
             value = powerHTTPConnection.onRunConnection();
             retVal = value;
-            LogWriter.Log("HTTP_DATA" + retVal);
+            //LogWriter.Log("HTTP_DATA" + retVal);
             if (onEventListenerHandler != null) {
                 retVal = onEventListenerHandler.doInBackground(value);
             }

@@ -144,7 +144,7 @@ class C0372a {
     }
 
     private enum C0371a {
-        WITH_INTENT(1),
+        NM1409A(1),
         M1409A(2),
         M1408A(3),
         M1410A(4),
