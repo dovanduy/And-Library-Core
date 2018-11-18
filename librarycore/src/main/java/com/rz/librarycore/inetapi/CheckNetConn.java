@@ -8,8 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 /**
  * Created by Rz Rasel on 2018-01-15.
  */
@@ -28,12 +26,12 @@ public class CheckNetConn {
         int hasPermission = 0;
         hasPermission = ContextCompat.checkSelfPermission((Activity) argContext, Manifest.permission.INTERNET);
         if (hasPermission != PackageManager.PERMISSION_GRANTED) {
-            LogWriter.Log("Check it", "Please set the permission INTERNET");
+            //LogWriter.Log("Check it", "Please set the permission INTERNET");
             return false;
         }
         hasPermission = ContextCompat.checkSelfPermission((Activity) argContext, Manifest.permission.ACCESS_NETWORK_STATE);
         if (hasPermission != PackageManager.PERMISSION_GRANTED) {
-            LogWriter.Log("Check it", "Please set the permission ACCESS_NETWORK_STATE");
+            //LogWriter.Log("Check it", "Please set the permission ACCESS_NETWORK_STATE");
             return false;
         }
         ConnectivityManager connectivityManager = (ConnectivityManager) argContext.getSystemService(Context.CONNECTIVITY_SERVICE);

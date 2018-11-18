@@ -1,7 +1,5 @@
 package com.rz.librarycore.http;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -63,10 +61,10 @@ public class PowerHTTPConnection {
         try {
             URL domainURL = new URL(strDomainURL);
             //Get url protocol: domainURL.getProtocol()
-            LogWriter.Log("HTTP_REQUESTED_URL: " + strDomainURL);
+            //LogWriter.Log("HTTP_REQUESTED_URL: " + strDomainURL);
             HttpURLConnection httpURLConnection = (HttpURLConnection) domainURL.openConnection();
             httpURLConnection.setRequestMethod(httpMethod.getMethodName());
-            LogWriter.Log("HTTP_REQUESTED_METHODS: " + httpMethod.getMethodName());
+            //LogWriter.Log("HTTP_REQUESTED_METHODS: " + httpMethod.getMethodName());
             if (connectTimeout > 0) //15000
                 httpURLConnection.setConnectTimeout(connectTimeout);
             if (readTimeout > 0) //15000
@@ -86,7 +84,7 @@ public class PowerHTTPConnection {
                     strHeaders += key + "=" + value + "&";
                     httpURLConnection.setRequestProperty(key, value);
                 }
-                LogWriter.Log("HTTP_HEADER: " + strHeaders);
+                //LogWriter.Log("HTTP_HEADER: " + strHeaders);
             }
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -94,21 +92,21 @@ public class PowerHTTPConnection {
                 //onWriteHttpUrlData(httpURLConnection);
                 String urlRequestParam = PowerURLParameters.getFormatedURLParameters(urlRequestParameters);
                 PowerURLReadWrite.onURLWriter(httpURLConnection, urlRequestParam);
-                LogWriter.Log("HTTP_PARAMETERS:" + urlRequestParam);
+                //LogWriter.Log("HTTP_PARAMETERS:" + urlRequestParam);
             }
             int responseCode = httpURLConnection.getResponseCode();
-            LogWriter.Log("HTTP_RESPONSE_CODE: " + responseCode);
+            //LogWriter.Log("HTTP_RESPONSE_CODE: " + responseCode);
             String httpURLData = PowerURLReadWrite.onURLReader(httpURLConnection);
-            LogWriter.Log("HTTP_DATA: " + httpURLData);
+            //LogWriter.Log("HTTP_DATA: " + httpURLData);
             httpURLConnection.disconnect();
             if (httpURLData != null) {
                 //LogWriter.Log("URL_DATA: " + httpURLData);
             }
             return httpURLData;
         } catch (MalformedURLException e) {
-            LogWriter.Log("PRINT_ERROR_MalformedURLException: " + e.toString());
+            //LogWriter.Log("PRINT_ERROR_MalformedURLException: " + e.toString());
         } catch (IOException e) {
-            LogWriter.Log("PRINT_ERROR_IOException: " + e.toString());
+            //LogWriter.Log("PRINT_ERROR_IOException: " + e.toString());
         }
         return null;
     }

@@ -1,7 +1,5 @@
 package com.rz.librarycore.http;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ class PowerURLParameters {
         //String strUrlParams = stringBuilderUrlParams.toString();
         //retVal = strUrlParams.getBytes();
         retVal = stringBuilderUrlParams.toString();
-        LogWriter.Log("HTTP_REQUESTED_PARAMETERS: " + retVal);
+        //LogWriter.Log("HTTP_REQUESTED_PARAMETERS: " + retVal);
         return retVal;
     }
 }

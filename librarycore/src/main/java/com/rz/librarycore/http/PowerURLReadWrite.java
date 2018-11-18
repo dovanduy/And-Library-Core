@@ -1,7 +1,5 @@
 package com.rz.librarycore.http;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -26,7 +24,7 @@ class PowerURLReadWrite {
             writer.close();
             outputStream.close();
         } catch (IOException e) {
-            LogWriter.Log("PRINT_ERROR_IOException:- " + e.getMessage().toString());
+            //LogWriter.Log("PRINT_ERROR_IOException:- " + e.getMessage().toString());
         }
     }
 
@@ -48,7 +46,7 @@ class PowerURLReadWrite {
                 inputStream.close();
                 //argHttpURLConnection.disconnect();
                 retVal = stringBuilder.toString();
-                LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
+                //LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
             } else {
                 inputStream = argHttpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
@@ -61,11 +59,11 @@ class PowerURLReadWrite {
                 }
                 inputStream.close();
                 //argHttpURLConnection.disconnect();
-                LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
+                //LogWriter.Log("PRINT_HTTP_DATA_STRING: " + stringBuilder.toString());
             }
         } catch (IOException e) {
             //e.printStackTrace();
-            LogWriter.Log("PRINT_ERROR_IOException:- " + e);
+            //LogWriter.Log("PRINT_ERROR_IOException:- " + e);
         }
         return retVal;
     }

@@ -7,8 +7,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -83,7 +81,7 @@ public class DeviceIPApi {
                 }
             } catch (Exception e) {
                 //Log.e("IP Address", "getLocalIpAddress", ex);
-                LogWriter.Log("IP Address getLocalIpAddress: " + e);
+                //LogWriter.Log("IP Address getLocalIpAddress: " + e);
             }
             return null;
         }
@@ -156,7 +154,7 @@ public class DeviceIPApi {
                 hashMapIPDetails.put("status", jsonRoot.getString("status"));
             } catch (JSONException e) {
                 System.out.println(e);
-                LogWriter.Log("Error JSONException: " + e);
+                //LogWriter.Log("Error JSONException: " + e);
             }
             return hashMapIPDetails;
         }

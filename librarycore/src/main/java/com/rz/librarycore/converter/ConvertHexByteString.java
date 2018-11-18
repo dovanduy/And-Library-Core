@@ -1,7 +1,5 @@
 package com.rz.librarycore.converter;
 
-import com.rz.librarycore.log.original.LogWriter;
-
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
@@ -66,8 +64,8 @@ public class ConvertHexByteString {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogWriter.Log("BYTE: " + byteVal.toString());
-        LogWriter.Log("STRING_01: " + strVal);
+        /*LogWriter.Log("BYTE: " + byteVal.toString());
+        LogWriter.Log("STRING_01: " + strVal);*/
         /*public static String bytesToHex(byte[] bytes) {
             char[] hexChars = new char[bytes.length * 2];
             for ( int j = 0; j < bytes.length; j++ ) {
@@ -81,14 +79,14 @@ public class ConvertHexByteString {
         for (byte b : byteVal) {
             sb.append(String.format("%02x", b));
         }
-        LogWriter.Log("HEX_STRING: " + sb.toString());
+        //LogWriter.Log("HEX_STRING: " + sb.toString());
         byte[] newByte = new BigInteger(sb.toString(), 16).toByteArray();
-        LogWriter.Log("BYTE_STRING: " + newByte.toString());
+        //LogWriter.Log("BYTE_STRING: " + newByte.toString());
         try {
             strVal = new String(newByte, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogWriter.Log("STRING_02: " + strVal);
+        //LogWriter.Log("STRING_02: " + strVal);
     }
 }
