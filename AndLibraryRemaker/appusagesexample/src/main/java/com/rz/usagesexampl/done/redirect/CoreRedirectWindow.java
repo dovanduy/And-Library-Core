@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.done;
+package com.rz.usagesexampl.done.redirect;
 
 import android.app.Activity;
 import android.content.Context;

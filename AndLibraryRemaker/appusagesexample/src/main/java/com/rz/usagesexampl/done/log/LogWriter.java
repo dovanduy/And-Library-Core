@@ -1,4 +1,4 @@
-package com.rz.usagesexampl;
+package com.rz.usagesexampl.done.log;
 
 public class LogWriter {
     public static boolean isDebug = true;
