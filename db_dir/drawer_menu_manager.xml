@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<drawer_menu>
+    <drawer_menu_group category="Dashboard">
+        <drawer_menu_item>
+            <menu_typ>DASHBOARD</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_dashboard</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>common_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+    </drawer_menu_group>
+    <drawer_menu_group category="General Entry System">
+        <drawer_menu_item>
+            <menu_typ>NONE</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_registration</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>common_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>BULL_COW_INFORMATION</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_cow_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>MILK_PRODUCTION_RELATED_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_milk_production_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>HEALTH_VACCINATION_RELATED_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_health_and_vaccination_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>DISEASE_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_disease_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <!--<drawer_menu_item>
+            <menu_typ>REPRODUCTIVE_HEALTH_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_reproductive_health_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>-->
+    </drawer_menu_group>
+    <drawer_menu_group category="Insemination Entry System">
+        <drawer_menu_item>
+            <menu_typ>NONE</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_insemination</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>common_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>INSEMINATION_INFORMATION</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text>label_drawer_insemination_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+    </drawer_menu_group>
+    <drawer_menu_group category="Calving System">
+        <drawer_menu_item>
+            <menu_typ>NONE</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_calving_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>common_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item>
+            <menu_typ>CALVING_INFORMATION</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <menu_label_text_temp>বাছুর সংক্রান্ত তথ্যাদি</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+    </drawer_menu_group>
+    <drawer_menu_group category="Report System Cow/Bull">
+        <drawer_menu_item item="Report Root">
+            <menu_typ>NONE</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text></menu_label_text>
+            <menu_label_text_temp>রিপোর্ট</menu_label_text_temp>
+            <menu_icon>common_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report General Info">
+            <menu_typ>REPORT_COW_BULL_GENERAL_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Cow/Bull General Info-->
+            <menu_label_text_temp>গরু সম্পর্কিত তথ্য</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report Milk Production Info">
+            <menu_typ>REPORT_COW_MILK_PRODUCTION_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Milk Production-->
+            <menu_label_text_temp>দুধ উৎপাদন</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report Vaccination Info">
+            <menu_typ>REPORT_COW_BULL_VACCINATION_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Cow/Bull Vaccination Info-->
+            <menu_label_text_temp>টিকা</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report Disease Info">
+            <menu_typ>REPORT_COW_BULL_DISEASE_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Disease-->
+            <menu_label_text_temp>রোগবালাই</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report Insemination Info">
+            <menu_typ>REPORT_COW_INSEMINATION_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Insemination-->
+            <menu_label_text_temp>বীজ ভরণ</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Report Calving Info">
+            <menu_typ>REPORT_CALVING_GENERAL_INFO</menu_typ>
+            <menu_position>SECOND</menu_position>
+            <menu_label_text></menu_label_text>
+            <!--Insemination-->
+            <menu_label_text_temp>বাছুর সংক্রান্ত তথ্যাদি</menu_label_text_temp>
+            <menu_icon>drawer_arrow_11x16</menu_icon>
+            <menu_is_header>false</menu_is_header>
+        </drawer_menu_item>
+    </drawer_menu_group>
+    <drawer_menu_group category="App Self System">
+        <drawer_menu_item item="Project Info">
+            <menu_typ>NONE</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_project_info</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>info_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+        <drawer_menu_item item="Logout">
+            <menu_typ>LOGOUT</menu_typ>
+            <menu_position>FIRST</menu_position>
+            <menu_label_text>label_drawer_log_out</menu_label_text>
+            <menu_label_text_temp></menu_label_text_temp>
+            <menu_icon>logout_icon</menu_icon>
+            <menu_is_header>true</menu_is_header>
+        </drawer_menu_item>
+    </drawer_menu_group>
+</drawer_menu>
