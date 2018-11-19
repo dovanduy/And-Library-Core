@@ -114,6 +114,8 @@ public class PowerFeedHTTPAsyncTask {
 
         @Override
         protected void onCancelled() {
+            super.onCancelled();
+            //
         }
     }
 }

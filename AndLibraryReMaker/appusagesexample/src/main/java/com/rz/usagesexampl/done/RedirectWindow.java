@@ -2,37 +2,16 @@ package com.rz.usagesexampl.done;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-/**
- * Returns an Image object that can then be painted on the screen.
- * The url argument must specify an absolute { @ link URL }. The name
- * argument is a specifier that is relative to the url argument.
- * <p>
- * This method always returns immediately, whether or not the
- * image exists. When this applet attempts to draw the image on
- * the screen, the data will be loaded. The graphics primitives
- * that draw the image will incrementally paint on the screen.
- * </p>
- * <p>
- * //@param  url  an absolute URL giving the base location of the image
- * //@param  name the location of the image, relative to the url argument
- * //@return      the image at the specified URL
- * //@see         Image
- */
 public class RedirectWindow {
-    private Activity activity;
-    private Context context;
+    private Activity f1134a;
+    private Context f1135b;
     private static RedirectWindow instance = null;
-    private Intent intent;
-    private CoreRedirectWindow coreRedirectWindow;
-    private OnEventListener onEventListener;
-    private String methodName = "methodName";
-    //private RedirectWindow redirectWindow = new RedirectWindow(activity, context);
+    private C0375a f1136d;
+    private String f1137e;
 
     public static RedirectWindow getInstance(Activity argActivity, Context argContext) {
-        String staticMethodName = "RedirectWindow getInstance(Activity argActivity, Context argContext)";
         if (instance == null) {
             instance = new RedirectWindow(argActivity, argContext);
         }
@@ -40,64 +19,38 @@ public class RedirectWindow {
     }
 
     public RedirectWindow(Activity argActivity, Context argContext) {
-        methodName = "RedirectWindow(Activity argActivity, Context argContext)";
-        activity = argActivity;
-        context = argContext;
-        coreRedirectWindow = new CoreRedirectWindow(activity, context);
-        //coreRedirectWindow.setCoreRedirectWindow(activity, context);
+        this.f1134a = argActivity;
+        this.f1135b = argContext;
+        this.f1136d = new C0375a(this.f1134a, this.f1135b);
     }
 
-    /*@Deprecated
-    public RedirectWindow withRedirect(Class<?> argRedirectClass) {
-        coreRedirectWindow.withRedirect(argRedirectClass);
-        return this;
-    }*/
-
-    /**
-     * The Description of the method to explain what the method does
-     *
-     * @param argBundle type parameters used by the method
-     * @return self class object
-     */
     public RedirectWindow withBundle(Bundle argBundle) {
-        methodName = "withBundle(Bundle argBundle)";
-        coreRedirectWindow.withBundle(argBundle);
+        this.f1136d.m1452a(argBundle);
         return this;
     }
 
     public RedirectWindow withFlag() {
-        methodName = "withFlag()";
-        coreRedirectWindow.withFlag();
+        this.f1136d.m1451a();
         return this;
     }
 
     public RedirectWindow disposeWindow() {
-        methodName = "disposeWindow()";
-        coreRedirectWindow.disposeWindow();
+        this.f1136d.m1456b();
         return this;
     }
 
-    /*@Deprecated
-    public void runRedirect() {
-        coreRedirectWindow.runRedirect();
-        return;
-    }*/
-
     public void run(Class<?> argRedirectClass) {
-        methodName = "run(Class<?> argRedirectClass)";
-        coreRedirectWindow.execute(argRedirectClass);
+        this.f1136d.m1453a((Class) argRedirectClass);
         return;
     }
 
     public void run(Class<?> argRedirectClass, int argTimeMilliseconds) {
-        methodName = "run(Class<?> argRedirectClass, int argTimeMilliseconds)";
-        coreRedirectWindow.execute(argRedirectClass, argTimeMilliseconds);
+        this.f1136d.m1454a((Class) argRedirectClass, argTimeMilliseconds);
         return;
     }
 
     public void run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener) {
-        methodName = "run(Class<?> argRedirectClass, int argTimeMilliseconds, OnEventListener argOnEventListener)";
-        coreRedirectWindow.execute(argRedirectClass, argTimeMilliseconds, argOnEventListener);
+        this.f1136d.m1455a(argRedirectClass, argTimeMilliseconds, argOnEventListener);
         return;
     }
 
@@ -105,11 +58,3 @@ public class RedirectWindow {
         public boolean onDependencyWait();
     }
 }
-
-/**
- * The Desciption of the method to explain what the method does
- *
- * @param the parameters used by the method
- * @return self class object
- * @throws what kind of exception does this method throw
- */

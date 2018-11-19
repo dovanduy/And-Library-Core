@@ -3,7 +3,11 @@ package com.rz.usagesexampl;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import com.rz.usagesexampl.done.log.LogWriter;
+import com.rz.usagesexampl.done.RedirectWindow;
 
 
 public class ActSplash extends AppCompatActivity {
@@ -60,6 +64,11 @@ public class ActSplash extends AppCompatActivity {
         redirectWindow.withBundle(bundle)
                 .withFlag()
                 .disposeWindow()
+                .run(ActTestTwo.class, 5000);*/
+        RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
+        redirectWindow.withBundle(bundle)
+                .withFlag()
+                .disposeWindow()
                 .run(ActTestTwo.class);
         redirectWindow.withBundle(bundle)
                 .withFlag()
@@ -78,7 +87,7 @@ public class ActSplash extends AppCompatActivity {
             public void run() {
                 isDependencyWait = true;
             }
-        }, 10000);*/
+        }, 10000);
     }
 }
 //https://github.com/bintray/gradle-bintray-plugin/issues/88

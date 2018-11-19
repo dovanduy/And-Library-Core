@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.done;
+package com.rz.usagesexampl.done.redirect;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,7 +51,8 @@ class CoreRedirectWindow {
     protected CoreRedirectWindow withIntent(Intent argIntent) {
         methodName = "withIntent(Intent argIntent)";
         //methodCallerList.add(1);
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.INTENT);
         return this;
     }
 
@@ -63,7 +64,8 @@ class CoreRedirectWindow {
      */
     protected CoreRedirectWindow withBundle(Bundle argBundle) {
         methodName = "withBundle(Bundle argBundle)";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.BUNDLE);
         this.bundle = argBundle;
         /*if (intent != null) {
             intent.putExtras(bundle);
@@ -74,7 +76,8 @@ class CoreRedirectWindow {
 
     protected CoreRedirectWindow withFlag() {
         methodName = "withFlag()";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.FLAG);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         //methodCallerList.add(3);
         return this;
@@ -82,7 +85,8 @@ class CoreRedirectWindow {
 
     protected CoreRedirectWindow disposeWindow() {
         methodName = "disposeWindow()";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.DISPOSE);
         //activity.finish();
         //methodCallerList.add(5);
         return this;
@@ -98,7 +102,8 @@ class CoreRedirectWindow {
 
     protected void execute(Class<?> argRedirectClass) {
         methodName = "execute(Class<?> argRedirectClass)";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.EXECUTE);
         //activity.startActivity(intent);
         redirectClass = argRedirectClass;
         //intent = new Intent(context, redirectClass);
@@ -109,7 +114,8 @@ class CoreRedirectWindow {
 
     protected void execute(Class<?> argRedirectClass, int argTimeMilliseconds) {
         methodName = "execute(Class<?> argRedirectClass, int argTimeMilliseconds)";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.EXECUTE);
         redirectClass = argRedirectClass;
         //intent = new Intent(context, redirectClass);
         handlerRedirect = new Handler();
@@ -121,7 +127,8 @@ class CoreRedirectWindow {
 
     protected void execute(Class<?> argRedirectClass, int argTimeMilliseconds, RedirectWindow.OnEventListener argOnEventListener) {
         methodName = "execute(Class<?> argRedirectClass, int argTimeMilliseconds, RedirectWindow.OnEventListener argOnEventListener)";
-        setPriority();
+        //setPriority();
+        setPriority(PRIORITY.EXECUTE);
         redirectClass = argRedirectClass;
         onEventListener = argOnEventListener;
         //intent = new Intent(context, redirectClass);
@@ -178,28 +185,14 @@ class CoreRedirectWindow {
         }
     });
 
-    private enum PRIORITY {
-        WITH_INTENT(1),
-        WITH_BUNDLE(2),
-        WITH_FLAG(3),
-        EXECUTE(4),
-        DISPOSE_WINDOW(5);
-        private int item;
-
-        PRIORITY(int argValue) {
-            this.item = argValue;
-        }
-
-        public int getItem() {
-            return this.item;
-        }
+    private void setPriority(PRIORITY argPriority) {
+        methodCallerList.add(argPriority.item);
     }
 
     private void setPriority() {
         methodName = "setPriority()";
         //String strMethodName = argMethodName.replaceAll("(.)([A-Z])", "$1_$2").toUpperCase();
-        String strMethodName = Thread.currentThread().getStackTrace()[3].getMethodName()
-                .replaceAll("(.)([A-Z])", "$1_$2").toUpperCase();
+        String strMethodName = Thread.currentThread().getStackTrace()[3].getMethodName().replaceAll("(.)([A-Z])", "$1_$2").toUpperCase();
         //System.out.println("METHOD_NAME: " + strMethodName);
         if (containsEnum(PRIORITY.class, strMethodName)) {
             //System.out.println("ENUM_VALUE: " + PRIORITY.valueOf(strMethodName).getItem());
@@ -216,6 +209,23 @@ class CoreRedirectWindow {
             }
         }
         return false;
+    }
+
+    private enum PRIORITY {
+        INTENT(1),
+        BUNDLE(2),
+        FLAG(3),
+        EXECUTE(4),
+        DISPOSE(5);
+        private int item;
+
+        PRIORITY(int argValue) {
+            this.item = argValue;
+        }
+
+        public int getItem() {
+            return this.item;
+        }
     }
 }
 
