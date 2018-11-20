@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class HTTPPowerFeed {
     private static String methodName = "methodName";
-    private String strDomainURL;
+    private String httpRequestURL;
     private final String userAgent = "Mozilla/5.0";
     private HTTPMethod httpMethod;
     private boolean isAllowRedirects = true;
@@ -26,8 +26,8 @@ public class HTTPPowerFeed {
     private HashMap<String, String> urlHeaders = new HashMap<String, String>();
     private HashMap<String, String> urlRequestParameters = new HashMap<String, String>();
 
-    public HTTPPowerFeed onPrepareConnection(String argStrDomainURL, HTTPMethod argHTTPMethod, boolean argIsAllowRedirects) {
-        this.strDomainURL = argStrDomainURL;
+    public HTTPPowerFeed onPrepareConnection(String argHTTPRequestURL, HTTPMethod argHTTPMethod, boolean argIsAllowRedirects) {
+        this.httpRequestURL = argHTTPRequestURL;
         this.httpMethod = argHTTPMethod;
         this.isAllowRedirects = argIsAllowRedirects;
         return this;
@@ -61,19 +61,21 @@ public class HTTPPowerFeed {
     public HTTPPowerFeed withCharSet(String argCharSet) {
         return this;
     }
+
     public HTTPPowerFeed withUserAgent(String argUserAgent) {
         return this;
     }
+
     public HTTPPowerFeed withContentType(String argContentType) {
         return this;
     }
 
     public String onRun() {
         try {
-            URL domainURL = new URL(strDomainURL);
+            URL requestURL = new URL(httpRequestURL);
             //Get url protocol: domainURL.getProtocol()
             //LogWriter.Log("HTTP_REQUESTED_URL: " + strDomainURL);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) domainURL.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) requestURL.openConnection();
             httpURLConnection.setRequestMethod(httpMethod.getMethodName());
             //LogWriter.Log("HTTP_REQUESTED_METHODS: " + httpMethod.getMethodName());
             if (connectTimeout > 0) //15000
@@ -84,7 +86,7 @@ public class HTTPPowerFeed {
             //httpURLConnection.setRequestProperty("User-Agent", userAgent);
             httpURLConnection.setInstanceFollowRedirects(isAllowRedirects);
             httpURLConnection.setRequestProperty("charset", "utf-8");
-            httpURLConnection.setRequestProperty("User-Agent","your user agent");
+            httpURLConnection.setRequestProperty("User-Agent", "your user agent");
             //httpURLConnection.setRequestProperty("User-agent", System.getProperty("http.agent"));
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
             if (urlHeaders.size() > 0) {
