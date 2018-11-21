@@ -11,16 +11,13 @@ import android.support.v4.content.ContextCompat;
 /**
  * Created by Rz Rasel on 2016-08-01.
  */
-/**
- * @deprecated As of 2018-01-15
- */
-@Deprecated
-public class NetConnDetect {
-    private static NetConnDetect instance = null;
 
-    public static NetConnDetect getInstance() {
+public class NetCheck {
+    private static NetCheck instance = null;
+
+    public static NetCheck getInstance() {
         if (instance == null) {
-            instance = new NetConnDetect();
+            instance = new NetCheck();
         }
         return instance;
     }
