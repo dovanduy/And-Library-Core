@@ -1,4 +1,4 @@
-package com.rz.librarycore.database;
+package com.rz.librarycore.storage;
 
 import android.content.Context;
 import android.content.res.AssetManager;
