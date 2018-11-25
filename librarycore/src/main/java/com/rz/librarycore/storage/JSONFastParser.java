@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 public class JSONFastParser {
-    public static Map<String, Object> JSONFeedObject(String argJsonObject) throws JSONException {
+    public static HashMap<String, Object> JSONObjectFeed(String argJsonObject) throws JSONException {
         return new JSONFastParser().getJSONToMap(new JSONObject(argJsonObject));
     }
 
-    public static List<Object> JSONFeedArray(String argJsonArray) throws JSONException {
+    public static List<Object> JSONArrayFeed(String argJsonArray) throws JSONException {
         return new JSONFastParser().getJSONToList(new JSONArray(argJsonArray));
     }
 
-    private Map<String, Object> getJSONToMap(JSONObject argJsonObject) throws JSONException {
-        Map<String, Object> map = new HashMap<String, Object>();
+    private HashMap<String, Object> getJSONToMap(JSONObject argJsonObject) throws JSONException {
+        HashMap<String, Object> map = new HashMap<String, Object>();
 
         Iterator<String> keysIterator = argJsonObject.keys();
         while (keysIterator.hasNext()) {
@@ -52,6 +52,7 @@ public class JSONFastParser {
     }
 
     public static boolean isMap(Object argObject) {
+        //System.out.println("LOG_PRINT_OBJECT_TYPE: " + argObject.getClass());
         if (argObject instanceof HashMap || argObject instanceof Map) {
             return true;
         }
@@ -59,6 +60,7 @@ public class JSONFastParser {
     }
 
     public static boolean isList(Object argObject) {
+        //System.out.println("LOG_PRINT_OBJECT_TYPE: " + argObject.getClass());
         if (argObject instanceof ArrayList || argObject instanceof List) {
             return true;
         }
@@ -73,24 +75,58 @@ public class JSONFastParser {
         return null;
     }
 
-    public static HashMap<String, ?> getHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    public static <T> T getHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
         HashMap<String, ?> hashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
             if (isMap(object)) {
                 hashMap = (HashMap<String, ?>) object;
             }
+            return (T) hashMap;
+        }
+        return (T) hashMap;
+    }
+
+    @Deprecated
+    public static HashMap<String, String> getHashMapStringByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        HashMap<String, String> hashMap = null;
+        if (argObjectHashMap.containsKey(argKey)) {
+            Object object = argObjectHashMap.get(argKey);
+            if (isMap(object)) {
+                hashMap = (HashMap<String, String>) object;
+            }
             return hashMap;
         }
         return hashMap;
     }
 
-    public static ArrayList<HashMap<String, ?>> getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    public static <T> T getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
         ArrayList<HashMap<String, ?>> arrayListHashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
             if (isList(object)) {
                 arrayListHashMap = (ArrayList<HashMap<String, ?>>) object;
+                if (arrayListHashMap.size() > 0) {
+                    if (isMap(arrayListHashMap.get(0))) {
+                        return (T) arrayListHashMap;
+                    }
+                }
+                return null;
+            }
+            return (T) arrayListHashMap;
+        }
+        return (T) arrayListHashMap;
+    }
+
+    @Deprecated
+    public static ArrayList<HashMap<String, String>> getArrayListHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        ArrayList<HashMap<String, String>> arrayListHashMap = null;
+        if (argObjectHashMap.containsKey(argKey)) {
+            Object object = argObjectHashMap.get(argKey);
+            if (isList(object)) {
+                arrayListHashMap = (ArrayList<HashMap<String, String>>) object;
+                /*System.out.println("LOG_PRINT_CALLED");
+                System.out.println("LOG_PRINT_CALLED: " + arrayListHashMap.size());*/
                 if (arrayListHashMap.size() > 0) {
                     if (isMap(arrayListHashMap.get(0))) {
                         return arrayListHashMap;
@@ -103,7 +139,22 @@ public class JSONFastParser {
         return arrayListHashMap;
     }
 
-    public static ArrayList<?> getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    public static <T> T getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        //ArrayList<String>
+        ArrayList<?> arrayList = null;
+        if (argObjectHashMap.containsKey(argKey)) {
+            Object object = argObjectHashMap.get(argKey);
+            if (isList(object)) {
+                arrayList = (ArrayList<?>) object;
+            }
+            return (T) arrayList;
+        }
+        return (T) arrayList;
+    }
+
+    @Deprecated
+    public static ArrayList<?> getArrayListObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        //ArrayList<String>
         ArrayList<?> arrayList = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
@@ -115,7 +166,6 @@ public class JSONFastParser {
         return arrayList;
     }
 }
-//https://alvinalexander.com/source-code/how-write-java-method-returns-generic-type-syntax
 //https://www.programcreek.com/java-api-examples/?class=org.json.JSONObject&method=keys
 //https://www.quora.com/How-do-I-convert-JSONObject-to-HashMap-in-Java
 //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
@@ -129,3 +179,20 @@ public class JSONFastParser {
 
 //https://beginnersbook.com/2013/12/how-to-loop-hashmap-in-java/
 //
+/*
+try {
+    //Map<String, Object> mapObject = FeedJSONParser.FeedJSONObject(argResponse);
+    Map<String, Object> mapObject = JSONFastParser.JSONObjectFeed(argResponse);
+    for (Map.Entry<String, Object> entry : mapObject.entrySet()) {
+        String key = entry.getKey();
+        Object value = entry.getValue();
+        if (value instanceof List) {
+            //LogWriter.Log("LIST_KEY: " + key);
+        } else if (value instanceof String) {
+            //LogWriter.Log("STRING_KEY: " + key);
+        }
+    }
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+*/
