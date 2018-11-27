@@ -1,4 +1,4 @@
-package com.rz.librarycore.normal;
+package com.rz.librarycore.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
