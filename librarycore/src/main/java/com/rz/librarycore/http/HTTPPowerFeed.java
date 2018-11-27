@@ -105,7 +105,7 @@ public class HTTPPowerFeed {
             httpURLConnection.setDoOutput(true);
             if (httpMethod.POST == httpMethod && urlRequestParameters.size() > 0) {
                 //onWriteHttpUrlData(httpURLConnection);
-                String urlRequestParam = PowerURLParameters.getFormatedURLParameters(urlRequestParameters);
+                String urlRequestParam = getFormattedURLParameters(urlRequestParameters);
                 onURLWriter(httpURLConnection, urlRequestParam);
                 //LogWriter.Log("HTTP_PARAMETERS:" + urlRequestParam);
             }
@@ -196,6 +196,25 @@ public class HTTPPowerFeed {
             //e.printStackTrace();
             //LogWriter.Log("PRINT_ERROR_IOException:- " + e);
         }
+        return retVal;
+    }
+
+    protected static String getFormattedURLParameters(Map<String, String> argUrlParameters) {
+        //byte[] retVal;
+        String retVal = null;
+        StringBuilder stringBuilderUrlParams = new StringBuilder();
+        Iterator<Map.Entry<String, String>> iterator = argUrlParameters.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> urlParameters = iterator.next();
+            stringBuilderUrlParams.append(urlParameters.getKey()).append('=').append(urlParameters.getValue());
+            if (iterator.hasNext()) {
+                stringBuilderUrlParams.append('&');
+            }
+        }
+        //String strUrlParams = stringBuilderUrlParams.toString();
+        //retVal = strUrlParams.getBytes();
+        retVal = stringBuilderUrlParams.toString();
+        //LogWriter.Log("HTTP_REQUESTED_PARAMETERS: " + retVal);
         return retVal;
     }
 
