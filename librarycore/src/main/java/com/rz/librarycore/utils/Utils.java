@@ -15,6 +15,7 @@ public class Utils {
         if (argValue == null) {
             return true;
         }
+        argValue = argValue.replaceAll("\\s+", "");
         if (argValue.trim().isEmpty()) {
             return true;
         }

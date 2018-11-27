@@ -1,4 +1,4 @@
-package com.rz.librarycore.storage;
+package com.rz.usagesexampl.working.jxml;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -34,15 +34,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class XMLFeedParser {
+class CoreXMLFeedParser {
     private Context context;
     private XmlPullParserFactory xmlFactoryObject;
     private XmlPullParser xmlPullParser;
     private InputStream inputStream;
     private String xmlFilePath;
     private boolean isXMLStringNull = false;
+    private static String methodName = "methodName-var";
 
-    public XMLFeedParser(Context argContext) {
+    public CoreXMLFeedParser(Context argContext) {
+        methodName = "CoreXMLFeedParser(Context argContext)";
         this.context = argContext;
         isXMLStringNull = false;
     }
@@ -53,7 +55,8 @@ public class XMLFeedParser {
      * @param argFileName - XML file name to convert it to String
      * @return - return XML in String form
      */
-    public String onReadAssetsFile(String argFileName) {
+    protected String onReadAssetsFile(String argFileName) throws IOException {
+        methodName = "String onReadAssetsFile(String argFileName)";
         String xmlString = null;
         AssetManager assetManager = context.getAssets();
         try {
@@ -64,15 +67,16 @@ public class XMLFeedParser {
             inputStream.close();
             xmlString = new String(byteArray);
             //String result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException ex) {
+            throw ex;
         }
         return xmlString;
         //https://itekblog.com/load-your-custom-xml-from-resources-android/
         //http://www.vogella.com/tutorials/AndroidXML/article.html
     }
 
-    public XMLFeedParser onXMLPrepareItems(String argXMLString) {
+    protected CoreXMLFeedParser onXMLPrepareItems(String argXMLString) throws XmlPullParserException, UnsupportedEncodingException, IOException {
+        methodName = "CoreXMLFeedParser onXMLPrepareItems(String argXMLString)";
         //String xmlString = onReadAssetsFile(argFileName);
         //System.out.println("XML_DATA: " + xmlString);
         if (isNullOrEmpty(argXMLString)) {
@@ -87,19 +91,21 @@ public class XMLFeedParser {
             InputStream inputStream = new ByteArrayInputStream(argXMLString.getBytes("UTF8"));
             xmlPullParser.setInput(inputStream, null);
             inputStream.close();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (XmlPullParserException ex) {
+            throw ex;
+        } catch (UnsupportedEncodingException ex) {
+            throw ex;
+        } catch (IOException ex) {
+            throw ex;
+            //https://stackoverflow.com/questions/2912565/throwing-multiple-exceptions-in-java/29225574
         }
         return this;
     }
 
     //|------------------------------------------------------------|
 
-    public List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag) {
+    protected List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag) throws Exception {
+        methodName = "List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag)";
         int eventType;
         List<Map<String, String>> listXMLItems = new ArrayList<>();
         Map<String, String> mapXMLItem = new HashMap<>();
@@ -153,8 +159,9 @@ public class XMLFeedParser {
                 eventType = xmlPullParser.next();
             }
             //parsingComplete = false;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            //ex.printStackTrace();
+            throw ex;
         }
         //printProducts(products);
             /*TextView txtView = (TextView) findViewById(R.id.textView1);
@@ -166,7 +173,8 @@ public class XMLFeedParser {
     }
 
     //|------------------------------------------------------------|
-    public boolean containsListKey(List<String> argKeyList, String argSearchKey) {
+    private boolean containsListKey(List<String> argKeyList, String argSearchKey) {
+        methodName = "boolean containsListKey(List<String> argKeyList, String argSearchKey)";
         for (String item : argKeyList) {
             argSearchKey = argSearchKey.toLowerCase();
             if (item.trim().toLowerCase().contains(argSearchKey))
@@ -176,7 +184,8 @@ public class XMLFeedParser {
     }
 
     //|------------------------------------------------------------|
-    public String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) {
+    protected String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+        methodName = "String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
         if (isNullOrEmpty(argXMLString)) {
             return null;
         }
@@ -198,18 +207,22 @@ public class XMLFeedParser {
                     return getNodeToXMLString(currentItem);
                 }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException ex) {
+            //ex.printStackTrace();
+            throw ex;
+        } catch (SAXException ex) {
+            //ex.printStackTrace();
+            throw ex;
+        } catch (IOException ex) {
+            //ex.printStackTrace();
+            throw ex;
         }
         return null;
     }
 
     //|------------------------------------------------------------|
-    private String getNodeListToXMLString(NodeList argNodeList) {
+    private String getNodeListToXMLString(NodeList argNodeList) throws TransformerConfigurationException, TransformerException {
+        methodName = "String getNodeListToXMLString(NodeList argNodeList)";
         NodeList nodeList = argNodeList;
         DOMSource domSource = new DOMSource();
         StringWriter stringWriter = new StringWriter();
@@ -228,15 +241,18 @@ public class XMLFeedParser {
             /*String result = stringWriter.toString();
             System.out.println("XML_DATA: " + result);*/
             return stringWriter.toString();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
+        } catch (TransformerConfigurationException ex) {
+            //ex.printStackTrace();
+            throw ex;
+        } catch (TransformerException ex) {
+            //ex.printStackTrace();
+            throw ex;
         }
-        return null;
+        //return null;
     }
 
-    private String getNodeToXMLString(Node argNode) {
+    private String getNodeToXMLString(Node argNode) throws TransformerConfigurationException, TransformerException {
+        methodName = "String getNodeToXMLString(Node argNode)";
         Node node = argNode;
         DOMSource domSource = new DOMSource();
         StringWriter stringWriter = new StringWriter();
@@ -256,19 +272,23 @@ public class XMLFeedParser {
             //String result = stringWriter.toString();
             //System.out.println("XML_DATA: " + result);
             return stringWriter.toString();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
+        } catch (TransformerConfigurationException ex) {
+            //ex.printStackTrace();
+            throw ex;
+        } catch (TransformerException ex) {
+            //ex.printStackTrace();
+            throw ex;
         }
-        return null;
+        //return null;
     }
 
     //|------------------------------------------------------------|
-    public static boolean isNullOrEmpty(String argValue) {
+    private static boolean isNullOrEmpty(String argValue) {
+        methodName = "boolean isNullOrEmpty(String argValue)";
         if (argValue == null) {
             return true;
         }
+        argValue = argValue.replaceAll("\\s+", "");
         if (argValue.trim().isEmpty()) {
             return true;
         }
@@ -279,7 +299,9 @@ public class XMLFeedParser {
     }
 
     //|------------------------------------------------------------|
-    public void onDocumentBuilderFactory(String argXmlString) {
+    @Deprecated
+    private void onDocumentBuilderFactory(String argXmlString) {
+        methodName = "void onDocumentBuilderFactory(String argXmlString)";
         //https://stackoverflow.com/questions/14236767/sax-parsing-how-to-fetch-child-nodes
         InputSource inputSource = new InputSource(new StringReader(argXmlString));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

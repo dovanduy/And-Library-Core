@@ -3,17 +3,26 @@ package com.rz.usagesexampl;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.rz.usagesexampl.done.log.LogWriter;
-import com.rz.usagesexampl.done.RedirectWindow;
+import com.rz.usagesexampl.working.XMLFeedParser;
+import com.rz.usagesexampl.working.utils.AppUtils;
+
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 
 public class ActSplash extends AppCompatActivity {
     private Activity activity;
     private Context context;
-    private String CLASS_NAME = this.getClass().getName();
+    private String CLASS_NAME;
     private boolean isDependencyWait = false;
 
     @Override
@@ -22,72 +31,52 @@ public class ActSplash extends AppCompatActivity {
         setContentView(R.layout.act_splash);
         activity = this;
         context = this;
-        onRedirectWindow();
+        CLASS_NAME = this.getClass().getName();
+        //onRedirectWindow();
         /*RoundImage.onSayHi();
         MashUp.onSayHi();*/
-        onLog();
+        //onLog();
+        //onAppUtils();
+        //onJson();
+        try {
+            onReadXML();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    private void onLog() {
-        String TAG = "TEST_TAG";
-        LogWriter.isDebug = true;
-        LogWriter.Log("Test log log");
-        LogWriter.Log(TAG, "Test log log");
-        LogWriter.dLog("Test log d");
-        LogWriter.dLog(TAG, "Test log d");
-        LogWriter.eLog("Test log e");
-        LogWriter.eLog(TAG, "Test log e");
-        LogWriter.iLog("Test log i");
-        LogWriter.iLog(TAG, "Test log i");
-        LogWriter.vLog("Test log v");
-        LogWriter.vLog(TAG, "Test log v");
-        LogWriter.wtfLog("Test log wtf");
-        LogWriter.wtfLog(TAG, "Test log wtf");
-        LogWriter.isDebug = true;
-        LogWriter.Write.Log(CLASS_NAME, "Test log log");
-        LogWriter.Write.Log(CLASS_NAME, TAG, "Test log log");
-        LogWriter.Write.dLog(CLASS_NAME, "Test log d");
-        LogWriter.Write.dLog(CLASS_NAME, TAG, "Test log d");
-        LogWriter.Write.eLog(CLASS_NAME, "Test log e");
-        LogWriter.Write.eLog(CLASS_NAME, TAG, "Test log e");
-        LogWriter.Write.iLog(CLASS_NAME, "Test log i");
-        LogWriter.Write.iLog(CLASS_NAME, TAG, "Test log i");
-        LogWriter.Write.vLog(CLASS_NAME, "Test log v");
-        LogWriter.Write.vLog(CLASS_NAME, TAG, "Test log v");
-        LogWriter.Write.wtfLog(CLASS_NAME, "Test log wtf");
-        LogWriter.Write.wtfLog(CLASS_NAME, TAG, "Test log wtf");
-    }
-
-    private void onRedirectWindow() {
-        Bundle bundle = new Bundle();
-        /*RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .run(ActTestTwo.class, 5000);*/
-        RedirectWindow redirectWindow = RedirectWindow.getInstance(activity, context);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .run(ActTestTwo.class);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .run(ActTestTwo.class, 5000);
-        redirectWindow.withBundle(bundle)
-                .withFlag()
-                .disposeWindow()
-                .run(ActTestTwo.class, 5000, new RedirectWindow.OnEventListener() {
-                    @Override
-                    public boolean onDependencyWait() {
-                        return isDependencyWait;
-                    }
-                });
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                isDependencyWait = true;
+    private void onReadXML() throws IOException, ParserConfigurationException, SAXException, XmlPullParserException, Exception {
+        XMLFeedParser xmlFeedParser = new XMLFeedParser(context);
+        String xmlStr = xmlFeedParser.onReadAssetsFile("db_dir/test.xml");
+        //System.out.println("INIT_VALUE: " + xmlStr);
+        String xmlTag = "word_list";
+        String xmlAttr = "subjective_category";
+        String xmlAttrValue = "BANK_MANAGER";
+        xmlStr = xmlFeedParser.getXMLTagByAttributes(xmlStr, xmlTag, xmlAttr, xmlAttrValue);
+        //System.out.println("ATTRIBUTE_VALUE: " + xmlStr);
+        List<String> listXMLTags = new ArrayList<>();
+        listXMLTags.add("audio_file");
+        listXMLTags.add("main_word");
+        listXMLTags.add("secondary_word");
+        String xmlItemStartingTag = "word_item";
+        List<Map<String, String>> listItems = xmlFeedParser.onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems(listXMLTags, xmlItemStartingTag);
+        System.out.println("LIST: " + listItems.toString());
+        for (Map<String, String> listItem : listItems) {
+            for (Map.Entry<String, String> entry : listItem.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                System.out.println("XML_KEY: " + key + " - VALUE: " + value);
             }
-        }, 10000);
+        }
+    }
+
+    private void onAppUtils() {
+        AppUtils.getAppVersion(context);
+        AppUtils.getAppVersionCode(context);
+        AppUtils.logDebug("TAG", "MESSAGE");
+        AppUtils.getDisplaySize(context);
+        AppUtils.isURLAvailable("URL");
     }
 }
 //https://github.com/bintray/gradle-bintray-plugin/issues/88

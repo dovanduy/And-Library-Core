@@ -1,4 +1,4 @@
-package com.rz.librarycore.storage;
+package com.rz.usagesexampl.working.jxml;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,16 +10,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class JSONFastParser {
-    public static HashMap<String, Object> JSONObjectFeed(String argJsonObject) throws JSONException {
-        return new JSONFastParser().getJSONToMap(new JSONObject(argJsonObject));
+class CoreJSONFastParser {
+    private static String methodName = "methodName-var";
+    protected static HashMap<String, Object> JSONObjectFeed(String argJsonObject) throws JSONException {
+        methodName = "HashMap<String, Object> JSONObjectFeed(String argJsonObject)";
+        return getJSONToMap(new JSONObject(argJsonObject));
     }
 
-    public static List<Object> JSONArrayFeed(String argJsonArray) throws JSONException {
-        return new JSONFastParser().getJSONToList(new JSONArray(argJsonArray));
+    protected static List<Object> JSONArrayFeed(String argJsonArray) throws JSONException {
+        methodName = "List<Object> JSONArrayFeed(String argJsonArray)";
+        return getJSONToList(new JSONArray(argJsonArray));
     }
 
-    private HashMap<String, Object> getJSONToMap(JSONObject argJsonObject) throws JSONException {
+    private static HashMap<String, Object> getJSONToMap(JSONObject argJsonObject) throws JSONException {
+        methodName = "HashMap<String, Object> getJSONToMap(JSONObject argJsonObject)";
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         Iterator<String> keysIterator = argJsonObject.keys();
@@ -37,7 +41,8 @@ public class JSONFastParser {
         return map;
     }
 
-    private List<Object> getJSONToList(JSONArray argJsonArray) throws JSONException {
+    private static List<Object> getJSONToList(JSONArray argJsonArray) throws JSONException {
+        methodName = "List<Object> getJSONToList(JSONArray argJsonArray)";
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < argJsonArray.length(); i++) {
             Object value = argJsonArray.get(i);
@@ -51,7 +56,8 @@ public class JSONFastParser {
         return list;
     }
 
-    public static boolean isMap(Object argObject) {
+    protected static boolean isMap(Object argObject) {
+        methodName = "isMap(Object argObject)";
         //System.out.println("LOG_PRINT_OBJECT_TYPE: " + argObject.getClass());
         if (argObject instanceof HashMap || argObject instanceof Map) {
             return true;
@@ -59,7 +65,8 @@ public class JSONFastParser {
         return false;
     }
 
-    public static boolean isList(Object argObject) {
+    protected static boolean isList(Object argObject) {
+        methodName = "isList(Object argObject)";
         //System.out.println("LOG_PRINT_OBJECT_TYPE: " + argObject.getClass());
         if (argObject instanceof ArrayList || argObject instanceof List) {
             return true;
@@ -67,7 +74,8 @@ public class JSONFastParser {
         return false;
     }
 
-    public static <T> T getObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static <T> T getObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "<T> T getObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
             return (T) object;
@@ -75,7 +83,8 @@ public class JSONFastParser {
         return null;
     }
 
-    public static <T> T getHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static <T> T getHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "<T> T getHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         HashMap<String, ?> hashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
@@ -88,7 +97,8 @@ public class JSONFastParser {
     }
 
     @Deprecated
-    public static HashMap<String, String> getHashMapStringByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static HashMap<String, String> getHashMapStringByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "HashMap<String, String> getHashMapStringByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         HashMap<String, String> hashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
@@ -100,7 +110,8 @@ public class JSONFastParser {
         return hashMap;
     }
 
-    public static <T> T getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static <T> T getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "<T> T getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         ArrayList<HashMap<String, ?>> arrayListHashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
@@ -119,7 +130,8 @@ public class JSONFastParser {
     }
 
     @Deprecated
-    public static ArrayList<HashMap<String, String>> getArrayListHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static ArrayList<HashMap<String, String>> getArrayListHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "ArrayList<HashMap<String, String>> getArrayListHashMapByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         ArrayList<HashMap<String, String>> arrayListHashMap = null;
         if (argObjectHashMap.containsKey(argKey)) {
             Object object = argObjectHashMap.get(argKey);
@@ -139,7 +151,8 @@ public class JSONFastParser {
         return arrayListHashMap;
     }
 
-    public static <T> T getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static <T> T getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "<T> T getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         //ArrayList<String>
         ArrayList<?> arrayList = null;
         if (argObjectHashMap.containsKey(argKey)) {
@@ -153,7 +166,8 @@ public class JSONFastParser {
     }
 
     @Deprecated
-    public static ArrayList<?> getArrayListObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    protected static ArrayList<?> getArrayListObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+        methodName = "ArrayList<?> getArrayListObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey)";
         //ArrayList<String>
         ArrayList<?> arrayList = null;
         if (argObjectHashMap.containsKey(argKey)) {
@@ -196,3 +210,4 @@ try {
     e.printStackTrace();
 }
 */
+//https://www.codeaffine.com/2015/03/04/map-distinct-value-types-using-java-generics/
