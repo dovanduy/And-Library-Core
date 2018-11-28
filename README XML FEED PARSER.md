@@ -32,7 +32,7 @@
 ```
 
 ### JAVA Code Usages:
-```java_code_xmlfeedparser_usages
+```java_code_XMLFeedParser_usages
 XMLFeedParser xmlFeedParser = new XMLFeedParser(context);
 String xmlStr = xmlFeedParser.onReadAssetsFile("db_dir/test.xml");
 //System.out.println("INIT_VALUE: " + xmlStr);
