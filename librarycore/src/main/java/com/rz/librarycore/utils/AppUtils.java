@@ -1,5 +1,6 @@
 package com.rz.librarycore.utils;
 
+import android.arch.core.BuildConfig;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.rz.librarycore.BuildConfig;
 import com.rz.librarycore.log.LogWriter;
 
 import java.io.IOException;
@@ -65,6 +65,7 @@ public class AppUtils {
         }
         //|----|------------------------------------------------------------|
     }
+
     //|----|------------------------------------------------------------|
     public static boolean isURLAvailable(String argURL) {
         try {
