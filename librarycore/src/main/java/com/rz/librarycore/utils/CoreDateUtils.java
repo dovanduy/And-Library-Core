@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtils {
+public class CoreDateUtils {
     public static String getFormattedDate(String argStrDate, String argInDateFormat) throws ParseException, NullPointerException {
         if (isNullOrEmpty(argStrDate) || isNullOrEmpty(argInDateFormat)) {
             throw new NullPointerException();
