@@ -32,11 +32,11 @@ public class JSONFastParser {
         return C0367a.m1391b(argObjectHashMap, argKey);
     }
 
-    public static ArrayList<HashMap<String, ?>> getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    public static <E> ArrayList<HashMap<String, ?>> getArrayListMapByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
         return C0367a.m1394c(argObjectHashMap, argKey);
     }
 
-    public static ArrayList<?> getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
+    public static <T> ArrayList<?> getArrayListByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
         return C0367a.m1395d(argObjectHashMap, argKey);
     }
 }
