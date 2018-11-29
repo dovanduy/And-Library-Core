@@ -1,38 +1,20 @@
-package com.rz.usagesexampl.working.jxml;
+package com.rz.usagesexampl.done.jxml;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class XMLFeedParser {
     private Context context;
@@ -62,7 +44,7 @@ public class XMLFeedParser {
         return coreXMLFeedParser.onReadAssetsFile(argFileName);
     }
 
-    public XMLFeedParser onXMLPrepareItems(String argXMLString) throws IOException, XmlPullParserException {
+    public XMLFeedParser onXMLPrepareItems(String argXMLString) throws XmlPullParserException, UnsupportedEncodingException, IOException {
         methodName = "XMLFeedParser onXMLPrepareItems(String argXMLString)";
         coreXMLFeedParser.onXMLPrepareItems(argXMLString);
         return this;

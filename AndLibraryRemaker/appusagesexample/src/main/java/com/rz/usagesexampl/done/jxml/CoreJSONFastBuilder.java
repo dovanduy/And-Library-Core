@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.working.jxml;
+package com.rz.usagesexampl.done.jxml;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,28 +6,31 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class JSONFastBuilder {
-    public static Object getJSONString(Object object) throws JSONException {
-        if (object instanceof HashMap) {
+class CoreJSONFastBuilder {
+    private static String methodName = "methodName-var";
+    protected static Object getJSONString(Object argObject) throws JSONException {
+        methodName = "Object getJSONString(Object argObject)";
+        if (argObject instanceof HashMap) {
             JSONObject jsonObject = new JSONObject();
-            HashMap map = (HashMap) object;
+            HashMap map = (HashMap) argObject;
             for (Object key : map.keySet()) {
                 jsonObject.put(key.toString(), getJSONString(map.get(key)));
             }
             return jsonObject;
-        } else if (object instanceof Iterable) {
+        } else if (argObject instanceof Iterable) {
             JSONArray jsonArray = new JSONArray();
-            for (Object value : ((Iterable) object)) {
+            for (Object value : ((Iterable) argObject)) {
                 jsonArray.put(getJSONString(value));
             }
             return jsonArray;
         } else {
-            return object;
+            return argObject;
         }
     }
 
-    public static boolean isEmptyObject(JSONObject object) {
-        return object.names() == null;
+    protected static boolean isEmptyObject(JSONObject argJSONObject) {
+        methodName = "boolean isEmptyObject(JSONObject argJSONObject)";
+        return argJSONObject.names() == null;
     }
 }
 //https://gist.github.com/sheharyarn/cba56ff154de2cc62fc5

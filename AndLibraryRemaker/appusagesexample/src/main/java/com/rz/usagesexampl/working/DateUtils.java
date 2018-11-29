@@ -1,4 +1,4 @@
-package com.rz.librarycore.utils;
+package com.rz.usagesexampl.working;
 
 import java.text.ParseException;
 

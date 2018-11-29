@@ -5,18 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.rz.usagesexampl.working.XMLFeedParser;
 import com.rz.usagesexampl.working.utils.AppUtils;
+import com.rz.usagesexampl.working.DateUtils;
 
-import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.text.ParseException;
 
 
 public class ActSplash extends AppCompatActivity {
@@ -32,43 +24,19 @@ public class ActSplash extends AppCompatActivity {
         activity = this;
         context = this;
         CLASS_NAME = this.getClass().getName();
-        //onRedirectWindow();
-        /*RoundImage.onSayHi();
-        MashUp.onSayHi();*/
-        //onLog();
-        //onAppUtils();
-        //onJson();
-        try {
-            onReadXML();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        onUsagesDateUtils();
     }
 
-    private void onReadXML() throws IOException, ParserConfigurationException, SAXException, XmlPullParserException, Exception {
-        XMLFeedParser xmlFeedParser = new XMLFeedParser(context);
-        String xmlStr = xmlFeedParser.onReadAssetsFile("db_dir/test.xml");
-        //System.out.println("INIT_VALUE: " + xmlStr);
-        String xmlTag = "word_list";
-        String xmlAttr = "subjective_category";
-        String xmlAttrValue = "BANK_MANAGER";
-        xmlStr = xmlFeedParser.getXMLTagByAttributes(xmlStr, xmlTag, xmlAttr, xmlAttrValue);
-        //System.out.println("ATTRIBUTE_VALUE: " + xmlStr);
-        List<String> listXMLTags = new ArrayList<>();
-        listXMLTags.add("audio_file");
-        listXMLTags.add("main_word");
-        listXMLTags.add("secondary_word");
-        String xmlItemStartingTag = "word_item";
-        List<Map<String, String>> listItems = xmlFeedParser.onXMLPrepareItems(xmlStr)
-                .getXMLParsedItems(listXMLTags, xmlItemStartingTag);
-        System.out.println("LIST: " + listItems.toString());
-        for (Map<String, String> listItem : listItems) {
-            for (Map.Entry<String, String> entry : listItem.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                System.out.println("XML_KEY: " + key + " - VALUE: " + value);
-            }
+    public void onUsagesDateUtils() {
+        String strDate = "2018-11-22";
+        try {
+            //System.out.println(DateUtils.getDateFormat(strDate));
+            System.out.println(DateUtils.getFormattedDate(strDate, "yyyy-MM-dd"));
+            System.out.println(DateUtils.getFormattedDate(strDate, "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss"));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        System.out.println(DateUtils.isValidDate(strDate, "yyyy-MM-dd"));
     }
 
     private void onAppUtils() {

@@ -1,8 +1,7 @@
-package com.rz.usagesexampl.working.jxml;
+package com.rz.usagesexampl.done.jxml;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
