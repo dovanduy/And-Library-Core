@@ -7,6 +7,7 @@ import java.util.List;
 
 public class JSONFastParser {
     private static String methodName = "methodName-var";
+
     public static HashMap<String, Object> JSONObjectFeed(String argJsonObject) throws JSONException {
         methodName = "HashMap<String, Object> JSONObjectFeed(String argJsonObject)";
         return CoreJSONFastParser.JSONObjectFeed(argJsonObject);
@@ -63,6 +64,10 @@ public class JSONFastParser {
     public static ArrayList<?> getArrayListObjectByKey(HashMap<String, ?> argObjectHashMap, String argKey) {
         return CoreJSONFastParser.getArrayListObjectByKey(argObjectHashMap, argKey);
     }*/
+    public static boolean isJson(String argJson) {
+        methodName = "boolean isJson(String argJson)";
+        return CoreJSONFastParser.isJson(argJson);
+    }
 }
 //https://www.programcreek.com/java-api-examples/?class=org.json.JSONObject&method=keys
 //https://www.quora.com/How-do-I-convert-JSONObject-to-HashMap-in-Java

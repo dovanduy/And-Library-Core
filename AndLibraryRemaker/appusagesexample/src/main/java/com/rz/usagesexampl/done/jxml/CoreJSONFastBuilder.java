@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 class CoreJSONFastBuilder {
     private static String methodName = "methodName-var";
+
     protected static Object getJSONString(Object argObject) throws JSONException {
         methodName = "Object getJSONString(Object argObject)";
         if (argObject instanceof HashMap) {
@@ -31,6 +32,20 @@ class CoreJSONFastBuilder {
     protected static boolean isEmptyObject(JSONObject argJSONObject) {
         methodName = "boolean isEmptyObject(JSONObject argJSONObject)";
         return argJSONObject.names() == null;
+    }
+
+    protected static boolean isJson(String argJson) {
+        methodName = "boolean isJson(String argJson)";
+        try {
+            new JSONObject(argJson);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(argJson);
+            } catch (JSONException exc) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 //https://gist.github.com/sheharyarn/cba56ff154de2cc62fc5

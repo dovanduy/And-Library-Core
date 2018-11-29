@@ -67,69 +67,17 @@ public class Utils {
         return null;
     }
 
-    public static String getURLParameter(HashMap<String, String> argHashMap) throws UnsupportedEncodingException {
-        final String DEFAULT_ENCODING = "UTF-8";
-        if (argHashMap != null) {
-            return onPrepareParameter(argHashMap, false);
+    /*public static boolean isNullOrEmpty(String argValue) {
+        if (argValue == null) {
+            return true;
         }
-        return null;
-    }
-
-    public static String getURLParameter(HashMap<String, String> argHashMap, boolean argIsRemoveEmpty) throws UnsupportedEncodingException {
-        final String DEFAULT_ENCODING = "UTF-8";
-        if (argHashMap != null) {
-            return onPrepareParameter(argHashMap, argIsRemoveEmpty);
+        argValue = argValue.replaceAll("\\s+", "");
+        if (argValue.trim().isEmpty()) {
+            return true;
         }
-        return null;
-    }
-
-    private static String onPrepareParameter(HashMap<String, ?> argHashMap, boolean argIsRemoveEmpty) throws UnsupportedEncodingException {
-        final String DEFAULT_ENCODING = "UTF-8";
-        if (argHashMap != null) {
-            SortedMap<String, ?> sortedMap = new TreeMap<>(argHashMap);
-            StringBuilder stringBuilder = new StringBuilder();
-            Iterator<? extends Map.Entry<String, ?>> iterator = sortedMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, ?> entry = iterator.next();
-                String key = entry.getKey();
-                if (!isNullOrEmpty(key)) {
-                    Object value = entry.getValue();
-                    if (argIsRemoveEmpty && !isNullOrEmpty(value + "")) {
-                        stringBuilder.append(URLEncoder.encode(key, DEFAULT_ENCODING));
-                        stringBuilder.append("=");
-                        String valueAsString = value != null ? URLEncoder.encode(value.toString(), DEFAULT_ENCODING) : "";
-                        stringBuilder.append(valueAsString);
-                        if (iterator.hasNext()) {
-                            stringBuilder.append('&');
-                        }
-                    } else if (!argIsRemoveEmpty) {
-                        stringBuilder.append(URLEncoder.encode(key, DEFAULT_ENCODING));
-                        stringBuilder.append("=");
-                        String valueAsString = value != null ? URLEncoder.encode(value.toString(), DEFAULT_ENCODING) : "";
-                        stringBuilder.append(valueAsString);
-                        if (iterator.hasNext()) {
-                            stringBuilder.append('&');
-                        }
-                    }
-                }
-            }
-            return stringBuilder.toString();
+        if (argValue.equalsIgnoreCase("null")) {
+            return true;
         }
-        /*HashMap<String, String> mapItems = new HashMap<>();
-        mapItems.put("str_01", "String01");
-        mapItems.put("str_06", "String06");
-        mapItems.put("str_03", "String03");
-        mapItems.put("str_04", "");
-        mapItems.put("", "String05");
-        mapItems.put("str_02", "String02");
-        mapItems.put("str_02", "String02d");
-        try {
-            System.out.println("URL_PARAM_STRING: " + Utils.getURLParameter(mapItems));
-            System.out.println("URL_PARAM_STRING: " + Utils.getURLParameter(mapItems, true));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }*/
-        return null;
-        //https://www.geeksforgeeks.org/sortedmap-java-examples/
-    }
+        return false;
+    }*/
 }

@@ -1,6 +1,9 @@
 package com.rz.usagesexampl.working.utils;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
+import java.util.HashMap;
 
 public class Usages {
     public void onUsagesDateUtils() {
@@ -13,5 +16,38 @@ public class Usages {
             e.printStackTrace();
         }
         System.out.println(DateUtils.isValidDate(strDate, "yyyy-MM-dd"));
+    }
+
+    private void onUsagesURLBuilder() throws UnsupportedEncodingException {
+        URLBuilder urlBuilder = new URLBuilder();
+        urlBuilder.withParameter("key1", "Value1")
+                .withParameter("key2", "Value2")
+                .withParameter("key3", "Value2")
+                .withParameter("key3", "Value4")
+                .withParameter("key4", "")
+                .withParameter("key5", "Value5");
+        System.out.println(urlBuilder.getURLParameter());
+        System.out.println(urlBuilder.getURLParameter(true));
+        HashMap<String, String> urlParameters = new HashMap<>();
+        urlParameters.put("key1", "Value1");
+        urlParameters.put("key2", "Value2");
+        urlParameters.put("key3", "Value2");
+        urlParameters.put("key3", "Value4");
+        urlParameters.put("key4", "");
+        urlParameters.put("key5", "Value5");
+        System.out.println(URLBuilder.getURLParameter(urlParameters));
+        System.out.println(URLBuilder.getURLParameter(urlParameters, true));
+        //https://stackoverflow.com/questions/1921514/how-to-run-a-runnable-thread-in-android-at-defined-intervals
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println(URLBuilder.isURLAlive("https://rzrasel.net/"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        //System.out.println(URLBuilder.isJson("{asfasf,asdfaf}"));
     }
 }

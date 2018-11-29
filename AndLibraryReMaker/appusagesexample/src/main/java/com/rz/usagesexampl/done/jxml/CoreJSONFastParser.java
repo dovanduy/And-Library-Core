@@ -12,6 +12,7 @@ import java.util.Map;
 
 class CoreJSONFastParser {
     private static String methodName = "methodName-var";
+
     protected static HashMap<String, Object> JSONObjectFeed(String argJsonObject) throws JSONException {
         methodName = "HashMap<String, Object> JSONObjectFeed(String argJsonObject)";
         return getJSONToMap(new JSONObject(argJsonObject));
@@ -178,6 +179,20 @@ class CoreJSONFastParser {
             return arrayList;
         }
         return arrayList;
+    }
+
+    protected static boolean isJson(String argJson) {
+        methodName = "boolean isJson(String argJson)";
+        try {
+            new JSONObject(argJson);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(argJson);
+            } catch (JSONException exc) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 //https://www.programcreek.com/java-api-examples/?class=org.json.JSONObject&method=keys

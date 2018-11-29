@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.rz.usagesexampl.working.utils.AppUtils;
-import com.rz.usagesexampl.working.DateUtils;
-
-import java.text.ParseException;
 
 
 public class ActSplash extends AppCompatActivity {
@@ -24,19 +21,6 @@ public class ActSplash extends AppCompatActivity {
         activity = this;
         context = this;
         CLASS_NAME = this.getClass().getName();
-        onUsagesDateUtils();
-    }
-
-    public void onUsagesDateUtils() {
-        String strDate = "2018-11-22";
-        try {
-            //System.out.println(DateUtils.getDateFormat(strDate));
-            System.out.println(DateUtils.getFormattedDate(strDate, "yyyy-MM-dd"));
-            System.out.println(DateUtils.getFormattedDate(strDate, "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(DateUtils.isValidDate(strDate, "yyyy-MM-dd"));
     }
 
     private void onAppUtils() {
