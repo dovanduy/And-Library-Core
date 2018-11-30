@@ -3,12 +3,19 @@ package com.rz.librarycore.utils;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Utils {
     public static boolean isNullOrEmpty(String argValue) {
         if (argValue == null) {
             return true;
         }
+        argValue = argValue.replaceAll("\\s+", "");
         if (argValue.trim().isEmpty()) {
             return true;
         }
@@ -59,4 +66,18 @@ public class Utils {
         }
         return null;
     }
+
+    /*public static boolean isNullOrEmpty(String argValue) {
+        if (argValue == null) {
+            return true;
+        }
+        argValue = argValue.replaceAll("\\s+", "");
+        if (argValue.trim().isEmpty()) {
+            return true;
+        }
+        if (argValue.equalsIgnoreCase("null")) {
+            return true;
+        }
+        return false;
+    }*/
 }
