@@ -1,6 +1,7 @@
 package com.rz.librarycore.http;
 
 import android.os.AsyncTask;
+import android.support.annotation.GuardedBy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ public class HTTPPowerFeedMultipart {
     private final String twoHyphens = "--";
     private HashMap<String, String> httpResponseData;
 
+    @GuardedBy("mLock")
     public HTTPPowerFeedMultipart withHeaderAuthorization(String argUrlHeaderAuthorization) {
         this.headerAuthorization = argUrlHeaderAuthorization;
         return this;
