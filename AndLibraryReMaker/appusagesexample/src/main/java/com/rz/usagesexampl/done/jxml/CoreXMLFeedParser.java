@@ -163,12 +163,16 @@ class CoreXMLFeedParser {
                     case XmlPullParser.START_DOCUMENT:
                         //products = new ArrayList();
                         listXMLTagItems.clear();
+                        listXMLAttributeItems.clear();
                         break;
                     case XmlPullParser.START_TAG:
                         xmlTagName = xmlPullParser.getName();
                         //LogWriter.Log("TAG_NAME: " + xmlTagName);
                         if (xmlTagName.equals(TAG_XML_ITEM_STARTING_ENDING)) {
                             mapXMLTagItems = new HashMap<>();
+                            mapXMLTagItems.clear();
+                            mapXMLAttributeItems = new HashMap<>();
+                            mapXMLAttributeItems.clear();
                         } else {
                             //int rid = resources.getIdentifier(packageName + ":raw/" + fileName, null, null);
                             //String key = argKeyList();
@@ -280,7 +284,9 @@ class CoreXMLFeedParser {
                         //LogWriter.Log("TAG_NAME: " + xmlTagName);
                         if (xmlTagName.equals(TAG_XML_ITEM_STARTING_ENDING)) {
                             mapXMLTagItems = new HashMap<>();
+                            mapXMLTagItems.clear();
                             mapXMLAttributeItems = new HashMap<>();
+                            mapXMLAttributeItems.clear();
                         } else {
                             //int rid = resources.getIdentifier(packageName + ":raw/" + fileName, null, null);
                             //String key = argKeyList();
@@ -441,8 +447,8 @@ class CoreXMLFeedParser {
     }
 
     //|------------------------------------------------------------|
-    protected String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) throws ParserConfigurationException, SAXException, IOException, TransformerException {
-        methodName = "String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
+    protected String getXMLByTagAttribute(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+        methodName = "String getXMLByTagAttribute(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
         if (isNullOrEmpty(argXMLString)) {
             return null;
         }

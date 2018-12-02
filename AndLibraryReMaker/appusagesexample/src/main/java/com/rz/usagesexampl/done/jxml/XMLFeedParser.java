@@ -45,7 +45,7 @@ public class XMLFeedParser {
     }
 
     public XMLFeedParser withTag(String argTagKey) {
-        methodName = "XMLFeedParser withTag(String argAttributeKey)";
+        methodName = "XMLFeedParser withTag(String argTagKey)";
         coreXMLFeedParser.withTag(argTagKey);
         return this;
     }
@@ -64,7 +64,7 @@ public class XMLFeedParser {
 
     //|------------------------------------------------------------|
     public List<Map<String, String>> getXMLParsedItems(String argItemStartingEndingTag) throws Exception {
-        methodName = "List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag)";
+        methodName = "List<Map<String, String>> getXMLParsedItems(String argItemStartingEndingTag)";
         return coreXMLFeedParser.getXMLParsedItems(argItemStartingEndingTag);
     }
     //|------------------------------------------------------------|
@@ -74,16 +74,16 @@ public class XMLFeedParser {
         return coreXMLFeedParser.getXMLParsedItems(argKeyList, argItemStartingEndingTag);
     }
 
-
-    //|------------------------------------------------------------|
-    public String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
-        methodName = "String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
-        return coreXMLFeedParser.getXMLTagByAttributes(argXMLString, argXMLTag, argXMLAttribute, argXMLAttributeValue);
-    }
     //|------------------------------------------------------------|
     public List<Map<String, String>> getAttributeItems() {
         methodName = "List<Map<String, String>> getAttributeItems()";
         return coreXMLFeedParser.getAttributeItems();
+    }
+
+    //|------------------------------------------------------------|
+    public String getXMLByTagAttribute(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+        methodName = "String getXMLByTagAttribute(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
+        return coreXMLFeedParser.getXMLByTagAttribute(argXMLString, argXMLTag, argXMLAttribute, argXMLAttributeValue);
     }
     //|------------------------------------------------------------|
 }

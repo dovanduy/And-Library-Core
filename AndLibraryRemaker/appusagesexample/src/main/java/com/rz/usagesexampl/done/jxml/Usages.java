@@ -52,14 +52,13 @@ public class Usages {
         List<Map<String, String>> listItemsTemp01 = xmlFeedParser.onXMLPrepareItems(xmlStr)
                 .getXMLParsedItems(listXMLTagsTemp, xmlItemStartingTagTemp);
         System.out.println("XML_TAG_LIST: " + listItemsTemp01);
-        if (true) return;
         //|------------------------------------------------------------|
         //|------------------------------------------------------------|
         //System.out.println("INIT_VALUE: " + xmlStr);
         String xmlTag = "word_list";
         String xmlAttr = "subjective_category";
         String xmlAttrValue = "BANK_MANAGER";
-        xmlStr = xmlFeedParser.getXMLTagByAttributes(xmlStr, xmlTag, xmlAttr, xmlAttrValue);
+        xmlStr = xmlFeedParser.getXMLByTagAttribute(xmlStr, xmlTag, xmlAttr, xmlAttrValue);
         //System.out.println("ATTRIBUTE_VALUE: " + xmlStr);
         List<String> listXMLTags = new ArrayList<>();
         listXMLTags.add("audio_file");
