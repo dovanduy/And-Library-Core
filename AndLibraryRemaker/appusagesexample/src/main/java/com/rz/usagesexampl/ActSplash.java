@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.rz.usagesexampl.done.jxml.Usages;
 import com.rz.usagesexampl.working.utils.AppUtils;
 
 
@@ -21,6 +22,11 @@ public class ActSplash extends AppCompatActivity {
         activity = this;
         context = this;
         CLASS_NAME = this.getClass().getName();
+        try {
+            Usages.onReadXML(context);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void onAppUtils() {

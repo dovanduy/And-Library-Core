@@ -17,7 +17,7 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Usages {
-    private void onReadXML(Context argContext) throws IOException, ParserConfigurationException, SAXException, XmlPullParserException, Exception {
+    public static void onReadXML(Context argContext) throws IOException, ParserConfigurationException, SAXException, XmlPullParserException, Exception {
         /*try {
             onReadXML(context);
         } catch (Exception ex) {
@@ -25,6 +25,36 @@ public class Usages {
         }*/
         XMLFeedParser xmlFeedParser = new XMLFeedParser(argContext);
         String xmlStr = xmlFeedParser.onReadAssetsFile("db_dir/test.xml");
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
+        /*List<String> listXMLTagsTemp = new ArrayList<>();
+        listXMLTagsTemp.add("audio_file");
+        listXMLTagsTemp.add("main_word");
+        listXMLTagsTemp.add("secondary_word");
+        String xmlItemStartingTagTemp = "word_item";*/
+        List<Map<String, String>> listItemsTemp = xmlFeedParser.withTag("audio_file")
+                .withTag("main_word")
+                .withTag("secondary_word")
+                .withAttribute("length")
+                .withAttribute("section")
+                .onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems("word_item");
+        List<Map<String, String>> listItemsAttr = xmlFeedParser.getAttributeItems();
+        System.out.println("XML_TAG_LIST: " + listItemsTemp);
+        System.out.println("XML_ATTR_LIST: " + listItemsAttr);
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
+        List<String> listXMLTagsTemp = new ArrayList<>();
+        listXMLTagsTemp.add("audio_file");
+        listXMLTagsTemp.add("main_word");
+        listXMLTagsTemp.add("secondary_word");
+        String xmlItemStartingTagTemp = "word_item";
+        List<Map<String, String>> listItemsTemp01 = xmlFeedParser.onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems(listXMLTagsTemp, xmlItemStartingTagTemp);
+        System.out.println("XML_TAG_LIST: " + listItemsTemp01);
+        if (true) return;
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
         //System.out.println("INIT_VALUE: " + xmlStr);
         String xmlTag = "word_list";
         String xmlAttr = "subjective_category";

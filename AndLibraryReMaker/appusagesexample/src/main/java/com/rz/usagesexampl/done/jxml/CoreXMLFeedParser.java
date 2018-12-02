@@ -23,8 +23,11 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,11 +47,22 @@ class CoreXMLFeedParser {
     private InputStream inputStream;
     private String xmlFilePath;
     private boolean isXMLStringNull = false;
+    /*private TreeMap<String, String> tagTreeMap;
+    private TreeMap<String, String> attributeTreeMap;*/
+    private HashSet<String> tagHashSet;
+    private HashSet<String> attributeHashSet;
+    private List<Map<String, String>> listXMLAttributeItems;
     private static String methodName = "methodName-var";
 
     public CoreXMLFeedParser(Context argContext) {
         methodName = "CoreXMLFeedParser(Context argContext)";
         this.context = argContext;
+        tagHashSet = new HashSet<>();
+        tagHashSet.clear();
+        attributeHashSet = new HashSet<>();
+        attributeHashSet.clear();
+        listXMLAttributeItems = new ArrayList<>();
+        listXMLAttributeItems.clear();
         isXMLStringNull = false;
     }
 
@@ -78,10 +92,29 @@ class CoreXMLFeedParser {
         //http://www.vogella.com/tutorials/AndroidXML/article.html
     }
 
+    protected CoreXMLFeedParser withTag(String argTagKey) {
+        methodName = "CoreXMLFeedParser withTag(String argAttributeKey)";
+        if (!isNullOrEmpty(argTagKey)) {
+            tagHashSet.add(argTagKey);
+        }
+        return this;
+    }
+
+    protected CoreXMLFeedParser withAttribute(String argAttributeKey) {
+        methodName = "CoreXMLFeedParser withAttribute(String argAttributeKey)";
+        if (!isNullOrEmpty(argAttributeKey)) {
+            attributeHashSet.add(argAttributeKey);
+        }
+        return this;
+    }
+
     protected CoreXMLFeedParser onXMLPrepareItems(String argXMLString) throws XmlPullParserException, UnsupportedEncodingException, IOException {
         methodName = "CoreXMLFeedParser onXMLPrepareItems(String argXMLString)";
         //String xmlString = onReadAssetsFile(argFileName);
         //System.out.println("XML_DATA: " + xmlString);
+        /*if (tagHashSet.size() <= 0) {
+            return this;
+        }*/
         if (isNullOrEmpty(argXMLString)) {
             isXMLStringNull = true;
             return this;
@@ -106,16 +139,21 @@ class CoreXMLFeedParser {
     }
 
     //|------------------------------------------------------------|
-
-    protected List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag) throws Exception {
-        methodName = "List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag)";
+    protected List<Map<String, String>> getXMLParsedItems(String argItemStartingEndingTag) throws Exception {
+        methodName = "List<Map<String, String>> getXMLParsedItems(String argItemStartingEndingTag)";
         int eventType;
-        List<Map<String, String>> listXMLItems = new ArrayList<>();
-        Map<String, String> mapXMLItem = new HashMap<>();
+        List<Map<String, String>> listXMLTagItems = new ArrayList<>();
+        if (tagHashSet.size() <= 0) {
+            return listXMLTagItems;
+        }
+        Map<String, String> mapXMLTagItems = new HashMap<>();
+        listXMLAttributeItems = new ArrayList<>();
+        Map<String, String> mapXMLAttributeItems = new HashMap<>();
         if (isXMLStringNull) {
-            return listXMLItems;
+            return listXMLTagItems;
         }
         try {
+            //String currentTag = null;
             eventType = xmlPullParser.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 String xmlTagName = null;
@@ -124,13 +162,13 @@ class CoreXMLFeedParser {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT:
                         //products = new ArrayList();
-                        listXMLItems.clear();
+                        listXMLTagItems.clear();
                         break;
                     case XmlPullParser.START_TAG:
                         xmlTagName = xmlPullParser.getName();
                         //LogWriter.Log("TAG_NAME: " + xmlTagName);
                         if (xmlTagName.equals(TAG_XML_ITEM_STARTING_ENDING)) {
-                            mapXMLItem = new HashMap<>();
+                            mapXMLTagItems = new HashMap<>();
                         } else {
                             //int rid = resources.getIdentifier(packageName + ":raw/" + fileName, null, null);
                             //String key = argKeyList();
@@ -138,8 +176,30 @@ class CoreXMLFeedParser {
                                 strXmlText = argXmlPullParser.nextText();
                             }*/
                             //LogWriter.Log("TAG_NAME_OUTER: " + xmlTagName);
-                            if (containsListKey(argKeyList, xmlTagName)) {
+                            /*if (!xmlPullParser.getName().equals(TAG_XML_ITEM_STARTING_ENDING)) {
+                                //currentTag = xmlPullParser.getName();
+                                System.out.println("getAttributeValue--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                                //System.out.println("getAttributeValue---------------++" + xmlPullParser.getAttributeValue(XmlPullParser.NO_NAMESPACE, "section"));
+                                //System.out.println("getAttributeValue---------------++" + xmlPullParser.getAttributeType(0));
+                                //System.out.println("getAttributeName---------------++" + xmlPullParser.getAttributeName(0));
+                                //System.out.println("--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                            }*/
+                            if (containsSetKey(tagHashSet, xmlTagName)) {
+                                /*System.out.println("--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                                System.out.println("GET_TEXT--------------->" + xmlPullParser.getText());*/
                                 //LogWriter.Log("TAG_NAME_INNER: " + xmlTagName);
+                                //System.out.println("getAttributeValue--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                                String attributeName = null;
+                                String attributeValue = null;
+                                if (xmlPullParser.getAttributeCount() > 0) {
+                                    attributeName = xmlPullParser.getAttributeName(0);
+                                    attributeValue = xmlPullParser.getAttributeValue(XmlPullParser.NO_NAMESPACE, attributeName);
+                                    //System.out.println(attributeName + " -- " + attributeValue);
+                                }
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
                                 String strXmlText = xmlPullParser.nextText();
                                 strXmlText = strXmlText.replaceAll("\\s+", " ").trim();
                                 //For left trim:
@@ -148,14 +208,28 @@ class CoreXMLFeedParser {
                                 strXmlText = strXmlText.replaceAll("\\s+$", "");
                                 strXmlText = strXmlText.trim();
                                 //LogWriter.Log("TAG_VALUE: ->" + strXmlText + "<-");
-                                mapXMLItem.put(xmlTagName, strXmlText);
+                                //mapXMLTagItems.put(xmlTagName, strXmlText);
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                                mapXMLTagItems.put(xmlTagName, strXmlText);
+                                if (containsSetKey(attributeHashSet, attributeName)) {
+                                    mapXMLAttributeItems.put(attributeName, attributeValue);
+                                } else {
+                                    mapXMLAttributeItems.put(xmlTagName, "attribute_not_found");
+                                }
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
                             }
                         }
                         break;
                     case XmlPullParser.END_TAG:
+                        //currentTag = null;
                         xmlTagName = xmlPullParser.getName();
-                        if (xmlTagName.equalsIgnoreCase(TAG_XML_ITEM_STARTING_ENDING) && listXMLItems != null) {
-                            listXMLItems.add(mapXMLItem);
+                        if (xmlTagName.equalsIgnoreCase(TAG_XML_ITEM_STARTING_ENDING) && listXMLTagItems != null) {
+                            listXMLTagItems.add(mapXMLTagItems);
+                            if (listXMLAttributeItems != null) {
+                                listXMLAttributeItems.add(mapXMLAttributeItems);
+                            }
                         }
                         break;
                 }
@@ -172,13 +246,193 @@ class CoreXMLFeedParser {
                     + c + "\nCalories : " + d);*/
         //adapterLvTeam.notifyDataSetChanged();
         //this.taskHandelListener.setOnTaskEndListener(lstLocationPoints);
-        return listXMLItems;
+        return listXMLTagItems;
+    }
+
+    //|------------------------------------------------------------|
+    @Deprecated
+    protected List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag) throws Exception {
+        methodName = "List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag)";
+        int eventType;
+        List<Map<String, String>> listXMLTagItems = new ArrayList<>();
+        Map<String, String> mapXMLTagItems = new HashMap<>();
+        listXMLAttributeItems = new ArrayList<>();
+        Map<String, String> mapXMLAttributeItems = new HashMap<>();
+        //attributeHashSet.add("section");
+        if (isXMLStringNull) {
+            return listXMLTagItems;
+        }
+        try {
+            //String currentTag = null;
+            eventType = xmlPullParser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String xmlTagName = null;
+                String TAG_XML_ITEM_STARTING_ENDING = argItemStartingEndingTag;
+                //String name = argXmlPullParser.getName();
+                switch (eventType) {
+                    case XmlPullParser.START_DOCUMENT:
+                        //products = new ArrayList();
+                        listXMLTagItems.clear();
+                        listXMLAttributeItems.clear();
+                        break;
+                    case XmlPullParser.START_TAG:
+                        xmlTagName = xmlPullParser.getName();
+                        //LogWriter.Log("TAG_NAME: " + xmlTagName);
+                        if (xmlTagName.equals(TAG_XML_ITEM_STARTING_ENDING)) {
+                            mapXMLTagItems = new HashMap<>();
+                            mapXMLAttributeItems = new HashMap<>();
+                        } else {
+                            //int rid = resources.getIdentifier(packageName + ":raw/" + fileName, null, null);
+                            //String key = argKeyList();
+                            /*if (tagName.equals(TAG_XML_LAT)) {
+                                strXmlText = argXmlPullParser.nextText();
+                            }*/
+                            //LogWriter.Log("TAG_NAME_OUTER: " + xmlTagName);
+                            /*if (!xmlPullParser.getName().equals(TAG_XML_ITEM_STARTING_ENDING)) {
+                                //currentTag = xmlPullParser.getName();
+                                System.out.println("getAttributeValue--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                                //System.out.println("getAttributeValue---------------++" + xmlPullParser.getAttributeValue(XmlPullParser.NO_NAMESPACE, "section"));
+                                //System.out.println("getAttributeValue---------------++" + xmlPullParser.getAttributeType(0));
+                                //System.out.println("getAttributeName---------------++" + xmlPullParser.getAttributeName(0));
+                                //System.out.println("--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                            }*/
+                            if (containsListKey(argKeyList, xmlTagName)) {
+                                /*System.out.println("--------------->" + xmlPullParser.getAttributeValue(null, "section"));
+                                if (xmlPullParser.getAttributeCount() > 0) {
+                                    System.out.println("--------------->" + xmlPullParser.getAttributeName(0));
+                                }*/
+                                //System.out.println("--------------->" + xmlPullParser.getAttributeCount());
+                                //System.out.println("--------------->" + xmlPullParser.getName());
+                                //System.out.println("GET_TEXT--------------->" + xmlPullParser.getText());
+                                //LogWriter.Log("TAG_NAME_INNER: " + xmlTagName);
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                                String attributeName = null;
+                                String attributeValue = null;
+                                if (xmlPullParser.getAttributeCount() > 0) {
+                                    attributeName = xmlPullParser.getAttributeName(0);
+                                    attributeValue = xmlPullParser.getAttributeValue(XmlPullParser.NO_NAMESPACE, attributeName);
+                                    //System.out.println(attributeName + " -- " + attributeValue);
+                                }
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                                String strXmlText = xmlPullParser.nextText();
+                                strXmlText = strXmlText.replaceAll("\\s+", " ").trim();
+                                //For left trim:
+                                strXmlText = strXmlText.replaceAll("^\\s+", "");
+                                //For right trim:
+                                strXmlText = strXmlText.replaceAll("\\s+$", "");
+                                strXmlText = strXmlText.trim();
+                                //LogWriter.Log("TAG_VALUE: ->" + strXmlText + "<-");
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                                mapXMLTagItems.put(xmlTagName, strXmlText);
+                                if (containsSetKey(attributeHashSet, attributeName)) {
+                                    mapXMLAttributeItems.put(attributeName, attributeValue);
+                                } else {
+                                    mapXMLAttributeItems.put(xmlTagName, "attribute_not_found");
+                                }
+                                //|------------------------------------------------------------|
+                                //|------------------------------------------------------------|
+                            }
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        //currentTag = null;
+                        xmlTagName = xmlPullParser.getName();
+                        /*System.out.println("------------> " + mapXMLAttributeItems.toString());
+                        System.out.println("------------) " + mapXMLTagItems.toString());*/
+                        if (xmlTagName.equalsIgnoreCase(TAG_XML_ITEM_STARTING_ENDING) && listXMLTagItems != null) {
+                            listXMLTagItems.add(mapXMLTagItems);
+                            if (listXMLAttributeItems != null) {
+                                listXMLAttributeItems.add(mapXMLAttributeItems);
+                            }
+                        }
+                        break;
+                }
+                eventType = xmlPullParser.next();
+            }
+            //parsingComplete = false;
+        } catch (Exception ex) {
+            //ex.printStackTrace();
+            throw ex;
+        }
+        //printProducts(products);
+            /*TextView txtView = (TextView) findViewById(R.id.textView1);
+            txtView.setText("Name : " + a + "\nPrice : " + b + "\nDescription : "
+                    + c + "\nCalories : " + d);*/
+        //adapterLvTeam.notifyDataSetChanged();
+        //this.taskHandelListener.setOnTaskEndListener(lstLocationPoints);
+        return listXMLTagItems;
+    }
+
+    //|------------------------------------------------------------|
+    protected List<Map<String, String>> getAttributeItems() {
+        methodName = "List<Map<String, String>> getAttributeItems()";
+        return listXMLAttributeItems;
     }
 
     //|------------------------------------------------------------|
     private boolean containsListKey(List<String> argKeyList, String argSearchKey) {
         methodName = "boolean containsListKey(List<String> argKeyList, String argSearchKey)";
+        if (isNullOrEmpty(argSearchKey)) {
+            return false;
+        }
         for (String item : argKeyList) {
+            if (isNullOrEmpty(item)) {
+                return false;
+            }
+            argSearchKey = argSearchKey.toLowerCase();
+            if (item.trim().toLowerCase().contains(argSearchKey))
+                return true;
+        }
+        return false;
+    }
+
+    //|------------------------------------------------------------|
+    private boolean containsListKey(ArrayList<String> argKeyList, String argSearchKey) {
+        methodName = "boolean containsListKey(ArrayList<String> argKeyList, String argSearchKey)";
+        if (isNullOrEmpty(argSearchKey)) {
+            return false;
+        }
+        for (String item : argKeyList) {
+            if (isNullOrEmpty(item)) {
+                return false;
+            }
+            argSearchKey = argSearchKey.toLowerCase();
+            if (item.trim().toLowerCase().contains(argSearchKey))
+                return true;
+        }
+        return false;
+    }
+
+    //|------------------------------------------------------------|
+    private boolean containsSetKey(Set<String> argKeyList, String argSearchKey) {
+        methodName = "boolean containsListKey(Set<String> argKeyList, String argSearchKey)";
+        if (isNullOrEmpty(argSearchKey)) {
+            return false;
+        }
+        for (String item : argKeyList) {
+            if (isNullOrEmpty(item)) {
+                return false;
+            }
+            argSearchKey = argSearchKey.toLowerCase();
+            if (item.trim().toLowerCase().contains(argSearchKey))
+                return true;
+        }
+        return false;
+    }
+
+    //|------------------------------------------------------------|
+    private boolean containsSetKey(HashSet<String> argKeyList, String argSearchKey) {
+        methodName = "boolean containsListKey(HashSet<String> argKeyList, String argSearchKey)";
+        if (isNullOrEmpty(argSearchKey)) {
+            return false;
+        }
+        for (String item : argKeyList) {
+            if (isNullOrEmpty(item)) {
+                return false;
+            }
             argSearchKey = argSearchKey.toLowerCase();
             if (item.trim().toLowerCase().contains(argSearchKey))
                 return true;
@@ -392,4 +646,6 @@ for (Map<String, String> listItem : listItems) {
         System.out.println("XML_KEY: " + key + " - VALUE: " + value);
     }
 }
+
+//https://android--examples.blogspot.com/2017/03/android-xmlpullparser-to-parse-xml.html
 */

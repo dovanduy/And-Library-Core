@@ -44,12 +44,29 @@ public class XMLFeedParser {
         return coreXMLFeedParser.onReadAssetsFile(argFileName);
     }
 
+    public XMLFeedParser withTag(String argTagKey) {
+        methodName = "XMLFeedParser withTag(String argAttributeKey)";
+        coreXMLFeedParser.withTag(argTagKey);
+        return this;
+    }
+
+    public XMLFeedParser withAttribute(String argAttributeKey) {
+        methodName = "XMLFeedParser withAttribute(String argAttributeKey)";
+        coreXMLFeedParser.withAttribute(argAttributeKey);
+        return this;
+    }
+
     public XMLFeedParser onXMLPrepareItems(String argXMLString) throws XmlPullParserException, UnsupportedEncodingException, IOException {
         methodName = "XMLFeedParser onXMLPrepareItems(String argXMLString)";
         coreXMLFeedParser.onXMLPrepareItems(argXMLString);
         return this;
     }
 
+    //|------------------------------------------------------------|
+    public List<Map<String, String>> getXMLParsedItems(String argItemStartingEndingTag) throws Exception {
+        methodName = "List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag)";
+        return coreXMLFeedParser.getXMLParsedItems(argItemStartingEndingTag);
+    }
     //|------------------------------------------------------------|
 
     public List<Map<String, String>> getXMLParsedItems(List<String> argKeyList, String argItemStartingEndingTag) throws Exception {
@@ -63,6 +80,12 @@ public class XMLFeedParser {
         methodName = "String getXMLTagByAttributes(String argXMLString, String argXMLTag, String argXMLAttribute, String argXMLAttributeValue)";
         return coreXMLFeedParser.getXMLTagByAttributes(argXMLString, argXMLTag, argXMLAttribute, argXMLAttributeValue);
     }
+    //|------------------------------------------------------------|
+    public List<Map<String, String>> getAttributeItems() {
+        methodName = "List<Map<String, String>> getAttributeItems()";
+        return coreXMLFeedParser.getAttributeItems();
+    }
+    //|------------------------------------------------------------|
 }
 
 

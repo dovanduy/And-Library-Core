@@ -56,4 +56,3 @@ public class XMLFeedParser {
         return this.f1115b.m1400a(argXMLString, argXMLTag, argXMLAttribute, argXMLAttributeValue);
     }
 }
-//https://android--examples.blogspot.com/2017/03/android-xmlpullparser-to-parse-xml.html
