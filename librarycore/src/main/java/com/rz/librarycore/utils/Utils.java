@@ -3,11 +3,11 @@ package com.rz.librarycore.utils;
 import java.io.UnsupportedEncodingException;
 
 public class Utils {
-    public static int m1390a() {
+    public static int getCacheSize() {
         return C0366a.m1386a();
     }
 
-    public static boolean m1391a(String argString) {
+    public static boolean isNullOrEmpty(String argString) {
         return C0366a.m1387a(argString);
     }
 
