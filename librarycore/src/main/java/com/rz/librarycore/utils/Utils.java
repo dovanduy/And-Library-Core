@@ -15,7 +15,7 @@ public class Utils {
         return C0366a.m1388b(argString);
     }
 
-    public static String m1393c(String argString) throws UnsupportedEncodingException {
+    public static String getBase64Decode(String argString) throws UnsupportedEncodingException {
         return C0366a.m1389c(argString);
     }
 }
