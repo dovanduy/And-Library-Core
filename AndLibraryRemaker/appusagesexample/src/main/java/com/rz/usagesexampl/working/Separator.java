@@ -6,9 +6,20 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.rz.usagesexampl.ActTestTwo;
+import com.rz.usagesexampl.done.jxml.XMLFeedParser;
 import com.rz.usagesexampl.done.log.LogWriter;
 import com.rz.usagesexampl.done.redirect.RedirectWindow;
 import com.rz.usagesexampl.done.jxml.JSONFastParser;
+
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 public class Separator {
     private Activity activity;
@@ -19,6 +30,66 @@ public class Separator {
     public Separator(Activity argActivity, Context argContext) {
         activity = argActivity;
         context = argContext;
+    }
+
+    public static void onReadXML(Context argContext) throws IOException, ParserConfigurationException, SAXException, XmlPullParserException, Exception {
+        /*try {
+            onReadXML(context);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }*/
+        XMLFeedParser xmlFeedParser = new XMLFeedParser(argContext);
+        String xmlStr = xmlFeedParser.onReadAssetsFile("db_dir/test.xml");
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
+        /*List<String> listXMLTagsTemp = new ArrayList<>();
+        listXMLTagsTemp.add("audio_file");
+        listXMLTagsTemp.add("main_word");
+        listXMLTagsTemp.add("secondary_word");
+        String xmlItemStartingTagTemp = "word_item";*/
+        List<Map<String, String>> listItemsTemp = xmlFeedParser.withTag("audio_file")
+                .withTag("main_word")
+                .withTag("secondary_word")
+                .withAttribute("length")
+                .withAttribute("section")
+                .onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems("word_item");
+        List<Map<String, String>> listItemsAttr = xmlFeedParser.getAttributeItems();
+        System.out.println("XML_TAG_LIST: " + listItemsTemp);
+        System.out.println("XML_ATTR_LIST: " + listItemsAttr);
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
+        List<String> listXMLTagsTemp = new ArrayList<>();
+        listXMLTagsTemp.add("audio_file");
+        listXMLTagsTemp.add("main_word");
+        listXMLTagsTemp.add("secondary_word");
+        String xmlItemStartingTagTemp = "word_item";
+        List<Map<String, String>> listItemsTemp01 = xmlFeedParser.onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems(listXMLTagsTemp, xmlItemStartingTagTemp);
+        System.out.println("XML_TAG_LIST: " + listItemsTemp01);
+        //|------------------------------------------------------------|
+        //|------------------------------------------------------------|
+        //System.out.println("INIT_VALUE: " + xmlStr);
+        String xmlTag = "word_list";
+        String xmlAttr = "subjective_category";
+        String xmlAttrValue = "BANK_MANAGER";
+        xmlStr = xmlFeedParser.getXMLByTagAttribute(xmlStr, xmlTag, xmlAttr, xmlAttrValue);
+        //System.out.println("ATTRIBUTE_VALUE: " + xmlStr);
+        List<String> listXMLTags = new ArrayList<>();
+        listXMLTags.add("audio_file");
+        listXMLTags.add("main_word");
+        listXMLTags.add("secondary_word");
+        String xmlItemStartingTag = "word_item";
+        List<Map<String, String>> listItems = xmlFeedParser.onXMLPrepareItems(xmlStr)
+                .getXMLParsedItems(listXMLTags, xmlItemStartingTag);
+        System.out.println("LIST: " + listItems.toString());
+        for (Map<String, String> listItem : listItems) {
+            for (Map.Entry<String, String> entry : listItem.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                System.out.println("XML_KEY: " + key + " - VALUE: " + value);
+            }
+        }
     }
 
     private void onLog() {
