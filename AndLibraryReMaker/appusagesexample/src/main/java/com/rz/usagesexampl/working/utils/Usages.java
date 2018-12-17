@@ -18,6 +18,23 @@ public class Usages {
         System.out.println(DateUtils.isValidDate(strDate, "yyyy-MM-dd"));
     }
 
+    private void useUtils() {
+        String abc = "null";
+        if (Utils.isNullOrEmpty(abc)) {
+            System.out.println("NULL_VALUE_FOUND");
+        }
+        System.out.println("CACHE_SIZE: " + Utils.getCacheSize());
+        abc = "check it";
+        try {
+            abc = Utils.getBase64Encode(abc);
+            System.out.println("BASE64: " + abc);
+            abc = Utils.getBase64Decode(abc);
+            System.out.println("BASE64: " + abc);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void onUsagesURLBuilder() throws UnsupportedEncodingException {
         URLBuilder urlBuilder = new URLBuilder();
         urlBuilder.withParameter("key1", "Value1")
