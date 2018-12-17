@@ -3,6 +3,17 @@ package com.rz.librarycore.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * <h1>C0367a</h1>
+ * <p>
+ * Use for object memory cache
+ * </p>
+ *
+ * @author Rz Rasel (Md. Rashed - Uz - Zaman)
+ * @version 100.00.01
+ * @since 2018-12-10
+ */
+
 class C0367a {
     private static final String[] f1106a = new String[]{"dd/MM/yyyy", "dd/MM/yyyy hh:mm:ss", "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy'T'HH:mm:ss.SSSZ", "dd/MM/yyyy'T'HH:mm:ss.SSS", "dd/MM/yyyy'T'HH:mm:ssZ", "dd/MM/yyyy'T'HH:mm:ss", "yyyy-MM-dd", "yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss.SSSZ", "MM/dd/yyyy", "MM/dd/yyyy hh:mm:ss", "MM/dd/yyyy HH:mm:ss", "MM/dd/yyyy'T'HH:mm:ss.SSS'Z'", "MM/dd/yyyy'T'HH:mm:ss.SSSZ", "MM/dd/yyyy'T'HH:mm:ss.SSS", "MM/dd/yyyy'T'HH:mm:ssZ", "MM/dd/yyyy'T'HH:mm:ss", "yyyy:MM:dd HH:mm:ss", "yyyyMMdd"};
 

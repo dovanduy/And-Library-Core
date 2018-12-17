@@ -4,6 +4,17 @@ import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
 
+/**
+ * <h1>C0366a</h1>
+ * <p>
+ * Use for object memory cache
+ * </p>
+ *
+ * @author Rz Rasel (Md. Rashed - Uz - Zaman)
+ * @version 100.00.01
+ * @since 2018-12-10
+ */
+
 class C0366a {
 
     public static int m1386a() {

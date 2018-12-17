@@ -13,6 +13,17 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * <h1>C0368a</h1>
+ * <p>
+ * Use for object memory cache
+ * </p>
+ *
+ * @author Rz Rasel (Md. Rashed - Uz - Zaman)
+ * @version 100.00.01
+ * @since 2018-12-10
+ */
+
 class C0368a {
     private TreeMap<String, String> f1108a = new TreeMap();
 
