@@ -1,14 +1,16 @@
-package com.rz.librarycore.hardware;
+package com.rz.usagesexampl.hardware;
 
 /**
  * Created by Rz Rasel on 2017-08-23.
  */
 
-import android.*;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +40,7 @@ public class DeviceInfo {
         deviceInfoList.put("device_build_model", getDeviceBuildModel());
         deviceInfoList.put("device_build_user", getDeviceBuildUser());
         deviceInfoList.put("device_build_product", getDeviceBuildProduct());
+        deviceInfoList.put("device_build_serial", getDeviceSerialNumber());
         deviceInfoList.put("device_build_hardware", getDeviceBuildHardware());
         deviceInfoList.put("device_build_version", getDeviceBuildVersion());
         deviceInfoList.put("device_build_sdk_version", getDeviceBuildSDKVersion());
@@ -119,6 +122,16 @@ public class DeviceInfo {
 
     public String getDeviceBuildID() {
         String deviceId = android.os.Build.ID;
+        return deviceId;
+    }
+
+    //@SuppressLint("MissingPermission")
+    public String getDeviceSerialNumber() {
+        String deviceId = Build.SERIAL;
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            deviceId = Build.getSerial();
+        }*/
+        //http://www.coderzheaven.com/2011/07/11/how-to-find-the-device-id-or-serial-number-of-an-android-device/
         return deviceId;
     }
 

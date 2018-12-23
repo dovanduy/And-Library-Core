@@ -5,22 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.rz.usagesexampl.done.jxml.XMLFeedParser;
-import com.rz.usagesexampl.working.caching.MemoryCache;
-import com.rz.usagesexampl.working.utils.AppUtils;
-import com.rz.usagesexampl.working.utils.Utils;
+import com.rz.usagesexampl.hardware.DeviceInfo;
 
-import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.HashMap;
 
 /**
  * <h1>ActSplash</h1>
@@ -46,7 +34,9 @@ public class ActSplash extends AppCompatActivity {
         activity = this;
         context = this;
         CLASS_NAME = this.getClass().getName();
-        onUseMemoryCache();
+        //onUseMemoryCache();
+        HashMap<String, String> allMappedValue = new DeviceInfo(activity, context).getAllMappedValue();
+        System.out.println(allMappedValue.toString());
     }
 
     private void onUseMemoryCache() {
@@ -57,7 +47,7 @@ public class ActSplash extends AppCompatActivity {
         arrayList.add("Value004");
         arrayList.add("Value005");
         String cacheKey = "cacheKey";
-        try {
+        /*try {
             MemoryCache.setCache(context, cacheKey, arrayList);
             ArrayList<String> arrayList1 = (ArrayList<String>) MemoryCache.getCache(context, cacheKey);
             System.out.println("SIZE: " + arrayList1.size());
@@ -69,15 +59,15 @@ public class ActSplash extends AppCompatActivity {
             //ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             //ex.printStackTrace();
-        }
+        }*/
     }
 
     private void onAppUtils() {
-        AppUtils.getAppVersion(context);
+        /*AppUtils.getAppVersion(context);
         AppUtils.getAppVersionCode(context);
         AppUtils.logDebug("TAG", "MESSAGE");
         AppUtils.getDisplaySize(context);
-        AppUtils.isURLAvailable("URL");
+        AppUtils.isURLAvailable("URL");*/
     }
 }
 //https://github.com/bintray/gradle-bintray-plugin/issues/88
