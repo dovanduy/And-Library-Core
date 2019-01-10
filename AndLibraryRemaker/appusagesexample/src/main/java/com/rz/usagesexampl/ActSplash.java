@@ -2,10 +2,15 @@ package com.rz.usagesexampl;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.rz.usagesexampl.hardware.DeviceInfo;
+import com.rz.usagesexampl.imagepicker.CRUDPathManager;
+import com.rz.usagesexampl.imagepicker.DirectoryPathManager;
+import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +40,23 @@ public class ActSplash extends AppCompatActivity {
         context = this;
         CLASS_NAME = this.getClass().getName();
         //onUseMemoryCache();
-        HashMap<String, String> allMappedValue = new DeviceInfo(activity, context).getAllMappedValue();
-        System.out.println(allMappedValue.toString());
+        /*HashMap<String, String> allMappedValue = new DeviceInfo(activity, context).getAllMappedValue();
+        System.out.println(allMappedValue.toString());*/
+        /*Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        startActivity(intent);*/
+        DirectoryPathManager directoryPathManager = new DirectoryPathManager(context)
+                .withDirectory(".test")
+                .withPackage(false);
+        System.out.println("DIRECTORY: " + directoryPathManager.getSystemDirectory());
+        System.out.println("DIRECTORY: " + directoryPathManager.getCacheDirectory());
+        try {
+            CRUDPathManager.onCreateDirectories(context, directoryPathManager.getSystemDirectory());
+            CRUDPathManager.onCreateDirectories(context, directoryPathManager.getCacheDirectory());
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onUseMemoryCache() {

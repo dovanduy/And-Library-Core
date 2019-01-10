@@ -1,6 +1,9 @@
-package com.rz.librarycore.imagepicker;
+package com.rz.usagesexampl.imagepicker;
 
 import android.content.Context;
+
+import com.rz.usagesexampl.imagepicker.exception.CoreError;
+import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +16,10 @@ import java.io.OutputStream;
 public class CRUDPathManager {
     public static boolean isDebug = true;
 
-    public static void onCreateDirs(Context argContext, String argDirectoryPath) {
+    public static void onCreateDirectories(Context argContext, String argDirectoryPath) throws CoreException {
         if (!PermissionsManager.hasPermissions(argContext, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"})) {
-            log("PERMISSION_DENIED: " + "android.permission.WRITE_EXTERNAL_STORAGE");
-            return;
+            //throw new HTTPPowerFeedException(new ErrorReason(HTTPPowerFeedException.ErrorDescription.FILE_NOT_FOUND_EXCEPTION, ex.getMessage() + " - " + httpRequestURL));
+            throw new CoreException(new CoreError().setReason(CoreError.Description.PERMISSIONS_DENIED, "Need permission android.permission.WRITE_EXTERNAL_STORAGE"));
         }
         File file = new File(argDirectoryPath);
         if (!isDirExists(file)) {

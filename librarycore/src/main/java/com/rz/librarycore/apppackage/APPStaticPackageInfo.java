@@ -10,10 +10,10 @@ import android.content.pm.PackageManager;
 
 public class APPStaticPackageInfo {
     public static String getPackageName(Context argContext) {
-        PackageManager manager = argContext.getPackageManager();
+        PackageManager packageManager = argContext.getPackageManager();
         String packageName = null;
         try {
-            PackageInfo packageInfo = manager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo packageInfo = packageManager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
             if (packageInfo != null) {
                 packageName = packageInfo.packageName;
             }
@@ -24,10 +24,10 @@ public class APPStaticPackageInfo {
     }
 
     public static String getVersionName(Context argContext) {
-        PackageManager manager = argContext.getPackageManager();
+        PackageManager packageManager = argContext.getPackageManager();
         try {
             //PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            PackageInfo packageInfo = manager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo packageInfo = packageManager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
             //return packageInfo.versionCode;
             //packageInfo.packageName;
             return packageInfo.versionName;
@@ -37,10 +37,10 @@ public class APPStaticPackageInfo {
     }
 
     public static int getVersionCode(Context argContext) {
-        PackageManager manager = argContext.getPackageManager();
+        PackageManager packageManager = argContext.getPackageManager();
         try {
             //PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            PackageInfo packageInfo = manager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo packageInfo = packageManager.getPackageInfo(argContext.getPackageName(), PackageManager.GET_META_DATA);
             //return packageInfo.versionCode;
             //packageInfo.packageName;
             return packageInfo.versionCode;

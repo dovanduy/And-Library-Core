@@ -46,19 +46,19 @@ public class XMLFeedParser {
 
     public XMLFeedParser withTag(String argTagKey) {
         methodName = "XMLFeedParser withTag(String argTagKey)";
-        coreXMLFeedParser.withTag(argTagKey);
+        //coreXMLFeedParser.withTag(argTagKey);
         return this;
     }
 
     public XMLFeedParser withAttribute(String argAttributeKey) {
         methodName = "XMLFeedParser withAttribute(String argAttributeKey)";
-        coreXMLFeedParser.withAttribute(argAttributeKey);
+        //coreXMLFeedParser.withAttribute(argAttributeKey);
         return this;
     }
 
     public XMLFeedParser onXMLPrepareItems(String argXMLString) throws XmlPullParserException, UnsupportedEncodingException, IOException {
         methodName = "XMLFeedParser onXMLPrepareItems(String argXMLString)";
-        coreXMLFeedParser.onXMLPrepareItems(argXMLString);
+        //coreXMLFeedParser.onXMLPrepareItems(argXMLString);
         return this;
     }
 
