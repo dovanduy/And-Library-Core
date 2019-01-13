@@ -1,48 +1,54 @@
 package com.rz.usagesexampl.imagepicker.exception;
 
 public class CoreError {
-    private static String prefixDescription = "EXCEPTION_OCCUR";
+    private static String prefixDescription = "EXCEPTION_OCCUR ";
 
-    public Reason setReason(Description argErrorDescription) {
+    public Reason setReason(TYPE argErrorDescription) {
         return new Reason(argErrorDescription);
     }
 
-    public Reason setReason(Description argErrorDescription, String argErrorCause) {
+    public Reason setReason(TYPE argErrorDescription, String argErrorCause) {
         return new Reason(argErrorDescription, argErrorCause);
     }
 
-    public enum Description {
-        PERMISSIONS_DENIED(prefixDescription + " PERMISSIONS DENIED EXCEPTION") {
+    public enum TYPE {
+        DIRECTORY_ALREADY_EXISTS(prefixDescription + "DIRECTORY EXISTS EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
             }
         },
-        MALFORMED_URL_EXCEPTION(prefixDescription + " MALFORMED URL EXCEPTION") {
+        FILE_NOT_FOUND_EXCEPTION(prefixDescription + "FILE ONT FOUND EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
             }
         },
-        IO_EXCEPTION(prefixDescription + " IO EXCEPTION") {
+        FILE_PATH_NOT_EXISTS(prefixDescription + "FILE PATH ONT EXISTS EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
             }
         },
-        FILE_NOT_FOUND_EXCEPTION(prefixDescription + " FILE ONT FOUND EXCEPTION") {
+        IO_EXCEPTION(prefixDescription + "IO EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
             }
         },
-        FILE_PATH_NOT_EXISTS(prefixDescription + " FILE PATH ONT EXISTS EXCEPTION") {
+        MALFORMED_URL_EXCEPTION(prefixDescription + "MALFORMED URL EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
             }
         },
-        RESPONSE_ERROR(prefixDescription + " RESPONSE EXCEPTION") {
+        PERMISSIONS_DENIED(prefixDescription + "PERMISSIONS DENIED EXCEPTION") {
+            @Override
+            String onMappedValue(String argParameter) {
+                return getMessage() + " - " + argParameter;
+            }
+        },
+        RESPONSE_ERROR(prefixDescription + "RESPONSE EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
                 return getMessage() + " - " + argParameter;
@@ -53,7 +59,7 @@ public class CoreError {
 
         private final String itemValue;
 
-        Description(String argItemValue) {
+        TYPE(String argItemValue) {
             this.itemValue = argItemValue;
         }
 
@@ -63,18 +69,25 @@ public class CoreError {
     }
 
     public class Reason {
+        private TYPE errorTYPE;
         private String errorDescription;
 
-        Reason(Description argErrorDescription) {
+        Reason(TYPE argErrorDescription) {
+            this.errorTYPE = argErrorDescription;
             this.errorDescription = argErrorDescription.getMessage();
         }
 
-        Reason(Description argErrorDescription, String argErrorCause) {
+        Reason(TYPE argErrorDescription, String argErrorCause) {
+            this.errorTYPE = argErrorDescription;
             this.errorDescription = argErrorDescription.onMappedValue(argErrorCause);
         }
 
         String getErrorDescription() {
             return this.errorDescription;
+        }
+
+        public TYPE getErrorType() {
+            return errorTYPE;
         }
     }
 }
@@ -86,3 +99,6 @@ public class CoreError {
 //https://www.codejava.net/java-core/exception/how-to-create-custom-exceptions-in-java
 //https://stackoverflow.com/questions/5819121/understanding-java-ioexception
 //https://examples.javacodegeeks.com/core-java/net/malformedurlexception/java-net-malformedurlexception-how-to-solve-malformedurlexception/
+
+//http://www.java67.com/2018/02/10-examples-of-array-in-java-tutorial.html
+//https://tutorialseye.com/advanced-array-techniques-java-tutorial.html

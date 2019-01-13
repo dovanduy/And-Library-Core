@@ -1,17 +1,16 @@
-package com.rz.librarycore.imagepicker;
+package com.rz.usagesexampl.imagepicker;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
 import android.widget.ImageView;
+
+import com.rz.usagesexampl.imagepicker.exception.CoreError;
+import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,8 +36,12 @@ public class ImageManager {
     private String fileTimeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
     public boolean isDebug = true;
 
-    public ImageManager(Context argContext) {
+    public ImageManager(Context argContext) throws CoreException {
         context = argContext;
+        checkPermission();
+    }
+
+    public void checkPermission() throws CoreException {
         String[] PERMISSIONS = {
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -46,53 +49,56 @@ public class ImageManager {
         if (Build.VERSION.SDK_INT >= 23) {
             if (!PermissionsManager.hasPermissions(context, PERMISSIONS)) {
                 PermissionsManager.requestPermissions(context, READ_WRITE_STORAGE_REQUEST, PERMISSIONS);
-                log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-                return;
+                //log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
+                throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + StringUtils.join(PERMISSIONS, ", ")));
             }
         } else if (!PermissionsManager.hasPermissions(context, PERMISSIONS)) {
-            log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-            return;
+            throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + StringUtils.join(PERMISSIONS, ", ")));
         }
     }
 
-    public void setExternalPath(String argStrDirPath) {
-        PathManager flyPathManager = new PathManager(context) {
+    public void setExternalPath(String argStrDirPath, boolean agrHaveDot) throws CoreException {
+        DirectoryPathManager flyPathManager = new DirectoryPathManager(context) {
             @Override
-            public String getRootDirectory() {
-                return super.getRootDirectory();
+            public DirectoryPathManager withDirectory(String argDirectoryName) {
+                return super.withDirectory(argDirectoryName);
             }
 
             @Override
-            public String getRootDirectory(String argDirectoryName) {
-                return super.getRootDirectory(argDirectoryName);
+            public DirectoryPathManager withPackage(boolean agrHaveDot) {
+                return super.withPackage(agrHaveDot);
             }
-        };
-        workingDirectory = flyPathManager.getRequestRootPath(flyPathManager, argStrDirPath);
+        }
+                .withDirectory(argStrDirPath)
+                .withPackage(agrHaveDot);
+        workingDirectory = flyPathManager.getSystemDirectory();
         referDirectory = workingDirectory;
         if (argStrDirPath != null) {
             if (!argStrDirPath.trim().isEmpty()) {
-                CRUDPathManager.onCreateDirs(context, workingDirectory);
+                CRUDPathManager.onCreateDirectories(context, workingDirectory);
             }
         }
     }
 
-    public void setCachePath(String argStrDirPath) {
-        PathManager flyPathManager = new PathManager(context) {
+    public void setCachePath(String argStrDirPath) throws CoreException {
+        DirectoryPathManager flyPathManager = new DirectoryPathManager(context) {
             @Override
-            public String getRootCacheDirectory() {
-                return super.getRootCacheDirectory();
+            public DirectoryPathManager withDirectory(String argDirectoryName) {
+                return super.withDirectory(argDirectoryName);
             }
 
             @Override
-            public String getRootCacheDirectory(String argDirectoryName) {
-                return super.getRootCacheDirectory(argDirectoryName);
+            public DirectoryPathManager withPackage(boolean agrHaveDot) {
+                return super.withPackage(agrHaveDot);
             }
-        };
-        workingDirectory = flyPathManager.getRequestCachePath(flyPathManager, argStrDirPath);
+        }
+                .withDirectory(argStrDirPath)
+                .withPackage();
+        workingDirectory = flyPathManager.getCacheDirectory();
         referDirectory = workingDirectory;
         if (argStrDirPath != null) {
             if (!argStrDirPath.trim().isEmpty()) {
-                CRUDPathManager.onCreateDirs(context, workingDirectory);
+                CRUDPathManager.onCreateDirectories(context, workingDirectory);
             }
         }
     }
@@ -101,7 +107,7 @@ public class ImageManager {
         referDirectory = workingDirectory + "/" + argDirectoryPath;
         if (referDirectory != null) {
             if (!referDirectory.trim().isEmpty()) {
-                CRUDPathManager.onCreateDirs(context, referDirectory);
+                //CRUDPathManager.onCreateDirs(referDirectory);
             }
         }
         //System.out.println("FILE_DIRECTORY: " + directory);
@@ -227,9 +233,9 @@ public class ImageManager {
             fileOutputStream.write(byteArrayOutputStream.toByteArray());
             fileOutputStream.close();
             log("Successfully write image");
-        } catch (Exception e) {
+        } catch (Exception ex) {
             //Log.e(TAG, "copyImageToInternalStorage: " + e.getMessage());
-            log("Error: " + e.getMessage());
+            log("Error: " + ex.getMessage());
         }
     }
 
@@ -245,9 +251,9 @@ public class ImageManager {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(byteArrayOutputStream.toByteArray());
             fileOutputStream.close();
-        } catch (Exception e) {
+        } catch (Exception ex) {
             //Log.e(TAG, "copyImageToInternalStorage: " + e.getMessage());
-            log("Error: " + e.getMessage());
+            log("Error: " + ex.getMessage());
         }
     }
 
@@ -260,9 +266,9 @@ public class ImageManager {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(byteArrayOutputStream.toByteArray());
             fileOutputStream.close();
-        } catch (Exception e) {
+        } catch (Exception ex) {
             //Log.e(TAG, "copyImageToInternalStorage: " + e.getMessage());
-            log("Error: " + e.getMessage());
+            log("Error: " + ex.getMessage());
         }
     }
 
@@ -470,6 +476,47 @@ public class ImageManager {
             installedMaps = false;
         }*/
     }
+
+    /*public void setExternalPath(String argStrDirPath) {
+        PathManager flyPathManager = new PathManager(context) {
+            @Override
+            public String getRootDirectory() {
+                return super.getRootDirectory();
+            }
+
+            @Override
+            public String getRootDirectory(String argDirectoryName) {
+                return super.getRootDirectory(argDirectoryName);
+            }
+        };
+        workingDirectory = flyPathManager.getRequestRootPath(flyPathManager, argStrDirPath);
+        referDirectory = workingDirectory;
+        if (argStrDirPath != null) {
+            if (!argStrDirPath.trim().isEmpty()) {
+                CRUDPathManager.onCreateDirs(workingDirectory);
+            }
+        }
+    }
+    public void setCachePath(String argStrDirPath) {
+        PathManager flyPathManager = new PathManager(context) {
+            @Override
+            public String getRootCacheDirectory() {
+                return super.getRootCacheDirectory();
+            }
+
+            @Override
+            public String getRootCacheDirectory(String argDirectoryName) {
+                return super.getRootCacheDirectory(argDirectoryName);
+            }
+        };
+        workingDirectory = flyPathManager.getRequestCachePath(flyPathManager, argStrDirPath);
+        referDirectory = workingDirectory;
+        if (argStrDirPath != null) {
+            if (!argStrDirPath.trim().isEmpty()) {
+                CRUDPathManager.onCreateDirs(workingDirectory);
+            }
+        }
+    }*/
 }
 //https://softwareengineering.stackexchange.com/questions/267534/string-args-vs-string-args
 //https://stackoverflow.com/questions/9048744/string-parameter-in-java

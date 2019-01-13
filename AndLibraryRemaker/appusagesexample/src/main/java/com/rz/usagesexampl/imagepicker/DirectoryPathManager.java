@@ -71,93 +71,40 @@ public class DirectoryPathManager {
     public String getCacheDirectory() {
         fullAbsolutePath = getCacheRootDir();
         File file = null;
-        if (isPrefixPackageName) {
+        String tempPackageName;
+        String tempDirectory;
+        String needle = ".";
+        int needleSize = needle.length();
+        if (!isNullOrEmpty(directory)) {
+            tempDirectory = directory.startsWith(needle) ? directory.substring(needleSize) : directory;
+            file = new File(fullAbsolutePath, tempDirectory);
+            fullAbsolutePath = file.toString();
+        }
+        /*if (isPrefixPackageName) {
             if (!isNullOrEmpty(packageName)) {
-                file = new File(fullAbsolutePath, packageName.replaceFirst(".", ""));
+                //file = new File(fullAbsolutePath, packageName.replaceFirst("\\.", ""));
+                tempPackageName = packageName.startsWith(needle) ? packageName.substring(needleSize) : packageName;
+                file = new File(fullAbsolutePath, tempPackageName);
                 fullAbsolutePath = file.toString();
             }
             if (!isNullOrEmpty(directory)) {
-                file = new File(fullAbsolutePath, directory.replaceFirst(".", ""));
+                tempDirectory = directory.startsWith(needle) ? directory.substring(needleSize) : directory;
+                file = new File(fullAbsolutePath, tempDirectory);
                 fullAbsolutePath = file.toString();
             }
         } else {
             if (!isNullOrEmpty(directory)) {
-                file = new File(fullAbsolutePath, directory.replaceFirst(".", ""));
+                tempDirectory = directory.startsWith(needle) ? directory.substring(needleSize) : directory;
+                file = new File(fullAbsolutePath, tempDirectory);
                 fullAbsolutePath = file.toString();
             }
             if (!isNullOrEmpty(packageName)) {
-                file = new File(fullAbsolutePath, packageName.replaceFirst(".", ""));
+                tempPackageName = packageName.startsWith(needle) ? packageName.substring(needleSize) : packageName;
+                file = new File(fullAbsolutePath, tempPackageName);
                 fullAbsolutePath = file.toString();
             }
-        }
+        }*/
         return fullAbsolutePath;
-    }
-    /*private String getSysRootDirectory() {
-        return getRootDir();
-    }
-
-    private String getSysDirectory() {
-        //return rootDirectory + "/" + context.getPackageName();
-        return getSysRootDirectory() + "/" + context.getPackageName();
-    }*/
-
-
-    private String getSysRootCacheDirectory() {
-        //return getCacheRootDir();
-        return "";
-    }
-
-    /*private String getSysCacheDirectory() {
-        //return rootDirectory + "/" + context.getPackageName();
-        return getSysRootCacheDirectory() + "/" + context.getPackageName();
-    }*/
-
-    public String getRootDirectory(String argDirectoryName) {
-        /*if (argDirectoryName == null) {
-            return getRootDirectory();
-        } else if (argDirectoryName.trim().isEmpty()) {
-            return getRootDirectory();
-        } else {
-            rootDirectory = getRootDir() + "/" + argDirectoryName;
-            directory = rootDirectory;
-        }*/
-        /*FlyDirFileManager flyDirFileManager = new FlyDirFileManager();
-        flyDirFileManager.makeDirs(directory);*/
-        //return directory;
-        return "";
-    }
-
-    /*protected String getRootCacheDirectory() {
-        //setRootDirectory(getSysDirectory());
-        rootDirectory = getSysRootCacheDirectory();
-        directory = rootDirectory;
-        //log("PRINT: " + directory);
-        return directory;
-    }*/
-
-    protected String getRootCacheDirectory(String argDirectoryName) {
-        /*if (argDirectoryName == null) {
-            setRootCacheDirectory();
-            return this;
-        } else if (argDirectoryName.trim().isEmpty()) {
-            setRootCacheDirectory();
-            return this;
-        } else {
-            rootDirectory = getRootCacheDir() + "/" + argDirectoryName;
-            directory = rootDirectory;
-        }*/
-        /*if (argDirectoryName == null) {
-            return getRootCacheDirectory();
-        } else if (argDirectoryName.trim().isEmpty()) {
-            return getRootCacheDirectory();
-        }
-        rootDirectory = getCacheRootDir() + "/" + argDirectoryName;
-        directory = rootDirectory;
-        *//*FlyDirFileManager flyDirFileManager = new FlyDirFileManager();
-        flyDirFileManager.makeDirs(directory);*//*
-        //log("PRINT: " + directory);
-        return directory;*/
-        return null;
     }
 
     private String getSysRootDir() {
@@ -189,12 +136,5 @@ public class DirectoryPathManager {
     }
 
     //|------------------------------------------------------------|
-    public String getRequestRootPath(DirectoryPathManager argPathManager, String argStrPath) {
-        return argPathManager.getRootCacheDirectory(argStrPath).toString();
-    }
-
-    public String getRequestCachePath(DirectoryPathManager argPathManager, String argStrPath) {
-        return argPathManager.getRootCacheDirectory(argStrPath).toString();
-    }
     //|------------------------------------------------------------|
 }

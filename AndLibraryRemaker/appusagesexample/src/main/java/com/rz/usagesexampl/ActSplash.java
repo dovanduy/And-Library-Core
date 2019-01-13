@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.rz.usagesexampl.hardware.DeviceInfo;
 import com.rz.usagesexampl.imagepicker.CRUDPathManager;
 import com.rz.usagesexampl.imagepicker.DirectoryPathManager;
+import com.rz.usagesexampl.imagepicker.ImageManager;
 import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 import java.util.ArrayList;
@@ -46,16 +47,24 @@ public class ActSplash extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         startActivity(intent);*/
-        DirectoryPathManager directoryPathManager = new DirectoryPathManager(context)
+        /*DirectoryPathManager directoryPathManager = new DirectoryPathManager(context)
                 .withDirectory(".test")
                 .withPackage(false);
-        System.out.println("DIRECTORY: " + directoryPathManager.getSystemDirectory());
-        System.out.println("DIRECTORY: " + directoryPathManager.getCacheDirectory());
+        System.out.println("DIRECTORY_SYSTEM: " + directoryPathManager.getSystemDirectory());
+        System.out.println("DIRECTORY_CACHE: " + directoryPathManager.getCacheDirectory());
         try {
-            CRUDPathManager.onCreateDirectories(context, directoryPathManager.getSystemDirectory());
+            //CRUDPathManager.onCreateDirectories(context, directoryPathManager.getSystemDirectory());
             CRUDPathManager.onCreateDirectories(context, directoryPathManager.getCacheDirectory());
-        } catch (CoreException e) {
-            e.printStackTrace();
+        } catch (CoreException ex) {
+            ex.printStackTrace();
+            System.out.println("ERROR_TYPE: " + ex.getErrorType().toString());
+        }*/
+        try {
+            ImageManager imageManager = new ImageManager(context);
+            imageManager.setExternalPath("test", true);
+            System.out.println("DIRECTORY_SYSTEM: " + imageManager.getWorkingDirectory());
+        } catch (CoreException ex) {
+            ex.printStackTrace();
         }
     }
 

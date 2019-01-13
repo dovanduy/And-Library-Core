@@ -1,6 +1,7 @@
 package com.rz.usagesexampl.imagepicker.exception;
 
 public class CoreException extends Exception {
+    private CoreError.TYPE errorTYPE;
     private String errorMessage = null;
 
     public CoreException() {
@@ -9,6 +10,7 @@ public class CoreException extends Exception {
 
     public CoreException(CoreError.Reason errorReason) {
         super(errorReason.getErrorDescription());
+        errorTYPE = errorReason.getErrorType();
         errorMessage = errorReason.getErrorDescription();
     }
 
@@ -18,6 +20,7 @@ public class CoreException extends Exception {
 
     public CoreException(CoreError.Reason errorReason, Throwable argCause) {
         super(errorReason.getErrorDescription(), argCause);
+        errorTYPE = errorReason.getErrorType();
         errorMessage = errorReason.getErrorDescription();
     }
 
@@ -29,5 +32,9 @@ public class CoreException extends Exception {
     @Override
     public String getMessage() {
         return errorMessage;
+    }
+
+    public CoreError.TYPE getErrorType() {
+        return errorTYPE;
     }
 }
