@@ -200,7 +200,7 @@ public class ImageManager {
         return retVal;
     }
 
-    public void write() {
+    public void write() throws CoreException {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(compressFormat, quality, byteArrayOutputStream);
@@ -211,9 +211,10 @@ public class ImageManager {
             fileOutputStream.write(byteArrayOutputStream.toByteArray());
             fileOutputStream.close();
             log("Successfully write image with image file name: " + referFullFilePath);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             //Log.e(TAG, "copyImageToInternalStorage: " + e.getMessage());
-            log("Error: " + e.getMessage());
+            //log("Error: " + e.getMessage());
+            throw new CoreException(new CoreError().setReason(CoreError.TYPE.EXCEPTION, ex.getMessage()));
         }
     }
 

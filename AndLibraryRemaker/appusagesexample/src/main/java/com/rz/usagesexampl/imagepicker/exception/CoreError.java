@@ -18,6 +18,12 @@ public class CoreError {
                 return getMessage() + " - " + argParameter;
             }
         },
+        EXCEPTION(prefixDescription + "EXCEPTION") {
+            @Override
+            String onMappedValue(String argParameter) {
+                return getMessage() + " - " + argParameter;
+            }
+        },
         FILE_NOT_FOUND_EXCEPTION(prefixDescription + "FILE ONT FOUND EXCEPTION") {
             @Override
             String onMappedValue(String argParameter) {
