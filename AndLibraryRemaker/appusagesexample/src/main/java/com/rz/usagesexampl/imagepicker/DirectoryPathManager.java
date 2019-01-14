@@ -33,7 +33,7 @@ public class DirectoryPathManager {
 
     public DirectoryPathManager withDirectory(String argDirectoryName) {
         if (!isNullOrEmpty(argDirectoryName)) {
-            directory = argDirectoryName;
+            directory = removeAllStartingDots(argDirectoryName);
         }
         return this;
     }
@@ -113,6 +113,21 @@ public class DirectoryPathManager {
 
     private String getCacheRootDir() {
         return context.getCacheDir() + "";
+    }
+
+    //|------------------------------------------------------------|
+    private String removeAllStartingDots(String argValue) {
+        String tempDirectory;
+        String needle = ".";
+        int needleSize = needle.length();
+        String retValue;
+        retValue = argValue.trim();
+        if (retValue.startsWith(needle)) {
+            return removeAllStartingDots(retValue.substring(needleSize));
+        } else {
+            return retValue;
+        }
+        //return retValue;
     }
 
     //|------------------------------------------------------------|

@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 
+import com.rz.usagesexampl.imagepicker.exception.CoreError;
 import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 public class ImagePickerManager {
@@ -21,39 +23,55 @@ public class ImagePickerManager {
         context = argContext;
     }
 
-    public CameraManager getCameraManager() {
+    public CameraManager getCameraManager() throws CoreException {
         return new CameraManager();
     }
 
-    public GalleryManager getGalleryManager() {
+    public CameraManager getCameraManager(int argPermissionRequestCode) throws CoreException {
+        return new CameraManager(argPermissionRequestCode);
+    }
+
+    public GalleryManager getGalleryManager() throws CoreException {
         return new GalleryManager();
     }
 
+    public GalleryManager getGalleryManager(int argPermissionRequestCode) throws CoreException {
+        return new GalleryManager(argPermissionRequestCode);
+    }
+
     public class CameraManager {
-        public static final int CAMERA_REQUEST = 4444;
+        public int CAMERA_REQUEST = 4444;
         private String cameraCacheDirectory = "";
         private String cameraCashFilePath = "";
 
-        public CameraManager() {
-            String[] PERMISSIONS = {android.Manifest.permission.CAMERA};
+        public CameraManager() throws CoreException {
+            checkCameraPermission();
+        }
+
+        public CameraManager(int argPermissionRequestCode) throws CoreException {
+            CAMERA_REQUEST = argPermissionRequestCode;
+            checkCameraPermission();
+        }
+
+        public void checkCameraPermission() throws CoreException {
+            String[] PERMISSIONS = {
+                    android.Manifest.permission.CAMERA,
+            };
             if (Build.VERSION.SDK_INT >= 23) {
                 if (!PermissionsManager.hasPermissions(context, PERMISSIONS)) {
                     PermissionsManager.requestPermissions(context, CAMERA_REQUEST, PERMISSIONS);
-                    log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-                    return;
+                    throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + ImageManager.StringUtils.join(PERMISSIONS, ", ")));
+                }
+            } else {
+                if (!PermissionsManager.hasPermissions(context, PERMISSIONS)) {
+                    PermissionsManager.requestPermissions(context, CAMERA_REQUEST, PERMISSIONS);
+                    throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + ImageManager.StringUtils.join(PERMISSIONS, ", ")));
                 }
             }
         }
 
-        public void open() {
-            String[] PERMISSIONS = {android.Manifest.permission.CAMERA};
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (PermissionsManager.hasPermissions(context, PERMISSIONS)) {
-                    PermissionsManager.requestPermissions(context, CAMERA_REQUEST, PERMISSIONS);
-                    log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-                    return;
-                }
-            }
+        public void open() throws CoreException {
+            checkCameraPermission();
             /*cameraCacheDirectory = getFileDir("cache", true);
             makeDir(cameraCacheDirectory);
             cameraCashFilePath = "camera-" + fileTimeStamp + ".png";
@@ -70,6 +88,7 @@ public class ImagePickerManager {
             ((Activity) context).startActivityForResult(cameraIntent, CAMERA_REQUEST);
         }
 
+        @Deprecated
         public void onRequestPermissionsResult(int argRequestCode, int[] argGrantResults) {
             if (argRequestCode == CAMERA_REQUEST) {
                 if (argGrantResults.length > 0 && argGrantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -79,7 +98,8 @@ public class ImagePickerManager {
             }
         }
 
-        public Bitmap onActivityResult(int argRequestCode, int argResultCode, Intent argData) {
+        public Bitmap onActivityResult(int argRequestCode, int argResultCode, Intent argData) throws CoreException {
+            checkCameraPermission();
             Bitmap bitmap = null;
             if (argRequestCode == CAMERA_REQUEST && argResultCode == Activity.RESULT_OK) {
                 Bundle bundle = argData.getExtras();
@@ -100,18 +120,45 @@ public class ImagePickerManager {
     }
 
     public class GalleryManager {
-        public static final int GALLERY_REQUEST = 8888;
+        public int GALLERY_REQUEST = 8888;
         private String galleryCacheDirectory = "";
         private String galleryCashFilePath = "";
 
-        public GalleryManager() {
+        public GalleryManager() throws CoreException {
+            checkGalleryPermission();
+        }
+
+        public GalleryManager(int argPermissionRequestCode) throws CoreException {
+            GALLERY_REQUEST = argPermissionRequestCode;
+            checkGalleryPermission();
+        }
+
+        public void checkGalleryPermission() throws CoreException {
             String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
             if (Build.VERSION.SDK_INT >= 23) {
                 if (PermissionsManager.hasPermissions(context, PERMISSIONS)) {
                     PermissionsManager.requestPermissions(context, GALLERY_REQUEST, PERMISSIONS);
-                    log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-                    return;
+                    throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + ImageManager.StringUtils.join(PERMISSIONS, ", ")));
                 }
+            } else {
+                /*if (PermissionsManager.hasPermissions(context, PERMISSIONS)) {
+                    PermissionsManager.requestPermissions(context, GALLERY_REQUEST, PERMISSIONS);
+                    throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + ImageManager.StringUtils.join(PERMISSIONS, ", ")));
+                }*/
+                for (int i = 0; i < PERMISSIONS.length; i++) {
+                    if (ContextCompat.checkSelfPermission(context, PERMISSIONS[i]) != PackageManager.PERMISSION_GRANTED) {
+                        throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + PERMISSIONS[i]));
+                    }
+                }
+            }
+        }
+
+        private void requestPermission() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //PermissionsManager.requestPermissions(context, GALLERY_REQUEST, PERMISSIONS);
+                //requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+            } else {
+                //openFilePicker();
             }
         }
 
@@ -124,16 +171,9 @@ public class ImagePickerManager {
             }
         }
 
-        public void open() {
+        public void open() throws CoreException {
             //System.out.println("OPEN_REQUEST: ");
-            String[] PERMISSIONS = {android.Manifest.permission.CAMERA};
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (PermissionsManager.hasPermissions(context, PERMISSIONS)) {
-                    PermissionsManager.requestPermissions(context, GALLERY_REQUEST, PERMISSIONS);
-                    log("ERROR_PERMISSION: " + StringUtils.join(PERMISSIONS, ", "));
-                    return;
-                }
-            }
+            checkGalleryPermission();
             //System.out.println("OPEN_REQUEST_PASS: ");
             /*galleryCacheDirectory = getFileDir("cache", true);
             makeDir(galleryCacheDirectory);
@@ -152,6 +192,7 @@ public class ImagePickerManager {
         }
 
         public Bitmap onActivityResult(int argRequestCode, int argResultCode, Intent argData) throws CoreException {
+            checkGalleryPermission();
             Bitmap bitmap = null;
             if (argRequestCode == GALLERY_REQUEST && argResultCode == Activity.RESULT_OK) {
                 //Bundle bundle = argData.getExtras();

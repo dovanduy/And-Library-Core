@@ -33,7 +33,7 @@ public class ImageManager {
     private String name = "";
     private int quality = 100;
     private Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.PNG;
-    private String fileTimeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
+    private String fileTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
     public boolean isDebug = true;
 
     public ImageManager(Context argContext) throws CoreException {
@@ -188,7 +188,9 @@ public class ImageManager {
     }
 
     public String getNewImageName(String argName, ImageFormat argImageFormat) {
-        return argName + "-" + fileTimeStamp + getRandom(1111, 9999) + "." + argImageFormat.getValue();
+        //fileTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String retVal = argName + "-" + fileTimeStamp + "-" + getRandom(1111, 9999) + "." + argImageFormat.getValue();
+        return retVal.replaceAll("[\\s|-]+", "-");
     }
 
     public int getRandom(int argMinValue, int argMaxValue) {

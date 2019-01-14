@@ -5,11 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="This is activity splash"
-        android:textSize="16sp" />
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/sysImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="This is activity splash"
+            android:textSize="16sp" />-->
+        <Button
+            android:id="@+id/sysBtnCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sysImageView"
+            android:layout_marginBottom="16dp"
+            android:text="Camera" />
+
+        <Button
+            android:id="@+id/sysBtnGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sysBtnCamera"
+            android:text="Gallery" />
+    </RelativeLayout>
 
 </RelativeLayout>
