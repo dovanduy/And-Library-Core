@@ -9,7 +9,6 @@ import android.os.Build;
 import android.util.Base64;
 import android.widget.ImageView;
 
-
 import com.rz.librarycore.exception.CoreError;
 import com.rz.librarycore.exception.CoreException;
 
@@ -191,7 +190,10 @@ public class ImageManager {
     public String getNewImageName(String argName, ImageFormat argImageFormat) {
         //fileTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String retVal = argName + "-" + fileTimeStamp + "-" + getRandom(1111, 9999) + "." + argImageFormat.getValue();
-        return retVal.replaceAll("[\\s|-]+", "-");
+        if (retVal != null) {
+            return retVal.replaceAll("[\\s|-]+", "-");
+        }
+        return retVal;
     }
 
     public int getRandom(int argMinValue, int argMaxValue) {
@@ -343,28 +345,60 @@ public class ImageManager {
             int height = argBitmap.getHeight();
             float aspectRatio = width / height;
             int targetWidth = argTargetWidth;
-            int targetHeight = Math.round(width / aspectRatio);
+            //int targetHeight = Math.round(width / aspectRatio);
+            //int targetHeight = Math.round((height / width) * targetWidth);
+            int targetHeight = Math.round((float) width / aspectRatio);
+            log("GLOBAL target: " + targetHeight);
 
             int finalWidth = 0;
             int finalHeight = 0;
 
-
+            //adjusted width / adjusted height = original width / original height
+            //adjusted width = (original width / original height) * adjusted height
+            //adjusted height = (original height / original width) * adjusted width
+            /*
+            aspectRatio = ( oldWidth / oldHeight )
+            newHeight = ( newWidth / aspectRatio ),
+            and if you need the new width of an object, you can use:
+            newWidth = ( newHeight * aspectRatio ).
+            */
+            //(original height / original width) x new width = new height
             if (width > height) {
                 // landscape
-                float ratio = (float) width / targetWidth;
+                log("CALCULATE_LANDSCAPE");
+                /*float ratio = height / width;
                 finalWidth = targetWidth;
-                finalHeight = (int) (height / ratio);
+                finalHeight = (int) (ratio * targetWidth);*/
+                float ratio = (float) width / (float) argTargetWidth;
+                finalWidth = argTargetWidth;
+                finalHeight = (int) ((float) height / ratio);
             } else if (height > width) {
                 // portrait
-                float ratio = (float) height / targetHeight;
-                finalWidth = (int) (width / ratio);
-                finalHeight = targetHeight;
+                log("CALCULATE_PORTRAIT");
+                /*float ratio = (float) (width / height);
+                finalHeight = (int) (targetWidth / ratio);
+                finalWidth = (int) (finalHeight * ratio);*/
+                float ratio = (float) ((float) height / (float) width);
+                ratio = ((float) width / (float) height);
+                finalWidth = (int) (targetWidth * ratio);
+                finalHeight = (int) (finalWidth / ratio);
+                /*log("PORTRAIT ratio: " + ratio);
+                log("PORTRAIT target width: " + targetWidth);
+                log("PORTRAIT target: " + targetHeight);
+                log("PORTRAIT size: " + width + " - " + height);
+                log("PORTRAIT: " + finalWidth + " - " + finalHeight);*/
             } else {
                 // square
-                float ratio = (float) width / targetWidth;
-                finalWidth = targetWidth;
-                finalHeight = (int) (height / ratio);
+                log("CALCULATE_SQUARE");
+                //float ratio = (float) width / targetWidth;
+                float ratio = width / height;
+                /*finalWidth = targetWidth;
+                finalHeight = (int) (ratio * targetWidth);*/
+                finalHeight = (int) (targetWidth / ratio);
+                finalWidth = (int) (finalHeight * ratio);
             }
+            log("BEFORE Image size: " + width + " - " + height);
+            log("BEFORE Final size: " + finalWidth + " - " + finalHeight);
             Bitmap bitmap = Bitmap.createScaledBitmap(argBitmap, finalWidth, finalHeight, true);
             //Bitmap background = Bitmap.createBitmap((int)finalWidth, (int)finalHeight, Bitmap.Config.ARGB_8888);
             log("Image size: " + width + " - " + height);
@@ -526,3 +560,14 @@ public class ImageManager {
 //https://stackoverflow.com/questions/9048744/string-parameter-in-java
 //https://medium.freecodecamp.org/why-you-should-ignore-exceptions-in-java-and-how-to-do-it-correctly-8e95e5775e58
 //
+/*
+Aspect ratio formula
+
+There is a simple formula for calculating aspect ratios: aspectRatio = ( oldWidth / oldHeight ).
+For instance if you want to know the new height of an object, you can use:
+newHeight = ( newWidth / aspectRatio ),
+and if you need the new width of an object, you can use:
+newWidth = ( newHeight * aspectRatio ).
+
+So first you need to know the aspect ratio by dividing the old width by the old height, and then you can use that to calculate either the new width or new height.
+*/

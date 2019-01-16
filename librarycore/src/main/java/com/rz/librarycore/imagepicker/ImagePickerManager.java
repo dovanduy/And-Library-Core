@@ -17,10 +17,12 @@ import com.rz.librarycore.exception.CoreException;
 
 
 public class ImagePickerManager {
+    public Activity activity;
     private Context context;
     public static boolean isDebug = true;
 
-    public ImagePickerManager(Context argContext) {
+    public ImagePickerManager(Activity argActivity, Context argContext) {
+        activity = argActivity;
         context = argContext;
     }
 
@@ -86,7 +88,8 @@ public class ImagePickerManager {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
             //cameraIntent.putExtra("return-data", true);
-            ((Activity) context).startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            //((Activity) context).startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            activity.startActivityForResult(cameraIntent, CAMERA_REQUEST);
         }
 
         @Deprecated

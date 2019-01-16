@@ -190,7 +190,10 @@ public class ImageManager {
     public String getNewImageName(String argName, ImageFormat argImageFormat) {
         //fileTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String retVal = argName + "-" + fileTimeStamp + "-" + getRandom(1111, 9999) + "." + argImageFormat.getValue();
-        return retVal.replaceAll("[\\s|-]+", "-");
+        if (retVal != null) {
+            return retVal.replaceAll("[\\s|-]+", "-");
+        }
+        return retVal;
     }
 
     public int getRandom(int argMinValue, int argMaxValue) {
