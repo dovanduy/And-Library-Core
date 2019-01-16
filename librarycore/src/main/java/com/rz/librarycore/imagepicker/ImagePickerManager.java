@@ -12,8 +12,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.librarycore.imagepicker.exception.CoreError;
-import com.rz.librarycore.imagepicker.exception.CoreException;
+import com.rz.librarycore.exception.CoreError;
+import com.rz.librarycore.exception.CoreException;
 
 
 public class ImagePickerManager {

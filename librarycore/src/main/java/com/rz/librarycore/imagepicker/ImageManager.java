@@ -10,8 +10,8 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 
-import com.rz.librarycore.imagepicker.exception.CoreError;
-import com.rz.librarycore.imagepicker.exception.CoreException;
+import com.rz.librarycore.exception.CoreError;
+import com.rz.librarycore.exception.CoreException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.rz.librarycore.imagepicker.exception;
+package com.rz.librarycore.exception;
 
 public class CoreError {
     private static String prefixDescription = "EXCEPTION_OCCUR ";
