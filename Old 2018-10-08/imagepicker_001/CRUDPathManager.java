@@ -1,9 +1,6 @@
-package com.rz.usagesexampl.imagepicker;
+package com.rz.librarycore.imagepicker;
 
 import android.content.Context;
-
-import com.rz.usagesexampl.imagepicker.exception.CoreError;
-import com.rz.usagesexampl.imagepicker.exception.CoreException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,17 +13,17 @@ import java.io.OutputStream;
 public class CRUDPathManager {
     public static boolean isDebug = true;
 
-    public static void onCreateDirectories(Context argContext, String argDirectoryPath) throws CoreException {
+    public static void onCreateDirs(Context argContext, String argDirectoryPath) {
         if (!PermissionsManager.hasPermissions(argContext, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"})) {
-            //throw new HTTPPowerFeedException(new ErrorReason(HTTPPowerFeedException.ErrorDescription.FILE_NOT_FOUND_EXCEPTION, ex.getMessage() + " - " + httpRequestURL));
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission: " + "android.permission.WRITE_EXTERNAL_STORAGE"));
+            log("PERMISSION_DENIED: " + "android.permission.WRITE_EXTERNAL_STORAGE");
+            return;
         }
         File file = new File(argDirectoryPath);
         if (!isDirExists(file)) {
             file.mkdirs();
             log("Directory created: " + argDirectoryPath);
         } else {
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.DIRECTORY_ALREADY_EXISTS, argDirectoryPath + " already exists"));
+            log("Directory already exists");
         }
     }
 
@@ -48,7 +45,7 @@ public class CRUDPathManager {
         return argFile.exists() && argFile.isFile();
     }
 
-    public static void onFileCopy(String argSourcePath, String argDestinationPath) throws CoreException {
+    public static void onFileCopy(String argSourcePath, String argDestinationPath) {
         InputStream inputStream = null;
         OutputStream outputStream = null;
         File file = null;
@@ -62,27 +59,24 @@ public class CRUDPathManager {
             while ((length = inputStream.read(byteArray)) > 0) {
                 outputStream.write(byteArray, 0, length);
             }
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException e) {
             //e.printStackTrace();
-            //log("Error: " + e.getMessage());
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.FILE_NOT_FOUND_EXCEPTION, ex.getMessage()));
-        } catch (IOException ex) {
+            log("Error: " + e.getMessage());
+        } catch (IOException e) {
             //e.printStackTrace();
-            //log("Error: " + e.getMessage());
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.IO_EXCEPTION, ex.getMessage()));
+            log("Error: " + e.getMessage());
         } finally {
             try {
                 outputStream.close();
                 inputStream.close();
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 //e.printStackTrace();
-                //log("Error: " + e.getMessage());
-                throw new CoreException(new CoreError().setReason(CoreError.TYPE.IO_EXCEPTION, ex.getMessage()));
+                log("Error: " + e.getMessage());
             }
         }
     }
 
-    public static void onFileCopy(File argSourcePath, File argDestinationPath) throws CoreException {
+    public static void onFileCopy(File argSourcePath, File argDestinationPath) {
         InputStream inputStream = null;
         OutputStream outputStream = null;
         try {
@@ -93,30 +87,27 @@ public class CRUDPathManager {
             while ((length = inputStream.read(byteArray)) > 0) {
                 outputStream.write(byteArray, 0, length);
             }
-        } catch (FileNotFoundException ex) {
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.FILE_NOT_FOUND_EXCEPTION, ex.getMessage()));
-        } catch (IOException ex) {
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.IO_EXCEPTION, ex.getMessage()));
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+            log("Error: " + e.getMessage());
+        } catch (IOException e) {
+            //e.printStackTrace();
+            log("Error: " + e.getMessage());
         } finally {
             try {
                 outputStream.close();
                 inputStream.close();
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 //e.printStackTrace();
-                throw new CoreException(new CoreError().setReason(CoreError.TYPE.IO_EXCEPTION, ex.getMessage()));
+                log("Error: " + e.getMessage());
             }
         }
     }
 
-    public static boolean deleteFile(Context argContext, String argFilePath) throws CoreException {
-        if (!PermissionsManager.hasPermissions(argContext, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"})) {
-            throw new CoreException(new CoreError().setReason(CoreError.TYPE.PERMISSIONS_DENIED, "Need permission android.permission.WRITE_EXTERNAL_STORAGE"));
-        }
+    public static boolean deleteFile(String argFilePath) {
         File file = new File(argFilePath);
         if (file.exists()) {
             file.delete();
-        } else {
-            //throw new CoreException(new CoreError().setReason(CoreError.TYPE.FILE_NOT_FOUND_EXCEPTION, argFilePath + " not found"));
         }
         return file.exists();
     }
