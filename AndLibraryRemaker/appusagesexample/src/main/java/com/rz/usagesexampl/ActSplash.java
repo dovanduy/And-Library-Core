@@ -108,7 +108,7 @@ public class ActSplash extends AppCompatActivity {
         } catch (CoreException ex) {
             //ex.printStackTrace();
         }
-        imagePickerManager = new ImagePickerManager(context);
+        imagePickerManager = new ImagePickerManager(activity, context);
         try {
             cameraManager = imagePickerManager.getCameraManager();
         } catch (CoreException ex) {

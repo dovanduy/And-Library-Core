@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActSplash">
+        <activity
+            android:name=".ActSplash"
+            android:configChanges="keyboard|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
