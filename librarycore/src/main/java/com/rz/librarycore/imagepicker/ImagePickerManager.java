@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.imagepicker;
+package com.rz.librarycore.imagepicker;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,8 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 
-import com.rz.usagesexampl.imagepicker.exception.CoreError;
-import com.rz.usagesexampl.imagepicker.exception.CoreException;
+import com.rz.librarycore.imagepicker.exception.CoreError;
+import com.rz.librarycore.imagepicker.exception.CoreException;
+
 
 public class ImagePickerManager {
     private Context context;

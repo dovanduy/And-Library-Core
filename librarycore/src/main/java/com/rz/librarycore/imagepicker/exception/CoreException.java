@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.imagepicker.exception;
+package com.rz.librarycore.imagepicker.exception;
 
 public class CoreException extends Exception {
     private CoreError.TYPE errorTYPE;

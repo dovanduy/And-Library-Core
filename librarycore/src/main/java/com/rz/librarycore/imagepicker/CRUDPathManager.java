@@ -1,9 +1,9 @@
-package com.rz.usagesexampl.imagepicker;
+package com.rz.librarycore.imagepicker;
 
 import android.content.Context;
 
-import com.rz.usagesexampl.imagepicker.exception.CoreError;
-import com.rz.usagesexampl.imagepicker.exception.CoreException;
+import com.rz.librarycore.imagepicker.exception.CoreError;
+import com.rz.librarycore.imagepicker.exception.CoreException;
 
 import java.io.File;
 import java.io.FileInputStream;

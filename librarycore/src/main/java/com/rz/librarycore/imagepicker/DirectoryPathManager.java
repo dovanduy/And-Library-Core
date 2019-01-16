@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.imagepicker;
+package com.rz.librarycore.imagepicker;
 
 import android.content.Context;
 import android.os.Environment;

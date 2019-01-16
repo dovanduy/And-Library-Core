@@ -1,4 +1,4 @@
-package com.rz.usagesexampl.imagepicker;
+package com.rz.librarycore.imagepicker;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,8 +9,9 @@ import android.os.Build;
 import android.util.Base64;
 import android.widget.ImageView;
 
-import com.rz.usagesexampl.imagepicker.exception.CoreError;
-import com.rz.usagesexampl.imagepicker.exception.CoreException;
+
+import com.rz.librarycore.imagepicker.exception.CoreError;
+import com.rz.librarycore.imagepicker.exception.CoreException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
