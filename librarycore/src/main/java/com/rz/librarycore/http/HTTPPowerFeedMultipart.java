@@ -34,6 +34,15 @@ public class HTTPPowerFeedMultipart {
     private final String twoHyphens = "--";
     private HashMap<String, String> httpResponseData;
 
+    public HTTPPowerFeedMultipart() {
+        urlRequestHeaders = new HashMap<String, String>();
+        urlRequestParameters = new HashMap<String, String>();
+        urlRequestFiles = new HashMap<String, File>();
+        httpResponseData = new HashMap<String, String>();
+        httpResponseData.put("code", null);
+        httpResponseData.put("response", null);
+    }
+
     @GuardedBy("mLock")
     public HTTPPowerFeedMultipart withHeaderAuthorization(String argUrlHeaderAuthorization) {
         this.headerAuthorization = argUrlHeaderAuthorization;
@@ -223,7 +232,7 @@ public class HTTPPowerFeedMultipart {
                 setRequestedHeader();
             }
             //|------------------------------------------------------------|
-            httpURLConnection.setRequestProperty("User-agent", System.getProperty("http.agent"));
+            //httpURLConnection.setRequestProperty("User-agent", System.getProperty("http.agent"));
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
             httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + this.boundary);
@@ -350,9 +359,9 @@ public class HTTPPowerFeedMultipart {
     }
 
     private HashMap<String, String> onFinishTask() throws HTTPPowerFeedException {
-        HashMap<String, String> responseHashMap = new HashMap<>();
-        responseHashMap.put("code", null);
-        responseHashMap.put("response", null);
+        httpResponseData = new HashMap<>();
+        httpResponseData.put("code", null);
+        httpResponseData.put("response", null);
         String response = null;
 
         try {
@@ -375,9 +384,9 @@ public class HTTPPowerFeedMultipart {
                 responseStreamReader.close();
                 response = stringBuilder.toString();
                 httpURLConnection.disconnect();
-                responseHashMap.put("code", status + "");
-                responseHashMap.put("response", response);
-                return responseHashMap;
+                httpResponseData.put("code", status + "");
+                httpResponseData.put("response", response);
+                return httpResponseData;
             } else {
                 InputStream responseStream = new BufferedInputStream(httpURLConnection.getInputStream());
                 BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
@@ -390,18 +399,18 @@ public class HTTPPowerFeedMultipart {
                 responseStreamReader.close();
                 response = stringBuilder.toString();
                 httpURLConnection.disconnect();
-                responseHashMap.put("code", status + "");
-                responseHashMap.put("response", response);
+                httpResponseData.put("code", status + "");
+                httpResponseData.put("response", response);
                 //throw new IOException("Server returned non-OK status: " + status);
                 //throw new HTTPPowerFeedException(new ErrorReason(HTTPPowerFeedException.ErrorDescription.RESPONSE_ERROR, response + " - " + "Server returned non-OK status: " + status));
-                return responseHashMap;
+                return httpResponseData;
             }
         } catch (IOException ex) {
             //ex.printStackTrace();
             //throw new HTTPPowerFeedException(new ErrorReason(HTTPPowerFeedException.ErrorDescription.IO_EXCEPTION, ex.getMessage() + " - " + httpRequestURL));
-            responseHashMap.put("code", -1 + "");
-            responseHashMap.put("response", "Error: " + ex.getMessage());
-            return responseHashMap;
+            httpResponseData.put("code", -1 + "");
+            httpResponseData.put("response", "Error: " + ex.getMessage());
+            return httpResponseData;
         }
         //return response;
     }
