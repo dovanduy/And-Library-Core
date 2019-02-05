@@ -7,8 +7,14 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode project.versionCode
-        versionName project.versionName
+        //versionName project.versionName
+        versionName project.getProperty("libraryVersion")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        def date = new Date()
+        //def formattedDate = date.format('yyyyMMddHHmmss')
+        def formattedDate = date.format('yyyyMMdd')
+        def apkName = project.applicationName + ' - (' + applicationId + ') ' + 'v-' + defaultConfig.versionName + ' - ' + formattedDate + ' '
+        setProperty("archivesBaseName", "$apkName")
     }
     buildTypes {
         debug {
