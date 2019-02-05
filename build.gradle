@@ -8,8 +8,10 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        /*classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'*/
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -28,10 +30,11 @@ task clean(type: Delete) {
 }
 ext {
     applicationName = "LibraryCore"
+    compileSdkVersion = 28
+    targetSdkVersion = 28
     versionCode = 1000001
     versionName = "100.00.01"
     //1.0.1.000.1
-    compileSdkVersion = 27
     supportLibraryVersion = "27.1.1"
     volley = "1.1.1"
     gson = "2.8.5"
