@@ -31,12 +31,13 @@ task clean(type: Delete) {
 }
 ext {
     applicationName = "LibraryCore"
-    compileSdkVersion = 27
-    targetSdkVersion = 27
+    minSdkVersion = 15
+    compileSdkVersion = 28
+    targetSdkVersion = 28
     versionCode = 1000001
     versionName = "100.00.01"
     //1.0.1.000.1
-    supportLibraryVersion = "27.1.1"
+    supportLibraryVersion = "28.0.0"
     volley = "1.1.1"
     gson = "2.8.5"
 }

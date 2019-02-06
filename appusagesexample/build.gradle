@@ -4,7 +4,7 @@ android {
     compileSdkVersion rootProject.project.compileSdkVersion
     defaultConfig {
         applicationId "com.rz.usagesexampl"
-        minSdkVersion 15
+        minSdkVersion rootProject.project.minSdkVersion
         targetSdkVersion rootProject.project.compileSdkVersion
         versionCode project.versionCode
         //versionName project.versionName
