@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.support.v4.content.ContextCompat;
 
 import com.rz.librarycore.exception.CoreError;
 import com.rz.librarycore.exception.CoreException;
+
+import java.util.List;
 
 
 public class ImagePickerManager {
@@ -85,6 +88,8 @@ public class ImagePickerManager {
             /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             //File file = new File(camDir, String.valueOf(System.currentTimeMillis()) + ".png");*/
             //((Activity) context).startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            ///
+            ///
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
             //cameraIntent.putExtra("return-data", true);

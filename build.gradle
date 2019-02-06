@@ -43,5 +43,6 @@ ext {
     androidDependency = [
             appCompatLibrary    : "com.android.support:appcompat-v7:${supportLibraryVersion}",
             designSupportLibrary: "com.android.support:design:${supportLibraryVersion}",
+            supportLibrary: "com.android.support:support-v4:${supportLibraryVersion}",
     ]
 }

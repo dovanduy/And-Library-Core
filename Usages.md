@@ -4,9 +4,9 @@
 android-core-library-center / android-core-library
 android-core-library-collection / android-core-library
 
-
+## Usages Of <b>XML Feed Parser</b>
 <details>
-  <summary>## Usages Of <b>XML Feed Parser</b></summary>
+  <summary>Usages Of <b>XML Feed Parser</b></summary>
 ### XML Type/Format:
 ```xml_type_format_JSONFastParser_usages
 //JSON Object:
