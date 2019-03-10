@@ -58,6 +58,56 @@ class C0367a {
         }
     }
 
+    public static String getSecondToDateTime(long argTimeInSecond, String argInFormat) {
+        Date date = new Date(argTimeInSecond * 1000);
+        //Date date = new Date(getCurrentSecond() * 1000);
+        //DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat(argInFormat);
+        //System.out.println("----------------->" + dateFormat.format(date));
+        return dateFormat.format(date);
+    }
+
+    public static String getGMTSecondToDateTime(long argTimeInSecond, String argInFormat) {
+        Date date = new Date(argTimeInSecond * 1000);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat);
+        // Give it to me in GMT time.
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        //System.out.println("GMT time: " + simpleDateFormat.format(date));
+        return simpleDateFormat.format(date);
+    }
+
+    public static long getSecond(String argDateTime, String argInFormat) {
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat);
+        try {
+            //Date date = simpleDateFormat.parse(simpleDateFormat.format(argDateTime));
+            Date date = simpleDateFormat.parse(argDateTime);
+            return date.getTime() / 1000;
+        } catch (ParseException ex) {
+            //ex.printStackTrace();
+            return System.currentTimeMillis() / 1000;
+        }
+    }
+
+    public static long getGMTSecond(String argDateTime, String argInFormat) {
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat, Locale.ENGLISH);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            //Date date = simpleDateFormat.parse(simpleDateFormat.format(argDateTime));
+            DateFormat dateFormat = new SimpleDateFormat(argInFormat);
+            Date date = simpleDateFormat.parse(argDateTime);
+            return date.getTime() / 1000;
+        } catch (ParseException ex) {
+            //ex.printStackTrace();
+            return System.currentTimeMillis() / 1000;
+        }
+    }
+
+    public static long getCurrentSecond() {
+        return System.currentTimeMillis() / 1000;
+    }
+
     public static String getGMTToLocalTime(String argDateTime, String argInFormat, String argOutFormat) {
         /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy . hh:mm aa");*/

@@ -5,9 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Base64;
 
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +22,7 @@ import java.util.TimeZone;
  * @see Object
  */
 public class Utils {
+    @Deprecated
     public static String getSecondToDateTime(long argTimeInSecond, String argInFormat) {
         Date date = new Date(argTimeInSecond * 1000);
         //Date date = new Date(getCurrentSecond() * 1000);
@@ -33,6 +32,7 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    @Deprecated
     public static String getGMTSecondToDateTime(long argTimeInSecond, String argInFormat) {
         Date date = new Date(argTimeInSecond * 1000);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat);
@@ -42,6 +42,7 @@ public class Utils {
         return simpleDateFormat.format(date);
     }
 
+    @Deprecated
     public static long getSecond(String argDateTime, String argInFormat) {
         //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat);
@@ -55,6 +56,7 @@ public class Utils {
         }
     }
 
+    @Deprecated
     public static long getGMTSecond(String argDateTime, String argInFormat) {
         //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(argInFormat, Locale.ENGLISH);
@@ -70,6 +72,7 @@ public class Utils {
         }
     }
 
+    @Deprecated
     public static long getCurrentSecond() {
         return System.currentTimeMillis() / 1000;
     }
@@ -104,6 +107,7 @@ public class Utils {
         }
     }
 
+    @Deprecated
     public static String getGMTToLocalTime(String argDateTime, String argInFormat, String argOutFormat) {
         /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy . hh:mm aa");*/
