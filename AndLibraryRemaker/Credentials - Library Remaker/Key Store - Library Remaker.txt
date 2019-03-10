@@ -1,0 +1,13 @@
+Password: 123456
+Alias: keystore
+Password: 123456
+First and last name: Rz Rasel
+Organization Unit: Rz
+Organization: Rz
+City: Dhaka
+State: Dhaka
+Country Code: BD
+
+
+Debug Key:
+keytool -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
